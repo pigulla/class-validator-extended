@@ -10,16 +10,20 @@ function compareValues(a: number, b: number, monotonicity: Monotonicity): boolea
             return b <= a
         case Monotonicity.STRICTLY_DECREASING:
             return b < a
-        default: {
-            const allowedValues = Object.values(Monotonicity)
-                .map(value => `"${value}"`)
-                .join(', ')
-            throw new TypeError(`Unknown monotonicity type "${monotonicity}" (expected one of ${allowedValues})`)
-        }
+        /* istanbul ignore next */
+        default:
+            throw new Error('Unexpected monotonicity value')
     }
 }
 
+const allowedValues = new Set(Object.values(Monotonicity))
+
 export function isMonotonic<T>(values: T[], selector: Selector<T>, monotonicity: Monotonicity): boolean {
+    if (!allowedValues.has(monotonicity)) {
+        const allowedValuesString = [...allowedValues].map(value => `"${value}"`).join(', ')
+        throw new TypeError(`Unknown monotonicity type "${monotonicity}" (expected one of ${allowedValuesString})`)
+    }
+
     return values.reduce(
         (satisfied: boolean, item: T, index: number) =>
             satisfied && (index === 0 || compareValues(selector(values[index - 1]), selector(item), monotonicity)),
