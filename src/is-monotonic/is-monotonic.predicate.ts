@@ -1,16 +1,22 @@
 import {Monotonicity, Selector} from './is-monotonic.options'
 
 function compareValues(a: number, b: number, monotonicity: Monotonicity): boolean {
-    if (monotonicity === Monotonicity.WEAKLY_INCREASING) {
-        return b >= a
+    switch (monotonicity) {
+        case Monotonicity.WEAKLY_INCREASING:
+            return b >= a
+        case Monotonicity.STRICTLY_INCREASING:
+            return b > a
+        case Monotonicity.WEAKLY_DECREASING:
+            return b <= a
+        case Monotonicity.STRICTLY_DECREASING:
+            return b < a
+        default: {
+            const allowedValues = Object.values(Monotonicity)
+                .map(value => `"${value}"`)
+                .join(', ')
+            throw new TypeError(`Unknown monotonicity type "${monotonicity}" (expected one of ${allowedValues})`)
+        }
     }
-    if (monotonicity === Monotonicity.STRICTLY_INCREASING) {
-        return b > a
-    }
-    if (monotonicity === Monotonicity.WEAKLY_DECREASING) {
-        return b <= a
-    }
-    return b < a
 }
 
 export function isMonotonic<T>(values: T[], selector: Selector<T>, monotonicity: Monotonicity): boolean {

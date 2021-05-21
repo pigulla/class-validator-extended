@@ -14,5 +14,8 @@ module.exports = {
             statements: -1000,
         },
     },
-    setupFilesAfterEnv: ['<rootDir>/test/setup.ts'],
+    setupFilesAfterEnv: ['jest-extended'],
+    transform: {
+        '^.+\\.ts$': 'ts-jest',
+    },
 }

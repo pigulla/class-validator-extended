@@ -1,10 +1,10 @@
-import 'jest-extended';
-import { isMonotonic, Monotonicity } from '~domain/validator';
+import 'jest-extended'
+import {isMonotonic, Monotonicity} from '../src'
+
+const selector = (n: number) => n
 
 describe('isMonotonic', () => {
-    const selector = (n: number) => n;
-
-    it.each([
+    it.each<[number[], Monotonicity]>([
         [[], Monotonicity.STRICTLY_INCREASING],
         [[1], Monotonicity.STRICTLY_INCREASING],
         [[1, 2, 3, 4, 5], Monotonicity.STRICTLY_INCREASING],
@@ -22,11 +22,11 @@ describe('isMonotonic', () => {
         [[1], Monotonicity.WEAKLY_DECREASING],
         [[5, 4, 3, 2, 1], Monotonicity.WEAKLY_DECREASING],
         [[5, 4, 3, 3, 3, 2, 1], Monotonicity.WEAKLY_DECREASING],
-    ])('should be true for %p that is %s', (values: number[], monotonicity: Monotonicity) => {
-        expect(isMonotonic(values, selector, monotonicity)).toBeTrue();
-    });
+    ])('should be true for %p that is %s', (values, monotonicity) => {
+        expect(isMonotonic(values, selector, monotonicity)).toBeTrue()
+    })
 
-    it.each([
+    it.each<[number[], Monotonicity]>([
         [[1, 2, 2, 3], Monotonicity.STRICTLY_INCREASING],
         [[1, 2, 3, 4, 3], Monotonicity.STRICTLY_INCREASING],
 
@@ -36,7 +36,7 @@ describe('isMonotonic', () => {
         [[4, 3, 2, 1, 2], Monotonicity.STRICTLY_DECREASING],
 
         [[3, 2, 1, 2], Monotonicity.WEAKLY_DECREASING],
-    ])('should be false for %p that is %s', (values: number[], monotonicity: Monotonicity) => {
-        expect(isMonotonic(values, selector, monotonicity)).toBeFalse();
-    });
-});
+    ])('should be false for %p that is %s', (values, monotonicity) => {
+        expect(isMonotonic(values, selector, monotonicity)).toBeFalse()
+    })
+})

@@ -1,4 +1,4 @@
-export type Selector<T> = (item: T) => number;
+export type Selector<T> = (item: T) => number
 
 export enum Monotonicity {
     WEAKLY_INCREASING = 'weakly increasing',
@@ -6,4 +6,3 @@ export enum Monotonicity {
     WEAKLY_DECREASING = 'weakly decreasing',
     STRICTLY_DECREASING = 'strictly decreasing',
 }
-
