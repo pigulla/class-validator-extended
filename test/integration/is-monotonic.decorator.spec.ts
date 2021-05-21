@@ -2,7 +2,7 @@ import 'jest-extended'
 import {validateSync, ValidationError} from 'class-validator'
 import {ValidatorOptions} from 'class-validator/types/validation/ValidatorOptions'
 
-import {IsMonotonic, Monotonicity} from '../../src'
+import {IS_MONOTONIC, IsMonotonic, Monotonicity} from '../../src'
 
 class Test {
     @IsMonotonic<Date>(item => item.valueOf(), Monotonicity.STRICTLY_INCREASING)
@@ -51,7 +51,7 @@ describe('IsMonotonic', () => {
             target: test,
             value: test.values,
             constraints: {
-                isMonotonic: '',
+                [IS_MONOTONIC]: expect.toBeString(),
             },
         })
     })
