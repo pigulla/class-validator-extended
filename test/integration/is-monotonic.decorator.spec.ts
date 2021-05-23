@@ -5,7 +5,7 @@ import {ValidatorOptions} from 'class-validator/types/validation/ValidatorOption
 import {IS_MONOTONIC, IsMonotonic, Monotonicity} from '../../src'
 
 class Test {
-    @IsMonotonic<Date>(item => item.valueOf(), Monotonicity.STRICTLY_INCREASING)
+    @IsMonotonic<Date>({selector: item => item.valueOf(), monotonicity: Monotonicity.STRICTLY_INCREASING})
     public readonly values: readonly Date[]
 
     public constructor(values: readonly Date[]) {

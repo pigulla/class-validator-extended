@@ -6,3 +6,8 @@ export enum Monotonicity {
     WEAKLY_DECREASING = 'weakly decreasing',
     STRICTLY_DECREASING = 'strictly decreasing',
 }
+
+export type IsMonotonicOptions<T> = {
+    selector: Selector<T>
+    monotonicity: Monotonicity
+}

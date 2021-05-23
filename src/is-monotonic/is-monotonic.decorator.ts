@@ -1,21 +1,23 @@
-import {registerDecorator, ValidationArguments} from 'class-validator'
+import {buildMessage, ValidateBy, ValidationOptions} from 'class-validator'
 
-import {Monotonicity, Selector} from './is-monotonic.options'
+import {IsMonotonicOptions} from './is-monotonic.options'
 import {isMonotonic} from './is-monotonic.predicate'
 
 export const IS_MONOTONIC = 'isMonotonic'
 
-export function IsMonotonic<T>(selector: Selector<T>, monotonicity: Monotonicity) {
-    return (object: Object, propertyName: string): void => {
-        registerDecorator({
+export function IsMonotonic<T>(validationOptions: IsMonotonicOptions<T> & ValidationOptions) {
+    return ValidateBy(
+        {
             name: IS_MONOTONIC,
-            target: object.constructor,
-            propertyName,
             validator: {
-                validate(values: T[], _arguments: ValidationArguments) {
-                    return isMonotonic(values, selector, monotonicity)
-                },
+                validate: (value, _arguments): boolean =>
+                    isMonotonic(value, validationOptions.selector, validationOptions.monotonicity),
+                defaultMessage: buildMessage(
+                    eachPrefix => `${eachPrefix}$property must be a ${validationOptions.monotonicity} array`,
+                    validationOptions
+                ),
             },
-        })
-    }
+        },
+        validationOptions
+    )
 }
