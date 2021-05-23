@@ -8,20 +8,25 @@ jobs:
 
         strategy:
             matrix:
-                node: ['12', '14', '16']
+                node:
+                    - '12'
+                    - '14'
+                    - '16'
 
         steps:
             - uses: actions/checkout@v2
+
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node }}
+
+            - run: npm i -g npm@7 --registry=https://registry.npmjs.org
+            - run: npm ci
+            - run: npm test
+            - run: npm run build
+
             - uses: codecov/codecov-action@v1
               with:
                 files: ./coverage/clover.xml
                 fail_ci_if_error: true
                 verbose: true
-            - name: Use Node.js
-              uses: actions/setup-node@v1
-              with:
-                  node-version: ${{ matrix.node }}
-            - run: npm i -g npm@7 --registry=https://registry.npmjs.org
-            - run: npm ci
-            - run: npm test
-            - run: npm run build
