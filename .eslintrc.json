@@ -1,0 +1,38 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:unicorn/recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:import/typescript",
+        "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["unicorn", "prettier", "@typescript-eslint/eslint-plugin"],
+    "env": {
+        "browser": true
+    },
+    "rules": {
+        "no-dupe-class-members": "off",
+        "no-unused-vars": "off",
+        "prefer-arrow-callback": "error",
+        "@typescript-eslint/explicit-member-accessibility": "error",
+        "import/prefer-default-export": "off",
+        "import/no-default-export": "error",
+        "import/order": [
+            "error",
+            {
+                "newlines-between": "always",
+                "alphabetize": {
+                    "order": "asc",
+                    "caseInsensitive": true
+                },
+                "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "unknown"]
+            }
+        ],
+        "unicorn/no-null": "off",
+        "unicorn/no-array-callback-reference": "off",
+        "unicorn/no-array-reduce": "off",
+        "prettier/prettier": "error"
+    }
+}

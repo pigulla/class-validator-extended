@@ -1,0 +1,35 @@
+{
+    "include": ["src/**/*.ts"],
+    "compilerOptions": {
+        // Project options
+        "declaration": true,
+        "incremental": false,
+        "lib": ["ES6"],
+        "module": "commonjs",
+        "outDir": "./dist",
+        "removeComments": true,
+        "rootDir": "src",
+        "sourceMap": true,
+        "target": "ES6",
+
+        // Module resolution
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "./",
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+
+        // Experimental
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+
+        // Strict checks
+        "strict": true,
+
+        // Linter checks
+        "noImplicitReturns": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedIndexedAccess": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+    }
+}
