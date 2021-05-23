@@ -6,12 +6,17 @@ jobs:
     build:
         runs-on: ubuntu-latest
 
+        strategy:
+            matrix:
+                node: ['12', '14', '16']
+
         steps:
             - uses: actions/checkout@v2
             - name: Use Node.js
               uses: actions/setup-node@v1
               with:
-                  node-version: '14.x'
+                  node-version: ${{ matrix.node }}
+            - run: npm i -g npm@7 --registry=https://registry.npmjs.org
             - run: npm ci
             - run: npm test
             - run: npm run build
