@@ -24,9 +24,12 @@ export function isMonotonic<T>(values: T[], selector: Selector<T>, monotonicity:
         throw new TypeError(`Unknown monotonicity type "${monotonicity}" (expected one of ${allowedValuesString})`)
     }
 
-    return values.reduce(
-        (satisfied: boolean, item: T, index: number) =>
-            satisfied && (index === 0 || compareValues(selector(values[index - 1]), selector(item), monotonicity)),
-        true
+    return (
+        Array.isArray(values) &&
+        values.reduce(
+            (satisfied: boolean, item: T, index: number) =>
+                satisfied && (index === 0 || compareValues(selector(values[index - 1]), selector(item), monotonicity)),
+            true
+        )
     )
 }

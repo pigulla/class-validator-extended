@@ -11,7 +11,7 @@ export function SetNotEmpty(validationOptions?: ValidationOptions): PropertyDeco
             validator: {
                 validate: (value, _arguments): boolean => setNotEmpty(value),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property should not be empty`,
+                    eachPrefix => `${eachPrefix}$property should not be an empty set`,
                     validationOptions
                 ),
             },

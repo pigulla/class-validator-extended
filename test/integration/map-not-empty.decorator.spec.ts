@@ -1,44 +1,69 @@
 import 'jest-extended'
 import {validateSync, ValidationError} from 'class-validator'
-import {ValidatorOptions} from 'class-validator/types/validation/ValidatorOptions'
 
 import {MapNotEmpty, MAP_NOT_EMPTY} from '../../src'
 
 class Test {
     @MapNotEmpty()
-    public readonly value: ReadonlyMap<unknown, unknown>
+    public readonly value: unknown
 
-    public constructor(value: ReadonlyMap<unknown, unknown>) {
+    public constructor(value: unknown) {
         this.value = value
     }
 }
 
-const validatorOptions: ValidatorOptions = {
-    forbidUnknownValues: true,
+class TestEach {
+    @MapNotEmpty({each: true})
+    public readonly value: unknown
+
+    public constructor(value: unknown) {
+        this.value = value
+    }
 }
 
-describe('NonEmptyMap', () => {
-    it.each<[string, Test]>([
-        ['a non-empty map', new Test(new Map([['foo', 'bar']]))],
-        ['a map with empty-looking values', new Test(new Map([[undefined, '']]))],
-    ])('should validate for %p', (_, test) => {
-        expect(validateSync(test, validatorOptions)).toEqual([])
+describe('MapNotEmpty', () => {
+    it.each<[string, unknown]>([
+        ['a non-empty map', new Map([['foo', 'bar']])],
+        ['a map with empty-looking values', new Map([[undefined, '']])],
+    ])('should validate for %p', (_, value) => {
+        const instance = new Test(value)
+        expect(validateSync(instance)).toEqual([])
     })
 
-    it.each<[string, Test]>([
+    it.each<[string, unknown]>([
         ['an empty map', new Test(new Map())],
         ['an explicitly empty map', new Test(new Map([]))],
-    ])('should not validate for %p', (_, test) => {
-        const result = validateSync(test, validatorOptions)
+    ])('should not validate for %p', (_, value) => {
+        const instance = new Test(value)
+        const result = validateSync(instance)
 
         expect(result).toEqual([expect.any(ValidationError)])
         expect(result[0]).toMatchObject({
             children: [],
             property: 'value',
-            target: test,
-            value: test.value,
+            target: instance,
+            value: instance.value,
             constraints: {
-                [MAP_NOT_EMPTY]: expect.toBeString(),
+                [MAP_NOT_EMPTY]: 'value should not be an empty map',
+            },
+        })
+    })
+
+    it.each<[string, unknown]>([
+        ['null', null],
+        ['an an array with an empty empty map', [new Map()]],
+    ])(`should not validate with 'each: true' for %s`, (_, value) => {
+        const instance = new TestEach(value)
+        const result = validateSync(instance)
+
+        expect(result).toEqual([expect.any(ValidationError)])
+        expect(result[0]).toMatchObject({
+            children: [],
+            property: 'value',
+            target: instance,
+            value: instance.value,
+            constraints: {
+                [MAP_NOT_EMPTY]: 'each value in value should not be an empty map',
             },
         })
     })
