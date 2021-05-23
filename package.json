@@ -11,7 +11,7 @@
         "test": "npm run lint && npm run jest && npm audit",
         "format": "prettier --write .",
         "jest": "jest",
-        "lint": "npm run lint:tsc && npm run lint:eslint",
+        "lint": "npm run lint:tsc && npm run lint:eslint && npm run lint:prettier",
         "lint:tsc": "tsc --noEmit",
         "lint:eslint": "eslint --ext=ts .",
         "lint:prettier": "prettier --check ."
