@@ -1,10 +1,11 @@
 {
     "name": "class-validator-extended",
-    "version": "0.0.1",
-    "description": "",
+    "version": "0.0.1-beta",
+    "description": "Additional decorator and non-decorator based validation for class-validator.",
     "main": "dist/index.js",
     "directories": {
-        "test": "test"
+        "test": "test",
+        "lib": "src"
     },
     "scripts": {
         "build": "rm -rf dist && tsc",
@@ -24,7 +25,10 @@
         "class-validator",
         "plugin"
     ],
-    "author": "Raphael Pigulla <pigulla@four66.com>",
+    "author": {
+        "name": "Raphael Pigulla",
+        "email": "pigulla@four66.com"
+    },
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/pigulla/class-validator-extended/issues"
