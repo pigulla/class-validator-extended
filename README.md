@@ -7,4 +7,5 @@
 ![GitHub](https://img.shields.io/github/license/pigulla/class-validator-extended?style=flat-square)
 
 # class-validator-extended
+
 > Additional decorator and non-decorator based validation for class-validator.
