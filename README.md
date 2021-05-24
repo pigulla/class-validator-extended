@@ -13,7 +13,6 @@
 
 | Decorator                       | Description                                                                       |
 | ------------------------------- | --------------------------------------------------------------------------------- |
-| `@ArrayInvariant(callback)`      | Checks if all values in the given array satisfy the given invariant.             |
 | `@ArrayMonotonic(options)`      | Checks if given array is sorted according to the given options.                   |
 | `@IsDayjs(options)`             | Checks if given value is a [Dayjs](https://www.npmjs.com/package/dayjs) instance. |
 | `@IsMap()`                      | Checks if given value is a Map instance.                                          |

@@ -1,6 +1,6 @@
 {
     "name": "class-validator-extended",
-    "version": "0.0.1-beta",
+    "version": "0.0.2-beta",
     "description": "Additional decorator and non-decorator based validation for class-validator.",
     "main": "dist/index.js",
     "directories": {
@@ -50,7 +50,7 @@
         "typescript": "^4.2.4"
     },
     "peerDependencies": {
-        "class-validator": "^0.13.1",
-        "dayjs": "^1.10.4"
+        "class-validator": "*",
+        "dayjs": "*"
     }
 }
