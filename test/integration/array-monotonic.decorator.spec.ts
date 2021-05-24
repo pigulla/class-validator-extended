@@ -1,10 +1,10 @@
 import 'jest-extended'
 import {validateSync, ValidationError} from 'class-validator'
 
-import {IS_MONOTONIC, IsMonotonic, Monotonicity} from '../../src'
+import {ARRAY_MONOTONIC, ArrayMonotonic, Monotonicity} from '../../src'
 
 class Test {
-    @IsMonotonic<Date>({selector: item => item.valueOf(), monotonicity: Monotonicity.STRICTLY_INCREASING})
+    @ArrayMonotonic<Date>({selector: item => item.valueOf(), monotonicity: Monotonicity.STRICTLY_INCREASING})
     public readonly values: unknown
 
     public constructor(values: unknown) {
@@ -13,7 +13,11 @@ class Test {
 }
 
 class TestEach {
-    @IsMonotonic<Date>({selector: item => item.valueOf(), monotonicity: Monotonicity.STRICTLY_INCREASING, each: true})
+    @ArrayMonotonic<Date>({
+        selector: item => item.valueOf(),
+        monotonicity: Monotonicity.STRICTLY_INCREASING,
+        each: true,
+    })
     public readonly values: unknown
 
     public constructor(values: unknown) {
@@ -21,7 +25,7 @@ class TestEach {
     }
 }
 
-describe('IsMonotonic', () => {
+describe('ArrayMonotonic', () => {
     it.each<[string, unknown[]]>([
         ['an empty array', []],
         [
@@ -57,7 +61,7 @@ describe('IsMonotonic', () => {
             target: instance,
             value: instance.values,
             constraints: {
-                [IS_MONOTONIC]: 'values must be a strictly increasing array',
+                [ARRAY_MONOTONIC]: 'values must be a strictly increasing array',
             },
         })
     })
@@ -83,7 +87,7 @@ describe('IsMonotonic', () => {
             target: instance,
             value: instance.values,
             constraints: {
-                [IS_MONOTONIC]: 'each value in values must be a strictly increasing array',
+                [ARRAY_MONOTONIC]: 'each value in values must be a strictly increasing array',
             },
         })
     })

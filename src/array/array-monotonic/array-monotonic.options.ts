@@ -1,3 +1,4 @@
+export type Comparator<T> = (a: T, b: T) => number
 export type Selector<T> = (item: T) => number
 
 export enum Monotonicity {
@@ -7,7 +8,14 @@ export enum Monotonicity {
     STRICTLY_DECREASING = 'strictly decreasing',
 }
 
-export type IsMonotonicOptions<T> = {
-    selector: Selector<T>
+export type SelectorOrComparator<T> =
+    | {
+          selector: Selector<T>
+      }
+    | {
+          comparator: Comparator<T>
+      }
+
+export type ArrayMonotonicOptions<T> = SelectorOrComparator<T> & {
     monotonicity: Monotonicity
 }
