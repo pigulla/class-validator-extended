@@ -13,10 +13,8 @@
         "browser": true
     },
     "rules": {
-        "no-dupe-class-members": "off",
         "no-unused-vars": "off",
         "prefer-arrow-callback": "error",
-        "@typescript-eslint/explicit-member-accessibility": "error",
         "import/prefer-default-export": "off",
         "import/no-default-export": "error",
         "import/order": [
@@ -31,8 +29,6 @@
             }
         ],
         "unicorn/no-null": "off",
-        "unicorn/no-array-callback-reference": "off",
-        "unicorn/no-array-reduce": "off",
         "prettier/prettier": "error"
     }
 }

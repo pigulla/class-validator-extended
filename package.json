@@ -14,7 +14,7 @@
         "jest": "jest",
         "lint": "npm run lint:tsc && npm run lint:eslint && npm run lint:prettier",
         "lint:tsc": "tsc --noEmit",
-        "lint:eslint": "eslint --ext=ts .",
+        "lint:eslint": "eslint --max-warnings 0 --ext=ts .",
         "lint:prettier": "prettier --check ."
     },
     "repository": {
@@ -22,6 +22,10 @@
         "url": "git+https://github.com/pigulla/class-validator-extended.git"
     },
     "keywords": [
+        "validator",
+        "validation",
+        "decorators",
+        "typescript",
         "class-validator",
         "plugin"
     ],
