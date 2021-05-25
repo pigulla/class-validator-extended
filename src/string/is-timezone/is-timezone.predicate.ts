@@ -1,0 +1,16 @@
+export function isTimezone(value: unknown): boolean {
+    if (typeof value !== 'string') {
+        return false
+    }
+
+    try {
+        new Intl.DateTimeFormat('default', {timeZone: value})
+        return true
+    } catch (error) {
+        if (error instanceof RangeError && /Invalid time zone/.test(error.message)) {
+            return false
+        }
+
+        throw error
+    }
+}
