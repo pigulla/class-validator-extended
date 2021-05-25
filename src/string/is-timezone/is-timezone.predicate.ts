@@ -1,4 +1,4 @@
-export function isTimezone(value: unknown): boolean {
+export function isTimezone(value: unknown): value is string {
     if (typeof value !== 'string') {
         return false
     }

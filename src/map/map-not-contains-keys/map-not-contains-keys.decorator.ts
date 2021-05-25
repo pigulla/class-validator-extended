@@ -4,7 +4,7 @@ import {mapNotContainsKeys} from './map-not-contains-keys.predicate'
 
 export const MAP_NOT_CONTAINS_KEYS = 'mapNotContainsKeys'
 
-export function MapNotContainsKeys(items: unknown[], validationOptions?: ValidationOptions): PropertyDecorator {
+export function MapNotContainsKeys<T = unknown>(items: T[], validationOptions?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {
             name: MAP_NOT_CONTAINS_KEYS,

@@ -1,11 +1,11 @@
 import {buildMessage, ValidateBy, ValidationOptions} from 'class-validator'
-import type {Dayjs} from 'dayjs'
+import {ConfigType} from 'dayjs'
 
 import {minDayjs} from './min-dayjs.predicate'
 
 export const MIN_DAYJS = 'minDayjs'
 
-export function MinDayjs(min: Date | Dayjs, validationOptions?: ValidationOptions): PropertyDecorator {
+export function MinDayjs(min: ConfigType, validationOptions?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {
             name: MIN_DAYJS,

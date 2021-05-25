@@ -1,11 +1,11 @@
 import {buildMessage, ValidateBy, ValidationOptions} from 'class-validator'
-import type {Dayjs} from 'dayjs'
+import {ConfigType} from 'dayjs'
 
 import {maxDayjs} from './max-dayjs.predicate'
 
 export const MAX_DAYJS = 'maxDayjs'
 
-export function MaxDayjs(max: Date | Dayjs, validationOptions?: ValidationOptions): PropertyDecorator {
+export function MaxDayjs(max: ConfigType, validationOptions?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {
             name: MAX_DAYJS,

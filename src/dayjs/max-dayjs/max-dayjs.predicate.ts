@@ -1,13 +1,13 @@
-import dayjs, {Dayjs} from 'dayjs'
+import dayjs, {ConfigType, Dayjs} from 'dayjs'
 
 import {isDayjs} from '../is-dayjs'
 
-export function maxDayjs(value: unknown, max: Date | Dayjs): boolean {
+export function maxDayjs(value: unknown, max: ConfigType): value is Dayjs {
     const maximum = dayjs(max)
 
     if (!maximum.isValid()) {
-        throw new TypeError(`Parameter must be a valid Date or Dayjs instance`)
+        throw new TypeError(`Parameter must be a valid date`)
     }
 
-    return isDayjs(value, {is_valid: true}) && value.isAfter(maximum)
+    return isDayjs(value, {is_valid: true}) && value.isBefore(maximum)
 }

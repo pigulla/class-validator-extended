@@ -15,7 +15,7 @@ export function MapUniqueKey<T = unknown, P = unknown>(
             validator: {
                 validate: (value, _arguments): boolean => mapUniqueKey(value, selector),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}All $property's keys must be unique`,
+                    eachPrefix => `${eachPrefix}all $property's keys must be unique`,
                     validationOptions
                 ),
             },

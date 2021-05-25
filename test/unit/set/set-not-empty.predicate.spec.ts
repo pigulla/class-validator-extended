@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import {setNotEmpty} from '../../src'
+import {setNotEmpty} from '../../../src'
 
 describe('setNotEmpty', () => {
     it.each([[new Set([42])], [new Set(['bar', 'baz'])]])('should be true for %p', value => {

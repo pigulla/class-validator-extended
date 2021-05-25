@@ -4,7 +4,7 @@ import {mapContainsKeys} from './map-contains-keys.predicate'
 
 export const MAP_CONTAINS_KEYS = 'mapContainsKeys'
 
-export function MapContainsKeys(items: unknown[], validationOptions?: ValidationOptions): PropertyDecorator {
+export function MapContainsKeys<T = unknown>(items: T[], validationOptions?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {
             name: MAP_CONTAINS_KEYS,

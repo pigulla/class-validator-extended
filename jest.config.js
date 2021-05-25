@@ -4,8 +4,8 @@ module.exports = {
     preset: 'ts-jest',
     testEnvironment: 'node',
     collectCoverage: true,
-    collectCoverageFrom: ['src/**/*.ts'],
     coverageReporters: ['clover', 'text'],
+    coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/src/(.+/)*index.ts'],
     coverageThreshold: {
         global: {
             branches: 100,
@@ -14,6 +14,7 @@ module.exports = {
             statements: 0,
         },
     },
+    setupFiles: ['jest-date-mock'],
     setupFilesAfterEnv: ['jest-extended'],
     transform: {
         '^.+\\.ts$': 'ts-jest',

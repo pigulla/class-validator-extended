@@ -1,4 +1,4 @@
-export function mapNotContains(value: unknown, items: unknown[]): boolean {
+export function mapNotContains(value: unknown, items: unknown[]): value is Map<unknown, unknown> {
     if (!(value instanceof Map)) {
         return false
     }

@@ -1,6 +1,6 @@
 import {Selector} from './set-unique.options'
 
-export function setUnique<T, P>(value: unknown, selector: Selector<T, P>): boolean {
+export function setUnique<T, P>(value: unknown, selector: Selector<T, P>): value is Set<unknown> {
     if (!(value instanceof Set)) {
         return false
     }

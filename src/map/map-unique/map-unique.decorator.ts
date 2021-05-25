@@ -5,7 +5,7 @@ import {mapUnique} from './map-unique.predicate'
 
 export const MAP_UNIQUE = 'mapUnique'
 
-export function MapUnique<T = unknown, P = unknown>(
+export function MapUnique<T = unknown, P = T>(
     selector: Selector<T, P>,
     validationOptions?: ValidationOptions
 ): PropertyDecorator {
@@ -15,7 +15,7 @@ export function MapUnique<T = unknown, P = unknown>(
             validator: {
                 validate: (value, _arguments): boolean => mapUnique(value, selector),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}All $property's values must be unique`,
+                    eachPrefix => `${eachPrefix}all $property's values must be unique`,
                     validationOptions
                 ),
             },

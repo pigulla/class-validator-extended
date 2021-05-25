@@ -29,6 +29,12 @@
             }
         ],
         "unicorn/no-null": "off",
+        "unicorn/numeric-separators-style": ["error", {
+            "number": {
+                "minimumDigits": 4,
+                "groupLength": 3
+            }
+        }],
         "prettier/prettier": "error"
     }
 }

@@ -1,5 +1,5 @@
 import 'jest-extended'
-import {arrayMonotonic, Monotonicity} from '../../src'
+import {arrayMonotonic, Monotonicity} from '../../../src'
 
 const identity = <T = unknown>(x: T): T => x
 const direct_comparator = <T extends number>(a: T, b: T): number => a - b

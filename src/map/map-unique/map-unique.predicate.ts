@@ -1,6 +1,6 @@
 import {Selector} from './map-unique.options'
 
-export function mapUnique<T, P>(value: unknown, selector: Selector<T, P>): boolean {
+export function mapUnique<T, P>(value: unknown, selector: Selector<T, P>): value is Map<unknown, unknown> {
     if (!(value instanceof Map)) {
         return false
     }

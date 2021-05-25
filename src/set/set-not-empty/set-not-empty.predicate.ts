@@ -1,3 +1,3 @@
-export function setNotEmpty(set: unknown): boolean {
-    return set instanceof Set && set.size > 0
+export function setNotEmpty(value: unknown): value is Set<unknown> {
+    return value instanceof Set && value.size > 0
 }

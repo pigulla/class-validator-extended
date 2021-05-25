@@ -11,7 +11,7 @@ export function MaxBigInt(maxValue: number | BigInt, validationOptions?: Validat
             validator: {
                 validate: (value, _arguments): boolean => maxBigInt(value, maxValue),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must not be less than $constraint1`,
+                    eachPrefix => `${eachPrefix}$property must not be more than $constraint1`,
                     validationOptions
                 ),
             },

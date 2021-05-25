@@ -1,7 +1,7 @@
 import 'jest-extended'
 import dayjs, {Dayjs} from 'dayjs'
 
-import {isDayjs} from '../../src'
+import {isDayjs} from '../../../src'
 
 describe('isDayjs', () => {
     describe('when is_valid is set', () => {
