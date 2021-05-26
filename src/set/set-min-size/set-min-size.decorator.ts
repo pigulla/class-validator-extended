@@ -11,7 +11,7 @@ export function SetMinSize(min: number, validationOptions?: ValidationOptions): 
             validator: {
                 validate: (value, _arguments): boolean => setMinSize(value, min),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must contain not more than $constraint1 elements`,
+                    eachPrefix => `${eachPrefix}$property must contain at least $constraint1 elements`,
                     validationOptions
                 ),
             },

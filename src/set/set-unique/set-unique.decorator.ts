@@ -15,7 +15,7 @@ export function SetUnique<T = unknown, P = unknown>(
             validator: {
                 validate: (value, _arguments): boolean => setUnique(value, selector),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}all $property's keys must be unique`,
+                    eachPrefix => `${eachPrefix}all $property's values must be unique`,
                     validationOptions
                 ),
             },
