@@ -1,7 +1,13 @@
+import {isSet} from '../is-set'
+
 import {Selector} from './set-unique.options'
 
 export function setUnique<T, P>(value: unknown, selector: Selector<T, P>): value is Set<unknown> {
-    if (!(value instanceof Set)) {
+    if (typeof selector !== 'function') {
+        throw new TypeError('Parameter "selector" must be a function')
+    }
+
+    if (!isSet(value)) {
         return false
     }
 

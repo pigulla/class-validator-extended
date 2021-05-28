@@ -1,5 +1,7 @@
-export function mapNotContains(value: unknown, items: unknown[]): value is Map<unknown, unknown> {
-    if (!(value instanceof Map)) {
+import {isMap} from '../is-map'
+
+export function mapNotContains(value: unknown, items: Iterable<unknown>): value is Map<unknown, unknown> {
+    if (!isMap(value)) {
         return false
     }
 

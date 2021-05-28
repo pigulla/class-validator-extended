@@ -1,3 +1,5 @@
+import {isMap} from '../is-map'
+
 export function mapNotEmpty(value: unknown): value is Map<unknown, unknown> {
-    return value instanceof Map && value.size > 0
+    return isMap(value) && value.size > 0
 }

@@ -6,8 +6,8 @@ export function minDayjs(value: unknown, min: ConfigType): value is Dayjs {
     const minimum = dayjs(min)
 
     if (!minimum.isValid()) {
-        throw new TypeError(`Parameter must be a valid date`)
+        throw new TypeError(`Parameter "min" must be a valid date`)
     }
 
-    return isDayjs(value, {is_valid: true}) && value.isAfter(minimum)
+    return isDayjs(value, {is_valid: true}) && !minimum.isAfter(value)
 }

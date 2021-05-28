@@ -1,3 +1,9 @@
+import {isBigInt} from '../is-bigint'
+
 export function maxBigInt(value: unknown, maxValue: number | BigInt): value is BigInt {
-    return typeof value === 'bigint' && value <= maxValue
+    if (!(typeof maxValue === 'bigint' || (typeof maxValue === 'number' && Number.isFinite(maxValue)))) {
+        throw new TypeError('Parameter "maxValue" must be a finite number')
+    }
+
+    return isBigInt(value) && value <= BigInt(maxValue)
 }
