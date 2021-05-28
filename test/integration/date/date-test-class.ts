@@ -15,9 +15,7 @@ export class DateTestClass {
 
     constructor(fields: Partial<DateTestClass> = {}) {
         for (const [k, v] of Object.entries(fields)) {
-            if (Object.prototype.hasOwnProperty.call(this, k)) {
-                this[k as keyof DateTestClass] = v
-            }
+            this[k as keyof DateTestClass] = v
         }
     }
 }

@@ -1,15 +1,11 @@
 import 'jest-extended'
 
 import {ARRAY_MONOTONIC} from '../../../src'
-import {expectNoValidationErrors, expectValidationError} from '../../util'
+import {expectValidationError} from '../../util'
 
 import {ArrayTestClass} from './array-test-class'
 
 describe('ArrayMonotonic', () => {
-    it('should validate a valid object', () => {
-        expectNoValidationErrors(new ArrayTestClass())
-    })
-
     it('strictlyIncreasingSelector should fail validation', () => {
         expectValidationError(new ArrayTestClass({strictlyIncreasingSelector: null}), {
             constraint: ARRAY_MONOTONIC,

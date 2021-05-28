@@ -176,9 +176,7 @@ export class MapTestClass {
 
     constructor(fields: Partial<MapTestClass> = {}) {
         for (const [k, v] of Object.entries(fields)) {
-            if (Object.prototype.hasOwnProperty.call(this, k)) {
-                this[k as keyof MapTestClass] = v
-            }
+            this[k as keyof MapTestClass] = v
         }
     }
 }

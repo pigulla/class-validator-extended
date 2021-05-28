@@ -1,4 +1,4 @@
-import {ArrayMonotonic, Monotonicity} from '../../../src'
+import {ArrayContainsAnyOf, ArrayMonotonic, Monotonicity} from '../../../src'
 
 export class ArrayTestClass {
     @ArrayMonotonic<number>({selector: n => n, monotonicity: Monotonicity.STRICTLY_INCREASING})
@@ -17,11 +17,18 @@ export class ArrayTestClass {
         [],
     ]
 
+    @ArrayContainsAnyOf([1, 2, 3])
+    arrayContainsAnyOf: unknown = [1, 5, 10]
+
+    @ArrayContainsAnyOf(['a', 'b', 'c'], {count: 2})
+    arrayContainsAnyTwoOf: unknown = ['a', 'c', 'e']
+
+    @ArrayContainsAnyOf([1, 2, 3], {each: true})
+    eachArrayContainsAnyOf: unknown = new Set([[1, 5, 10]])
+
     constructor(fields: Partial<ArrayTestClass> = {}) {
         for (const [k, v] of Object.entries(fields)) {
-            if (v !== undefined && Object.prototype.hasOwnProperty.call(this, k)) {
-                this[k as keyof ArrayTestClass] = v
-            }
+            this[k as keyof ArrayTestClass] = v
         }
     }
 }
