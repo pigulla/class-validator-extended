@@ -1,13 +1,19 @@
-import dayjs, {ConfigType, Dayjs} from 'dayjs'
+import dayjs, { ConfigType, Dayjs } from 'dayjs'
 
-import {isDayjs} from '../is-dayjs'
+import { isDayjs } from '../is-dayjs'
 
-export function minDayjs(value: unknown, min: ConfigType): value is Dayjs {
-    const minimum = dayjs(min)
+/**
+ * @category Predicates
+ * @param value The value to validate.
+ * @param minimum The minimum allowed value.
+ */
+export function minDayjs(value: unknown, minimum: ConfigType): value is Dayjs {
+    const min = dayjs(minimum)
 
-    if (!minimum.isValid()) {
-        throw new TypeError(`Parameter "min" must be a valid date`)
+    if (!min.isValid()) {
+        throw new TypeError(`Parameter "minimum" must be a valid date`)
     }
 
-    return isDayjs(value, {is_valid: true}) && !minimum.isAfter(value)
+    // Let's not rely on the isSameOrBefore-plugin which might or might not be registered.
+    return isDayjs(value, { is_valid: true }) && !(min.isAfter(value) || min.isSame(value))
 }

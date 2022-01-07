@@ -1,8 +1,8 @@
 import 'jest-extended'
-import {arrayMonotonic, Monotonicity} from '../../../src'
+import { arrayMonotonic, ArrayMonotonicityComparator, ArrayMonotonicityProjection, Monotonicity } from '~'
 
-const identity = <T = unknown>(x: T): T => x
-const direct_comparator = <T extends number>(a: T, b: T): number => a - b
+const identity: ArrayMonotonicityProjection<number> = (x: number): number => x
+const direct_comparator: ArrayMonotonicityComparator<number> = (a: number, b: number): number => a - b
 
 describe('arrayMonotonic', () => {
     describe.each<[number[], Monotonicity]>([
@@ -25,11 +25,11 @@ describe('arrayMonotonic', () => {
         [[5, 4, 3, 3, 3, 2, 1], Monotonicity.WEAKLY_DECREASING],
     ])('should be true for %p that is %s', (values, monotonicity) => {
         it('when compared using a selector', () => {
-            expect(arrayMonotonic(values, {selector: identity, monotonicity})).toBeTrue()
+            expect(arrayMonotonic(values, { projection: identity, monotonicity })).toBeTrue()
         })
 
         it('when compared using a comparator', () => {
-            expect(arrayMonotonic(values, {comparator: direct_comparator, monotonicity})).toBeTrue()
+            expect(arrayMonotonic(values, { comparator: direct_comparator, monotonicity })).toBeTrue()
         })
     })
 
@@ -45,33 +45,33 @@ describe('arrayMonotonic', () => {
         [[3, 2, 1, 2], Monotonicity.WEAKLY_DECREASING],
     ])('should be false for %p that is %s', (values, monotonicity) => {
         it('when compared using a selector', () => {
-            expect(arrayMonotonic(values, {selector: identity, monotonicity})).toBeFalse()
+            expect(arrayMonotonic<number>(values, { projection: identity, monotonicity })).toBeFalse()
         })
 
         it('when compared using a comparator', () => {
-            expect(arrayMonotonic(values, {comparator: direct_comparator, monotonicity})).toBeFalse()
+            expect(arrayMonotonic(values, { comparator: direct_comparator, monotonicity })).toBeFalse()
         })
     })
 
     it('should detect invalid options', () => {
-        expect(() => arrayMonotonic<number>([], {selector: identity, monotonicity: 'foo' as Monotonicity})).toThrow(
+        expect(() => arrayMonotonic<number>([], { projection: identity, monotonicity: 'foo' as Monotonicity })).toThrow(
             TypeError
         )
     })
 
     it('should use the given selector function', () => {
-        type Item = {getValue: () => number}
+        type Item = { getValue: () => number }
 
         const values: Item[] = [
-            {getValue: jest.fn().mockReturnValue(0)},
-            {getValue: jest.fn().mockReturnValue(13)},
-            {getValue: jest.fn().mockReturnValue(42)},
-            {getValue: jest.fn().mockReturnValue(99)},
+            { getValue: jest.fn().mockReturnValue(0) },
+            { getValue: jest.fn().mockReturnValue(13) },
+            { getValue: jest.fn().mockReturnValue(42) },
+            { getValue: jest.fn().mockReturnValue(99) },
         ]
 
         expect(
             arrayMonotonic<Item>(values, {
-                selector: value => value.getValue(),
+                projection: value => value.getValue(),
                 monotonicity: Monotonicity.STRICTLY_INCREASING,
             })
         ).toBeTrue()

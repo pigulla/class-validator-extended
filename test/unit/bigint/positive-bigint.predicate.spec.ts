@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import {positiveBigInt} from '../../../src'
+import { positiveBigInt } from '~'
 
 describe('positiveBigInt', () => {
     it.each<[unknown]>([[BigInt(1)], [BigInt('10000')], [BigInt('100000000000')]])('should be true for %p', value => {

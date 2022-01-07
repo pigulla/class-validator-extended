@@ -1,9 +1,13 @@
-import {buildMessage, ValidateBy, ValidationOptions} from 'class-validator'
+import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator'
 
-import {isSet} from './is-set.predicate'
+import { isSet } from './is-set.predicate'
 
+/** @hidden */
 export const IS_SET = 'isSet'
 
+/**
+ * @category Set
+ */
 export function IsSet(validationOptions?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {

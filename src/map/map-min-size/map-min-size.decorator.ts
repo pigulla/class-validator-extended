@@ -1,15 +1,19 @@
-import {buildMessage, ValidateBy, ValidationOptions} from 'class-validator'
+import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator'
 
-import {mapMinSize} from './map-min-size.predicate'
+import { mapMinSize } from './map-min-size.predicate'
 
+/** @hidden */
 export const MAP_MIN_SIZE = 'mapMinSize'
 
-export function MapMinSize(min: number, validationOptions?: ValidationOptions): PropertyDecorator {
+/**
+ * @category Map
+ */
+export function MapMinSize(minimum: number, validationOptions?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {
             name: MAP_MIN_SIZE,
             validator: {
-                validate: (value, _arguments): boolean => mapMinSize(value, min),
+                validate: (value, _arguments): boolean => mapMinSize(value, minimum),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must contain at least $constraint1 elements`,
                     validationOptions

@@ -1,13 +1,13 @@
-import {ArrayContainsAnyOf, ArrayMonotonic, Monotonicity} from '../../../src'
+import { ArrayMonotonic, Monotonicity } from '~'
 
 export class ArrayTestClass {
-    @ArrayMonotonic<number>({selector: n => n, monotonicity: Monotonicity.STRICTLY_INCREASING})
+    @ArrayMonotonic<number>({ projection: n => n, monotonicity: Monotonicity.STRICTLY_INCREASING })
     strictlyIncreasingSelector: unknown = [1, 2, 3, 4, 5]
 
-    @ArrayMonotonic<number>({comparator: (a, b) => a - b, monotonicity: Monotonicity.WEAKLY_INCREASING})
+    @ArrayMonotonic<number>({ comparator: (a, b) => a - b, monotonicity: Monotonicity.WEAKLY_INCREASING })
     weaklyIncreasingComparator: unknown = [1, 1, 2, 3, 5]
 
-    @ArrayMonotonic<Date>({selector: v => v.valueOf(), monotonicity: Monotonicity.STRICTLY_DECREASING, each: true})
+    @ArrayMonotonic<Date>({ projection: v => v.valueOf(), monotonicity: Monotonicity.STRICTLY_DECREASING, each: true })
     eachStrictlyDecreasingSelector: unknown = [
         [
             new Date('2021-05-19T08:00:00.000Z'),
@@ -16,15 +16,6 @@ export class ArrayTestClass {
         ],
         [],
     ]
-
-    @ArrayContainsAnyOf([1, 2, 3])
-    arrayContainsAnyOf: unknown = [1, 5, 10]
-
-    @ArrayContainsAnyOf(['a', 'b', 'c'], {count: 2})
-    arrayContainsAnyTwoOf: unknown = ['a', 'c', 'e']
-
-    @ArrayContainsAnyOf([1, 2, 3], {each: true})
-    eachArrayContainsAnyOf: unknown = new Set([[1, 5, 10]])
 
     constructor(fields: Partial<ArrayTestClass> = {}) {
         for (const [k, v] of Object.entries(fields)) {

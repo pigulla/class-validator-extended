@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import {setContains} from '../../../src'
+import { setContains } from '~'
 
 describe('setContains', () => {
     let set: Set<unknown>

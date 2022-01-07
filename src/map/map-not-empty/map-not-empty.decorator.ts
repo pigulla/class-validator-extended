@@ -1,9 +1,13 @@
-import {buildMessage, ValidateBy, ValidationOptions} from 'class-validator'
+import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator'
 
-import {mapNotEmpty} from './map-not-empty.predicate'
+import { mapNotEmpty } from './map-not-empty.predicate'
 
+/** @hidden */
 export const MAP_NOT_EMPTY = 'mapNotEmpty'
 
+/**
+ * @category Map
+ */
 export function MapNotEmpty(validationOptions?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {

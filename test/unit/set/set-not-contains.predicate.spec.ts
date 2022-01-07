@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import {setNotContains} from '../../../src'
+import { setNotContains } from '~'
 
 describe('setNotContains', () => {
     let set: Set<unknown>

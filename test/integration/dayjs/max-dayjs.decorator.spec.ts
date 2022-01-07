@@ -1,17 +1,18 @@
 import 'jest-extended'
 import dayjs from 'dayjs'
 
-import {MAX_DAYJS} from '../../../src'
-import {expectValidationError} from '../../util'
+import { expectValidationError } from '../../util'
 
-import {DayjsTestClass} from './dayjs-test-class'
+import { DayjsTestClass } from './dayjs-test-class'
+
+import { MAX_DAYJS } from '~'
 
 describe('MaxDayjs', () => {
     describe('maxDayjs', () => {
         it.each<[unknown]>([[null], [undefined], [42], [dayjs('2021-01-02T00:00:00.000Z')]])(
             'should fail validation for %p',
             value => {
-                expectValidationError(new DayjsTestClass({maxDayjs: value}), {
+                expectValidationError(new DayjsTestClass({ maxDayjs: value }), {
                     property: 'maxDayjs',
                     constraint: MAX_DAYJS,
                     message: 'maximal allowed date for maxDayjs is $constraint1',
@@ -26,7 +27,7 @@ describe('MaxDayjs', () => {
             [[undefined]],
             [[dayjs('2021-01-02T00:00:00.000Z')]],
         ])('should fail validation for %p', value => {
-            expectValidationError(new DayjsTestClass({eachMaxDayjs: value}), {
+            expectValidationError(new DayjsTestClass({ eachMaxDayjs: value }), {
                 property: 'eachMaxDayjs',
                 constraint: MAX_DAYJS,
                 message: 'maximal allowed date for each value in eachMaxDayjs is $constraint1',

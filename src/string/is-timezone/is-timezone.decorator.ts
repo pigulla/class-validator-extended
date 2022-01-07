@@ -1,10 +1,27 @@
-import {buildMessage, ValidateBy, ValidationOptions} from 'class-validator'
+import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator'
 
-import {isTimezone} from './is-timezone.predicate'
+import { isTimezone } from './is-timezone.predicate'
 
+/** @hidden */
 export const IS_TIMEZONE = 'isTimezone'
 
-export function IsTimezone(validationOptions?: ValidationOptions): PropertyDecorator {
+/**
+ * Checks if the given value is a valid timezone string.
+ *
+ * Uses [Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) internally for
+ * validation.
+ *
+ * #### Example
+ * ```typescript
+ * // Ensure the value is in the future.
+ * @IsTimezone()
+ * timezone: string
+ * ```
+ *
+ * @category String
+ * @param options Generic class-validator options.
+ */
+export function IsTimezone(options?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {
             name: IS_TIMEZONE,
@@ -12,10 +29,10 @@ export function IsTimezone(validationOptions?: ValidationOptions): PropertyDecor
                 validate: (value, _arguments): boolean => isTimezone(value),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be a valid timezone string`,
-                    validationOptions
+                    options
                 ),
             },
         },
-        validationOptions
+        options
     )
 }

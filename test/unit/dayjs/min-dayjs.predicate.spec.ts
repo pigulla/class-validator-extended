@@ -1,9 +1,9 @@
 import 'jest-extended'
 
 import dayjs = require('dayjs')
-import {Dayjs} from 'dayjs'
+import { Dayjs } from 'dayjs'
 
-import {minDayjs} from '../../../src'
+import { minDayjs } from '~'
 
 describe('minDayjs', () => {
     const min = dayjs('2020-05-01T06:00:00.000Z')
@@ -15,11 +15,11 @@ describe('minDayjs', () => {
         }
     )
 
-    it.each<[unknown]>([[min.add(1, 'millisecond')], [min]])('should be true for %p', value => {
+    it.each<[unknown]>([[min.add(1, 'millisecond')]])('should be true for %p', value => {
         expect(minDayjs(value, min)).toBeTrue()
     })
 
-    it.each<[unknown]>([[undefined], [null], [min.subtract(1, 'minute')], [min.toDate()]])(
+    it.each<[unknown]>([[undefined], [null], [min], [min.subtract(1, 'minute')], [min.toDate()]])(
         'should be false for %p',
         value => {
             expect(minDayjs(value, min)).toBeFalse()

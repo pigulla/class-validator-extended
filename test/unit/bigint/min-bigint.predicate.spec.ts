@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import {minBigInt} from '../../../src'
+import { minBigInt } from '~'
 
 describe('minBigInt', () => {
     it.each<[unknown]>([[Number.POSITIVE_INFINITY], [Number.NaN], [null], ['']])(

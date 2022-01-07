@@ -1,9 +1,10 @@
 import 'jest-extended'
 
-import {MAP_CONTAINS_KEYS} from '../../../src'
-import {expectValidationError} from '../../util'
+import { expectValidationError } from '../../util'
 
-import {MapTestClass} from './map-test-class'
+import { MapTestClass } from './map-test-class'
+
+import { MAP_CONTAINS_KEYS } from '~'
 
 describe('MapContainsKeys', () => {
     describe('mapContainsKeys', () => {
@@ -19,7 +20,7 @@ describe('MapContainsKeys', () => {
                 ]),
             ],
         ])('should fail validation for %p', value => {
-            expectValidationError(new MapTestClass({mapContainsKeys: value}), {
+            expectValidationError(new MapTestClass({ mapContainsKeys: value }), {
                 property: 'mapContainsKeys',
                 constraint: MAP_CONTAINS_KEYS,
                 message: 'mapContainsKeys must contain $constraint1 keys',
@@ -46,7 +47,7 @@ describe('MapContainsKeys', () => {
                 ],
             ],
         ])('should fail validation for %p', value => {
-            expectValidationError(new MapTestClass({eachMapContainsKeys: value}), {
+            expectValidationError(new MapTestClass({ eachMapContainsKeys: value }), {
                 property: 'eachMapContainsKeys',
                 constraint: MAP_CONTAINS_KEYS,
                 message: 'each value in eachMapContainsKeys must contain $constraint1 keys',

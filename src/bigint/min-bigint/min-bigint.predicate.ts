@@ -1,9 +1,14 @@
-import {isBigInt} from '../is-bigint'
+import { isBigInt } from '../is-bigint'
 
-export function minBigInt(value: unknown, minValue: number | BigInt): value is BigInt {
-    if (!(typeof minValue === 'bigint' || (typeof minValue === 'number' && Number.isFinite(minValue)))) {
-        throw new TypeError('Parameter "minValue" must be a finite number')
+/**
+ * @category Predicates
+ * @param value The value to validate.
+ * @param minimum The minimum allowed value.
+ */
+export function minBigInt(value: unknown, minimum: number | BigInt): value is BigInt {
+    if (!(typeof minimum === 'bigint' || (typeof minimum === 'number' && Number.isFinite(minimum)))) {
+        throw new TypeError('Parameter "minimum" must be a finite number')
     }
 
-    return isBigInt(value) && value >= BigInt(minValue)
+    return isBigInt(value) && value >= BigInt(minimum)
 }

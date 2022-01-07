@@ -1,13 +1,19 @@
-import dayjs, {ConfigType, Dayjs} from 'dayjs'
+import dayjs, { ConfigType, Dayjs } from 'dayjs'
 
-import {isDayjs} from '../is-dayjs'
+import { isDayjs } from '../is-dayjs'
 
-export function maxDayjs(value: unknown, max: ConfigType): value is Dayjs {
-    const maximum = dayjs(max)
+/**
+ * @category Predicates
+ * @param value The value to validate.
+ * @param maximum The maximum allowed value.
+ */
+export function maxDayjs(value: unknown, maximum: ConfigType): value is Dayjs {
+    const max = dayjs(maximum)
 
-    if (!maximum.isValid()) {
-        throw new TypeError(`Parameter "max" must be a valid date`)
+    if (!max.isValid()) {
+        throw new TypeError(`Parameter "maximum" must be a valid date`)
     }
 
-    return isDayjs(value, {is_valid: true}) && !maximum.isBefore(value)
+    // Let's not rely on the isSameOrBefore-plugin which might or might not be registered.
+    return isDayjs(value, { is_valid: true }) && !(max.isBefore(value) || max.isSame(value))
 }

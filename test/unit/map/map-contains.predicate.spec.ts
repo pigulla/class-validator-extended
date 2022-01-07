@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import {mapContains} from '../../../src'
+import { mapContains } from '~'
 
 describe('mapContains', () => {
     it.each<[unknown, Iterable<unknown>]>([

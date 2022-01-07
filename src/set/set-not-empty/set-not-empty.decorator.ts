@@ -1,9 +1,13 @@
-import {buildMessage, ValidateBy, ValidationOptions} from 'class-validator'
+import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator'
 
-import {setNotEmpty} from './set-not-empty.predicate'
+import { setNotEmpty } from './set-not-empty.predicate'
 
+/** @hidden */
 export const SET_NOT_EMPTY = 'setNotEmpty'
 
+/**
+ * @category Set
+ */
 export function SetNotEmpty(validationOptions?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {

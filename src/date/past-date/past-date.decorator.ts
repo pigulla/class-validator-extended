@@ -1,10 +1,26 @@
-import {buildMessage, ValidateBy, ValidationOptions} from 'class-validator'
+import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator'
 
-import {pastDate} from './past-date.predicate'
+import { pastDate } from './past-date.predicate'
 
+/** @hidden */
 export const PAST_DATE = 'pastDate'
 
-export function PastDate(validationOptions?: ValidationOptions): PropertyDecorator {
+/**
+ * Checks if the given value is a Date object in the past.
+ *
+ * Beware that the behaviour of this check depends on the current time and can thus be difficult to test.
+ *
+ * #### Example
+ * ```typescript
+ * // Ensure the value is in the past.
+ * @PastDate()
+ * created: Date
+ * ```
+ *
+ * @category Date
+ * @param options Generic class-validator options.
+ */
+export function PastDate(options?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {
             name: PAST_DATE,
@@ -12,10 +28,10 @@ export function PastDate(validationOptions?: ValidationOptions): PropertyDecorat
                 validate: (value, _arguments): boolean => pastDate(value),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be a Date instance in the past`,
-                    validationOptions
+                    options
                 ),
             },
         },
-        validationOptions
+        options
     )
 }

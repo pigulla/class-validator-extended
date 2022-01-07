@@ -1,9 +1,14 @@
-import {isBigInt} from '../is-bigint'
+import { isBigInt } from '../is-bigint'
 
-export function maxBigInt(value: unknown, maxValue: number | BigInt): value is BigInt {
-    if (!(typeof maxValue === 'bigint' || (typeof maxValue === 'number' && Number.isFinite(maxValue)))) {
-        throw new TypeError('Parameter "maxValue" must be a finite number')
+/**
+ * @category Predicates
+ * @param value The value to validate.
+ * @param maximum The maximum allowed value.
+ */
+export function maxBigInt(value: unknown, maximum: number | BigInt): value is BigInt {
+    if (!(typeof maximum === 'bigint' || (typeof maximum === 'number' && Number.isFinite(maximum)))) {
+        throw new TypeError('Parameter "maximum" must be a finite number')
     }
 
-    return isBigInt(value) && value <= BigInt(maxValue)
+    return isBigInt(value) && value <= BigInt(maximum)
 }

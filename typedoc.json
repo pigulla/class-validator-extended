@@ -1,0 +1,8 @@
+{
+    "entryPoints": ["src/index.ts"],
+    "out": "docs",
+    "treatWarningsAsErrors": true,
+    "includeVersion": true,
+    "categorizeByGroup": false,
+    "categoryOrder": ["Array", "BigInt", "Date", "Dayjs", "Map", "Set", "String", "Predicates", "Types", "*"]
+}

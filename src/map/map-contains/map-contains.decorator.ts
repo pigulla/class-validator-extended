@@ -1,9 +1,13 @@
-import {buildMessage, ValidateBy, ValidationOptions} from 'class-validator'
+import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator'
 
-import {mapContains} from './map-contains.predicate'
+import { mapContains } from './map-contains.predicate'
 
+/** @hidden */
 export const MAP_CONTAINS = 'mapContains'
 
+/**
+ * @category Map
+ */
 export function MapContains<T = unknown>(items: T[], validationOptions?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {

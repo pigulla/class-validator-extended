@@ -2,10 +2,11 @@ import 'jest-extended'
 
 import dayjs = require('dayjs')
 
-import {SET_UNIQUE} from '../../../src'
-import {expectValidationError} from '../../util'
+import { expectValidationError } from '../../util'
 
-import {SetTestClass} from './set-test-class'
+import { SetTestClass } from './set-test-class'
+
+import { SET_UNIQUE } from '~'
 
 describe('SetUnique', () => {
     describe('setUnique', () => {
@@ -21,7 +22,7 @@ describe('SetUnique', () => {
                 ]),
             ],
         ])('should fail validation for %p', value => {
-            expectValidationError(new SetTestClass({setUnique: value}), {
+            expectValidationError(new SetTestClass({ setUnique: value }), {
                 property: 'setUnique',
                 constraint: SET_UNIQUE,
                 message: `all setUnique's values must be unique`,
@@ -44,7 +45,7 @@ describe('SetUnique', () => {
                 ],
             ],
         ])('should fail validation for %p', value => {
-            expectValidationError(new SetTestClass({eachSetUnique: value}), {
+            expectValidationError(new SetTestClass({ eachSetUnique: value }), {
                 property: 'eachSetUnique',
                 constraint: SET_UNIQUE,
                 message: `each value in all eachSetUnique's values must be unique`,

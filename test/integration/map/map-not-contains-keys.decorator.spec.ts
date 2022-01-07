@@ -1,16 +1,17 @@
 import 'jest-extended'
 
-import {MAP_NOT_CONTAINS_KEYS} from '../../../src'
-import {expectValidationError} from '../../util'
+import { expectValidationError } from '../../util'
 
-import {MapTestClass} from './map-test-class'
+import { MapTestClass } from './map-test-class'
+
+import { MAP_NOT_CONTAINS_KEYS } from '~'
 
 describe('MapNotContainsKeys', () => {
     describe('mapNotContainsKeys', () => {
         it.each<[unknown]>([[null], [undefined], [new Set()], [new Map([['bam', 1]])]])(
             'should fail validation for %p',
             value => {
-                expectValidationError(new MapTestClass({mapNotContainsKeys: value}), {
+                expectValidationError(new MapTestClass({ mapNotContainsKeys: value }), {
                     property: 'mapNotContainsKeys',
                     constraint: MAP_NOT_CONTAINS_KEYS,
                     message: 'mapNotContainsKeys should not contain $constraint1 keys',
@@ -35,7 +36,7 @@ describe('MapNotContainsKeys', () => {
             ],
             [[new Map([[0, 1]]), new Map()]],
         ])('should fail validation for %p', value => {
-            expectValidationError(new MapTestClass({eachMapNotContainsKeys: value}), {
+            expectValidationError(new MapTestClass({ eachMapNotContainsKeys: value }), {
                 property: 'eachMapNotContainsKeys',
                 constraint: MAP_NOT_CONTAINS_KEYS,
                 message: 'each value in eachMapNotContainsKeys should not contain $constraint1 keys',

@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import {isTimezone} from '../../../src'
+import { isTimezone } from '~'
 
 import SpyInstance = jest.SpyInstance
 

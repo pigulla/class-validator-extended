@@ -1,4 +1,4 @@
-import {Dayjs} from 'dayjs'
+import { Dayjs } from 'dayjs'
 import dayjs = require('dayjs')
 
 import {
@@ -12,13 +12,13 @@ import {
     MapNotEmpty,
     MapUnique,
     MapUniqueKey,
-} from '../../../src'
+} from '~'
 
 export class MapTestClass {
     @IsMap()
     isMap: unknown = new Map()
 
-    @IsMap({each: true})
+    @IsMap({ each: true })
     eachIsMap: unknown = [new Map(), new Map()]
 
     @MapContains([42])
@@ -27,7 +27,7 @@ export class MapTestClass {
         ['bar', 42],
     ])
 
-    @MapContains([42], {each: true})
+    @MapContains([42], { each: true })
     eachMapContains: unknown = [
         new Map([
             ['foo', 13],
@@ -45,7 +45,7 @@ export class MapTestClass {
         ['bar', 42],
     ])
 
-    @MapContainsKeys(['foo', 'bar'], {each: true})
+    @MapContainsKeys(['foo', 'bar'], { each: true })
     eachMapContainsKeys: unknown = [
         new Map([
             ['foo', 13],
@@ -65,7 +65,7 @@ export class MapTestClass {
         [3, 'three'],
     ])
 
-    @MapMaxSize(3, {each: true})
+    @MapMaxSize(3, { each: true })
     eachMapMaxSize: unknown = [
         new Map([]),
         new Map([
@@ -81,7 +81,7 @@ export class MapTestClass {
         [false, 'lie'],
     ])
 
-    @MapMinSize(2, {each: true})
+    @MapMinSize(2, { each: true })
     eachMapMinSize: unknown = [
         new Map([
             [{}, 'uno'],
@@ -100,7 +100,7 @@ export class MapTestClass {
         ['bar', 42],
     ])
 
-    @MapNotContains(['foo', 1], {each: true})
+    @MapNotContains(['foo', 1], { each: true })
     eachMapNotContains: unknown = [
         new Map([
             ['foo', 13],
@@ -118,7 +118,7 @@ export class MapTestClass {
         ['bar', 42],
     ])
 
-    @MapNotContainsKeys([0, 13], {each: true})
+    @MapNotContainsKeys([0, 13], { each: true })
     eachMapNotContainsKeys: unknown = [
         new Map([
             ['foo', 13],
@@ -133,7 +133,7 @@ export class MapTestClass {
     @MapNotEmpty()
     mapNotEmpty: unknown = new Map([['foo', 42]])
 
-    @MapNotEmpty({each: true})
+    @MapNotEmpty({ each: true })
     eachMapNotEmpty: unknown = [
         new Map([
             ['foo', 42],
@@ -148,7 +148,7 @@ export class MapTestClass {
         ['bar', 13],
     ])
 
-    @MapUnique<Dayjs, string>(day => day.format('dddd'), {each: true})
+    @MapUnique<Dayjs, string>(day => day.format('dddd'), { each: true })
     eachMapUnique: unknown = [
         new Map([
             ['day 1', dayjs('2020-05-01T00:00:00.000Z')],
@@ -164,7 +164,7 @@ export class MapTestClass {
         [dayjs('2020-05-02T00:00:00.000Z'), 13],
     ])
 
-    @MapUniqueKey<Dayjs, string>(day => day.format('dddd'), {each: true})
+    @MapUniqueKey<Dayjs, string>(day => day.format('dddd'), { each: true })
     eachMapUniqueKey: unknown = [
         new Map([
             [dayjs('2020-05-01T00:00:00.000Z'), 'Saturday'],

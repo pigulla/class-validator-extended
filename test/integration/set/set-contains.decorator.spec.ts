@@ -1,16 +1,17 @@
 import 'jest-extended'
 
-import {SET_CONTAINS} from '../../../src'
-import {expectValidationError} from '../../util'
+import { expectValidationError } from '../../util'
 
-import {SetTestClass} from './set-test-class'
+import { SetTestClass } from './set-test-class'
+
+import { SET_CONTAINS } from '~'
 
 describe('SetContains', () => {
     describe('setContains', () => {
         it.each<[unknown]>([[null], [undefined], [new Set()], [new Set([[42, 'bla']])]])(
             'should fail validation for %p',
             value => {
-                expectValidationError(new SetTestClass({setContains: value}), {
+                expectValidationError(new SetTestClass({ setContains: value }), {
                     property: 'setContains',
                     constraint: SET_CONTAINS,
                     message: 'setContains must contain $constraint1 values',
@@ -23,7 +24,7 @@ describe('SetContains', () => {
         it.each<[unknown[]]>([[[null]], [[undefined]], [[new Set()]], [[new Set([[42, 'bla']]), new Map()]]])(
             'should fail validation for %p',
             value => {
-                expectValidationError(new SetTestClass({eachSetContains: value}), {
+                expectValidationError(new SetTestClass({ eachSetContains: value }), {
                     property: 'eachSetContains',
                     constraint: SET_CONTAINS,
                     message: 'each value in eachSetContains must contain $constraint1 values',

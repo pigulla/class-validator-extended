@@ -1,10 +1,10 @@
-import {IsTimezone} from '../../../src'
+import { IsTimezone } from '~'
 
 export class StringTestClass {
     @IsTimezone()
     isTimezone: unknown = 'Europe/Berlin'
 
-    @IsTimezone({each: true})
+    @IsTimezone({ each: true })
     eachIsTimezone: unknown = ['Europe/Berlin', 'europe/berlin', 'utc']
 
     constructor(fields: Partial<StringTestClass> = {}) {

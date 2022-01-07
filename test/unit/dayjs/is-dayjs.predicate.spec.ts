@@ -1,14 +1,14 @@
 import 'jest-extended'
-import dayjs, {Dayjs} from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 
-import {isDayjs} from '../../../src'
+import { isDayjs } from '~'
 
 describe('isDayjs', () => {
     describe('when is_valid is set', () => {
         it.each<[unknown]>([[undefined], [null], [0], ['0'], [new Date('2020-07-20T08:12:58.536Z')], ['foo']])(
             'should be false for %p',
             (value: unknown) => {
-                expect(isDayjs(value, {is_valid: true})).toBeFalse()
+                expect(isDayjs(value, { is_valid: true })).toBeFalse()
             }
         )
 
@@ -16,7 +16,7 @@ describe('isDayjs', () => {
             [true, dayjs('2020-07-20T08:12:58.536Z')],
             [false, dayjs('2020-07-20T00:99:00.00Z')],
         ])('should be %p true for %p', (expected, value) => {
-            expect(isDayjs(value, {is_valid: true})).toBe(expected)
+            expect(isDayjs(value, { is_valid: true })).toBe(expected)
         })
     })
 
@@ -24,7 +24,7 @@ describe('isDayjs', () => {
         it.each<[unknown]>([[undefined], [null], [0], ['0'], [new Date('2020-07-20T08:12:58.536Z')], ['foo']])(
             'should be false for %p',
             (value: unknown) => {
-                expect(isDayjs(value, {is_valid: false})).toBeFalse()
+                expect(isDayjs(value, { is_valid: false })).toBeFalse()
             }
         )
 
@@ -32,7 +32,7 @@ describe('isDayjs', () => {
             [true, dayjs('2020-07-20T08:12:58.536Z')],
             [true, dayjs('2020-07-20T00:99:00.00Z')],
         ])('should be %p for %p', (expected, value) => {
-            expect(isDayjs(value, {is_valid: false})).toBe(expected)
+            expect(isDayjs(value, { is_valid: false })).toBe(expected)
         })
     })
 })

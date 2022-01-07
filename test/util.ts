@@ -1,6 +1,6 @@
 import 'jest-extended'
-import {validateSync, ValidationError} from 'class-validator'
-import {ValidatorOptions} from 'class-validator/types/validation/ValidatorOptions'
+import { validateSync, ValidationError } from 'class-validator'
+import type { ValidatorOptions } from 'class-validator/types/validation/ValidatorOptions'
 
 const validationOptions: ValidatorOptions = {
     forbidUnknownValues: true,
@@ -14,7 +14,7 @@ export function expectNoValidationErrors(instance: object): void {
 
 export function expectValidationError<T extends Object>(
     instance: T,
-    {property, constraint, message}: {property: keyof T; constraint: string; message: string}
+    { property, constraint, message }: { property: keyof T; constraint: string; message: string }
 ): void {
     const errors = validateSync(instance, validationOptions)
 

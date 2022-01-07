@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import {mapNotContains} from '../../../src'
+import { mapNotContains } from '~'
 
 describe('mapNotContains', () => {
     it.each<[Map<unknown, unknown>, Iterable<unknown>]>([

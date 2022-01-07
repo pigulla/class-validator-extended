@@ -1,9 +1,9 @@
 import 'jest-extended'
 
 import dayjs = require('dayjs')
-import {advanceTo, clear} from 'jest-date-mock'
+import { advanceTo, clear } from 'jest-date-mock'
 
-import {futureDayjs} from '../../../src'
+import { futureDayjs } from '~'
 
 describe('futureDayjs', () => {
     const now = dayjs('2020-05-01T06:00:00.000Z')

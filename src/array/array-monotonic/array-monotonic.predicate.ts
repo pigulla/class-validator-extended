@@ -1,4 +1,4 @@
-import {ArrayMonotonicOptions, Monotonicity} from './array-monotonic.options'
+import { ArrayMonotonicOptions, Monotonicity } from './array-monotonic.options'
 
 function checkMonotonicity(value: number, monotonicity: Monotonicity): boolean {
     switch (monotonicity) {
@@ -12,13 +12,13 @@ function checkMonotonicity(value: number, monotonicity: Monotonicity): boolean {
             return value < 0
         /* istanbul ignore next */
         default:
-            throw new Error('Unexpected monotonicity value')
+            throw new TypeError('Unexpected monotonicity value')
     }
 }
 
 function compareItems<T>(a: T, b: T, options: ArrayMonotonicOptions<T>): boolean {
-    if ('selector' in options) {
-        return checkMonotonicity(options.selector(b) - options.selector(a), options.monotonicity)
+    if ('projection' in options) {
+        return checkMonotonicity(options.projection(b) - options.projection(a), options.monotonicity)
     }
 
     return checkMonotonicity(options.comparator(b, a), options.monotonicity)
@@ -26,7 +26,12 @@ function compareItems<T>(a: T, b: T, options: ArrayMonotonicOptions<T>): boolean
 
 const allowedValues = new Set(Object.values(Monotonicity))
 
-export function arrayMonotonic<T>(values: T[], options: ArrayMonotonicOptions<T>): boolean {
+/**
+ * @category Predicates
+ * @param value The value to validate.
+ * @param options Additional options.
+ */
+export function arrayMonotonic<T>(value: unknown, options: ArrayMonotonicOptions<T>): value is Array<unknown> {
     if (!allowedValues.has(options.monotonicity)) {
         const allowedValuesString = [...allowedValues].map(value => `"${value}"`).join(', ')
         throw new TypeError(
@@ -35,7 +40,7 @@ export function arrayMonotonic<T>(values: T[], options: ArrayMonotonicOptions<T>
     }
 
     return (
-        Array.isArray(values) &&
-        values.every((item: T, index: number) => index === 0 || compareItems(values[index - 1], item, options))
+        Array.isArray(value) &&
+        value.every((item: T, index: number) => index === 0 || compareItems(value[index - 1], item, options))
     )
 }

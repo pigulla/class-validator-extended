@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import {setMaxSize} from '../../../src'
+import { setMaxSize } from '~'
 
 describe('setMaxSize', () => {
     it.each<[unknown]>([[Number.POSITIVE_INFINITY], [Number.NaN], [null], [''], [BigInt(4)]])(

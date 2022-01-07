@@ -1,9 +1,13 @@
-import {buildMessage, ValidateBy, ValidationOptions} from 'class-validator'
+import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator'
 
-import {setNotContains} from './set-not-contains.predicate'
+import { setNotContains } from './set-not-contains.predicate'
 
+/** @hidden */
 export const SET_NOT_CONTAINS = 'setNotContains'
 
+/**
+ * @category Set
+ */
 export function SetNotContains(items: unknown[], validationOptions?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {

@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import {mapMinSize} from '../../../src'
+import { mapMinSize } from '~'
 
 describe('mapMinSize', () => {
     it.each<[unknown]>([[Number.POSITIVE_INFINITY], [Number.NaN], [null], [''], [BigInt(4)]])(

@@ -1,13 +1,14 @@
 import 'jest-extended'
 
-import {ARRAY_MONOTONIC} from '../../../src'
-import {expectValidationError} from '../../util'
+import { expectValidationError } from '../../util'
 
-import {ArrayTestClass} from './array-test-class'
+import { ArrayTestClass } from './array-test-class'
+
+import { ARRAY_MONOTONIC } from '~'
 
 describe('ArrayMonotonic', () => {
     it('strictlyIncreasingSelector should fail validation', () => {
-        expectValidationError(new ArrayTestClass({strictlyIncreasingSelector: null}), {
+        expectValidationError(new ArrayTestClass({ strictlyIncreasingSelector: null }), {
             constraint: ARRAY_MONOTONIC,
             property: 'strictlyIncreasingSelector',
             message: 'strictlyIncreasingSelector must be a strictly increasing array',
@@ -15,7 +16,7 @@ describe('ArrayMonotonic', () => {
     })
 
     it('eachStrictlyDecreasingSelector should fail validation', () => {
-        expectValidationError(new ArrayTestClass({eachStrictlyDecreasingSelector: [[3, 2, 2, 1]]}), {
+        expectValidationError(new ArrayTestClass({ eachStrictlyDecreasingSelector: [[3, 2, 2, 1]] }), {
             constraint: ARRAY_MONOTONIC,
             property: 'eachStrictlyDecreasingSelector',
             message: 'each value in eachStrictlyDecreasingSelector must be a strictly decreasing array',

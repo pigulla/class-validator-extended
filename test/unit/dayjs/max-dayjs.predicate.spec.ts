@@ -1,9 +1,9 @@
 import 'jest-extended'
 
 import dayjs = require('dayjs')
-import {Dayjs} from 'dayjs'
+import { Dayjs } from 'dayjs'
 
-import {maxDayjs} from '../../../src'
+import { maxDayjs } from '~'
 
 describe('maxDayjs', () => {
     const max = dayjs('2020-05-01T06:00:00.000Z')
@@ -15,11 +15,11 @@ describe('maxDayjs', () => {
         }
     )
 
-    it.each<[unknown]>([[max.subtract(1, 'millisecond')], [max]])('should be true for %p', value => {
+    it.each<[unknown]>([[max.subtract(1, 'millisecond')]])('should be true for %p', value => {
         expect(maxDayjs(value, max)).toBeTrue()
     })
 
-    it.each<[unknown]>([[undefined], [null], [max.add(1, 'minute')], [max.toDate()]])(
+    it.each<[unknown]>([[undefined], [null], [max], [max.add(1, 'minute')], [max.toDate()]])(
         'should be false for %p',
         value => {
             expect(maxDayjs(value, max)).toBeFalse()

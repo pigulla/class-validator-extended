@@ -1,9 +1,14 @@
-import {isMap} from '../is-map'
+import { isMap } from '../is-map'
 
-export function mapMaxSize(value: unknown, max: number): value is Map<unknown, unknown> {
-    if (typeof max !== 'number' || !Number.isFinite(max)) {
-        throw new TypeError('Parameter "max" must be a finite number')
+/**
+ * @category Predicates
+ * @param value The value to validate.
+ * @param maximum The maximum size of the set that is allowed.
+ */
+export function mapMaxSize(value: unknown, maximum: number): value is Map<unknown, unknown> {
+    if (typeof maximum !== 'number' || !Number.isFinite(maximum)) {
+        throw new TypeError('Parameter "maximum" must be a finite number')
     }
 
-    return isMap(value) && value.size <= max
+    return isMap(value) && value.size <= maximum
 }

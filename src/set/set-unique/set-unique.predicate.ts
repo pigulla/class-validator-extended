@@ -1,10 +1,15 @@
-import {isSet} from '../is-set'
+import { isSet } from '../is-set'
 
-import {Selector} from './set-unique.options'
+import { SetUniqueProjection } from './set-unique.options'
 
-export function setUnique<T, P>(value: unknown, selector: Selector<T, P>): value is Set<unknown> {
-    if (typeof selector !== 'function') {
-        throw new TypeError('Parameter "selector" must be a function')
+/**
+ * @category Predicates
+ * @param value The value to validate.
+ * @param projection The function mapping each value to the value that is used for the uniqueness check.
+ */
+export function setUnique<T, P>(value: unknown, projection: SetUniqueProjection<T, P>): value is Set<T> {
+    if (typeof projection !== 'function') {
+        throw new TypeError('Parameter "projection" must be a function')
     }
 
     if (!isSet(value)) {
@@ -15,7 +20,7 @@ export function setUnique<T, P>(value: unknown, selector: Selector<T, P>): value
     const set = value as Set<T>
 
     for (const item of set.keys()) {
-        const selected = selector(item)
+        const selected = projection(item)
 
         if (seen.has(selected)) {
             return false

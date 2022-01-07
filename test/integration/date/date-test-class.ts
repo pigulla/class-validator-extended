@@ -1,16 +1,16 @@
-import {FutureDate, PastDate} from '../../../src'
+import { FutureDate, PastDate } from '~'
 
 export class DateTestClass {
     @FutureDate()
     futureDate: unknown = new Date(Date.now() + 60 * 60 * 1_000)
 
-    @FutureDate({each: true})
+    @FutureDate({ each: true })
     eachFutureDate: unknown = [new Date(Date.now() + 60 * 60 * 1_000), new Date(Date.now() + 30 * 60 * 1_000)]
 
     @PastDate()
     pastDate: unknown = new Date(Date.now() - 60 * 60 * 1_000)
 
-    @PastDate({each: true})
+    @PastDate({ each: true })
     eachPastDate: unknown = [new Date(Date.now() - 60 * 60 * 1_000), new Date(Date.now() - 30 * 60 * 1_000)]
 
     constructor(fields: Partial<DateTestClass> = {}) {

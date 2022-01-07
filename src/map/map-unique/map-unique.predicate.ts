@@ -1,21 +1,29 @@
-import {isMap} from '../is-map'
+import { isMap } from '../is-map'
 
-import {Selector} from './map-unique.options'
+import { MapUniqueProjection } from './map-unique.options'
 
-export function mapUnique<T, P>(value: unknown, selector: Selector<T, P>): value is Map<unknown, unknown> {
-    if (typeof selector !== 'function') {
-        throw new TypeError('Parameter "selector" must be a function')
+/**
+ * @category Predicates
+ * @param value The value to validate.
+ * @param projection The function mapping each value to the value that is used for the uniqueness check.
+ */
+export function mapUnique<Key, Projection>(
+    value: unknown,
+    projection: MapUniqueProjection<Key, Projection>
+): value is Map<unknown, unknown> {
+    if (typeof projection !== 'function') {
+        throw new TypeError('Parameter "projection" must be a function')
     }
 
     if (!isMap(value)) {
         return false
     }
 
-    const seen = new Set<P>()
-    const map = value as Map<unknown, T>
+    const seen = new Set<Projection>()
+    const map = value as Map<unknown, Key>
 
     for (const item of map.values()) {
-        const selected = selector(item)
+        const selected = projection(item)
 
         if (seen.has(selected)) {
             return false

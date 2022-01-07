@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import {mapNotEmpty} from '../../../src'
+import { mapNotEmpty } from '~'
 
 describe('mapNotEmpty', () => {
     it.each([

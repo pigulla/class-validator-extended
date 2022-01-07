@@ -1,21 +1,37 @@
-import {buildMessage, ValidateBy, ValidationOptions} from 'class-validator'
+import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator'
 
-import {minBigInt} from './min-bigint.predicate'
+import { minBigInt } from './min-bigint.predicate'
 
+/** @hidden */
 export const MIN_BIGINT = 'minBigInt'
 
-export function MinBigInt(minValue: number | BigInt, validationOptions?: ValidationOptions): PropertyDecorator {
+/**
+ * Checks if the given value is a [BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
+ * not less than `maximum`.
+ *
+ * #### Example
+ * ```typescript
+ * // Ensure the value is greater than 9000.
+ * @MinBigInt(9_001)
+ * overNineThousand: BigInt
+ * ```
+ *
+ * @category BigInt
+ * @param minimum The minimum allowed value.
+ * @param options Generic class-validator options.
+ */
+export function MinBigInt(minimum: number | BigInt, options?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {
             name: MIN_BIGINT,
             validator: {
-                validate: (value, _arguments): boolean => minBigInt(value, minValue),
+                validate: (value, _arguments): boolean => minBigInt(value, minimum),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must not be less than $constraint1`,
-                    validationOptions
+                    options
                 ),
             },
         },
-        validationOptions
+        options
     )
 }

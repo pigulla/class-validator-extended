@@ -8,14 +8,15 @@
         "lib": "src"
     },
     "scripts": {
-        "build": "rm -rf dist && tsc",
+        "build": "rm -rf dist && tsc && npm run generate-docs",
         "test": "npm run lint && npm run jest && npm audit",
         "format": "prettier --write .",
         "jest": "jest",
         "lint": "npm run lint:tsc && npm run lint:eslint && npm run lint:prettier",
         "lint:tsc": "tsc --noEmit",
         "lint:eslint": "eslint --max-warnings 0 --ext=ts .",
-        "lint:prettier": "prettier --check ."
+        "lint:prettier": "prettier --check .",
+        "generate-docs": "typedoc"
     },
     "repository": {
         "type": "git",
@@ -39,19 +40,21 @@
     },
     "homepage": "https://github.com/pigulla/class-validator-extended#readme",
     "devDependencies": {
-        "@types/jest": "^26.0.23",
-        "@typescript-eslint/eslint-plugin": "^4.24.0",
-        "@typescript-eslint/parser": "^4.24.0",
-        "eslint": "^7.26.0",
+        "@types/jest": "^27.4.0",
+        "@types/validator": "^13.7.1",
+        "@typescript-eslint/eslint-plugin": "^5.9.0",
+        "@typescript-eslint/parser": "^5.9.0",
+        "eslint": "^8.6.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-import": "^2.23.2",
-        "eslint-plugin-prettier": "^3.4.0",
-        "eslint-plugin-unicorn": "^32.0.1",
-        "jest": "^27.0.1",
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-unicorn": "^40.0.0",
+        "jest": "^27.4.7",
         "jest-date-mock": "^1.0.8",
-        "jest-extended": "^0.11.5",
+        "jest-extended": "^1.2.0",
         "prettier": "^2.3.0",
         "ts-jest": "^27.0.1",
+        "typedoc": "^0.22.10",
         "typescript": "^4.2.4"
     },
     "peerDependencies": {

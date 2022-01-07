@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import {maxBigInt} from '../../../src'
+import { maxBigInt } from '~'
 
 describe('maxBigInt', () => {
     it.each<[unknown]>([[Number.POSITIVE_INFINITY], [Number.NaN], [null], ['']])(

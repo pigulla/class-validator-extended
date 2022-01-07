@@ -1,22 +1,37 @@
-import {buildMessage, ValidateBy, ValidationOptions} from 'class-validator'
-import {ConfigType} from 'dayjs'
+import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator'
+import { ConfigType } from 'dayjs'
 
-import {minDayjs} from './min-dayjs.predicate'
+import { minDayjs } from './min-dayjs.predicate'
 
+/** @hidden */
 export const MIN_DAYJS = 'minDayjs'
 
-export function MinDayjs(min: ConfigType, validationOptions?: ValidationOptions): PropertyDecorator {
+/**
+ * Checks if the given value is a Dayjs object not earlier than `minimum`.
+ *
+ * #### Example
+ * ```typescript
+ * // Ensure the value is after the infamous Y2K.
+ * @MinDayjs('2000-01-01T00:00:00.000Z')
+ * y2kUnsafeDate: Dayjs
+ * ```
+ *
+ * @category Dayjs
+ * @param minimum The minimum allowed value.
+ * @param options Generic class-validator options.
+ */
+export function MinDayjs(minimum: ConfigType, options?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {
             name: MIN_DAYJS,
             validator: {
-                validate: (value, _arguments): boolean => minDayjs(value, min),
+                validate: (value, _arguments): boolean => minDayjs(value, minimum),
                 defaultMessage: buildMessage(
                     eachPrefix => `minimal allowed date for ${eachPrefix}$property is $constraint1`,
-                    validationOptions
+                    options
                 ),
             },
         },
-        validationOptions
+        options
     )
 }

@@ -1,6 +1,16 @@
-export type Comparator<T> = (a: T, b: T) => number
-export type Selector<T> = (item: T) => number
+/**
+ * @category Types
+ */
+export type ArrayMonotonicityComparator<T> = (a: T, b: T) => number
 
+/**
+ * @category Types
+ */
+export type ArrayMonotonicityProjection<T> = (item: T) => number
+
+/**
+ * @category Types
+ */
 export enum Monotonicity {
     WEAKLY_INCREASING = 'weakly increasing',
     STRICTLY_INCREASING = 'strictly increasing',
@@ -8,14 +18,20 @@ export enum Monotonicity {
     STRICTLY_DECREASING = 'strictly decreasing',
 }
 
-export type SelectorOrComparator<T> =
+/**
+ * @category Types
+ */
+export type ArrayMonotonicityProjectionOrComparator<T> =
     | {
-          selector: Selector<T>
+          projection: ArrayMonotonicityProjection<T>
       }
     | {
-          comparator: Comparator<T>
+          comparator: ArrayMonotonicityComparator<T>
       }
 
-export type ArrayMonotonicOptions<T> = SelectorOrComparator<T> & {
+/**
+ * @category Types
+ */
+export type ArrayMonotonicOptions<T> = ArrayMonotonicityProjectionOrComparator<T> & {
     monotonicity: Monotonicity
 }

@@ -1,17 +1,18 @@
 import 'jest-extended'
 import dayjs from 'dayjs'
 
-import {MIN_DAYJS} from '../../../src'
-import {expectValidationError} from '../../util'
+import { expectValidationError } from '../../util'
 
-import {DayjsTestClass} from './dayjs-test-class'
+import { DayjsTestClass } from './dayjs-test-class'
+
+import { MIN_DAYJS } from '~'
 
 describe('MinDayjs', () => {
     describe('minDayjs', () => {
         it.each<[unknown]>([[null], [undefined], [42], [dayjs('2020-12-31T23:59:59.999Z')]])(
             'should fail validation for %p',
             value => {
-                expectValidationError(new DayjsTestClass({minDayjs: value}), {
+                expectValidationError(new DayjsTestClass({ minDayjs: value }), {
                     property: 'minDayjs',
                     constraint: MIN_DAYJS,
                     message: 'minimal allowed date for minDayjs is $constraint1',
@@ -26,7 +27,7 @@ describe('MinDayjs', () => {
             [[undefined]],
             [[dayjs('2020-12-31T23:59:59.999Z')]],
         ])('should fail validation for %p', value => {
-            expectValidationError(new DayjsTestClass({eachMinDayjs: value}), {
+            expectValidationError(new DayjsTestClass({ eachMinDayjs: value }), {
                 property: 'eachMinDayjs',
                 constraint: MIN_DAYJS,
                 message: 'minimal allowed date for each value in eachMinDayjs is $constraint1',

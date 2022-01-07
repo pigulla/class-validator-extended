@@ -2,10 +2,11 @@ import 'jest-extended'
 
 import dayjs = require('dayjs')
 
-import {MAP_UNIQUE} from '../../../src'
-import {expectValidationError} from '../../util'
+import { expectValidationError } from '../../util'
 
-import {MapTestClass} from './map-test-class'
+import { MapTestClass } from './map-test-class'
+
+import { MAP_UNIQUE } from '~'
 
 describe('MapUnique', () => {
     describe('mapUnique', () => {
@@ -20,7 +21,7 @@ describe('MapUnique', () => {
                 ]),
             ],
         ])('should fail validation for %p', value => {
-            expectValidationError(new MapTestClass({mapUnique: value}), {
+            expectValidationError(new MapTestClass({ mapUnique: value }), {
                 property: 'mapUnique',
                 constraint: MAP_UNIQUE,
                 message: `all mapUnique's values must be unique`,
@@ -43,7 +44,7 @@ describe('MapUnique', () => {
                 ],
             ],
         ])('should fail validation for %p', value => {
-            expectValidationError(new MapTestClass({eachMapUnique: value}), {
+            expectValidationError(new MapTestClass({ eachMapUnique: value }), {
                 property: 'eachMapUnique',
                 constraint: MAP_UNIQUE,
                 message: `each value in all eachMapUnique's values must be unique`,

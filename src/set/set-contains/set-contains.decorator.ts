@@ -1,9 +1,13 @@
-import {buildMessage, ValidateBy, ValidationOptions} from 'class-validator'
+import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator'
 
-import {setContains} from './set-contains.predicate'
+import { setContains } from './set-contains.predicate'
 
+/** @hidden */
 export const SET_CONTAINS = 'setContains'
 
+/**
+ * @category Set
+ */
 export function SetContains(items: unknown[], validationOptions?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {

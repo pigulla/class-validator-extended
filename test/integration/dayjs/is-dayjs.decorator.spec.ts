@@ -2,10 +2,11 @@ import 'jest-extended'
 
 import dayjs = require('dayjs')
 
-import {IS_DAYJS} from '../../../src'
-import {expectNoValidationErrors, expectValidationError} from '../../util'
+import { expectNoValidationErrors, expectValidationError } from '../../util'
 
-import {DayjsTestClass} from './dayjs-test-class'
+import { DayjsTestClass } from './dayjs-test-class'
+
+import { IS_DAYJS } from '~'
 
 describe('IsDayjs', () => {
     it('should accept a valid Dayjs instance where an invalid one is sufficient', () => {
@@ -32,7 +33,7 @@ describe('IsDayjs', () => {
     it.each<[unknown]>([[null], [undefined], [42], [dayjs('not a valid date')]])(
         'isDayjs should fail validation for %p',
         value => {
-            expectValidationError(new DayjsTestClass({isDayjs: value}), {
+            expectValidationError(new DayjsTestClass({ isDayjs: value }), {
                 property: 'isDayjs',
                 constraint: IS_DAYJS,
                 message: `isDayjs must be a valid Dayjs instance`,
@@ -43,7 +44,7 @@ describe('IsDayjs', () => {
     it.each<[unknown[]]>([[[dayjs(), dayjs('not a valid date')]], [[undefined]], [[dayjs('not a valid date')]]])(
         'eachIsDayjs should fail validation for %p',
         value => {
-            expectValidationError(new DayjsTestClass({eachIsDayjs: value}), {
+            expectValidationError(new DayjsTestClass({ eachIsDayjs: value }), {
                 property: 'eachIsDayjs',
                 constraint: IS_DAYJS,
                 message: 'each value in eachIsDayjs must be a valid Dayjs instance',

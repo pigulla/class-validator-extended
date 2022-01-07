@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import {negativeBigInt} from '../../../src'
+import { negativeBigInt } from '~'
 
 describe('negativeBigInt', () => {
     it.each<[unknown]>([[BigInt(-1)], [BigInt('-10000')], [BigInt('-100000000000')]])(

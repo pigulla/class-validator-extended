@@ -1,7 +1,7 @@
 import 'jest-extended'
 
-import {mapUniqueKey} from '../../../src'
-import {Selector} from '../../../src/map/map-unique-key/map-unique-key.options'
+import { mapUniqueKey } from '~'
+import { MapUniqueKeyProjection } from '~/map/map-unique-key/map-unique-key.options'
 
 describe('mapUniqueKey', () => {
     function selector(n: number): number {
@@ -9,7 +9,7 @@ describe('mapUniqueKey', () => {
     }
 
     it.each<[unknown]>([[undefined], [null], ['']])('should throw for %p as the selector', value => {
-        expect(() => mapUniqueKey(0, value as Selector<unknown, unknown>)).toThrow(TypeError)
+        expect(() => mapUniqueKey(0, value as MapUniqueKeyProjection<unknown, unknown>)).toThrow(TypeError)
     })
 
     it.each<[Map<unknown, unknown>]>([

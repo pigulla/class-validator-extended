@@ -1,1 +1,4 @@
-export type Selector<T, P> = (item: T) => P
+/**
+ * @category Types
+ */
+export type SetUniqueProjection<T, P> = (item: T) => P

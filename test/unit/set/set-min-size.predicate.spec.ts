@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import {setMinSize} from '../../../src'
+import { setMinSize } from '~'
 
 describe('setMinSize', () => {
     it.each<[unknown]>([[Number.POSITIVE_INFINITY], [Number.NaN], [null], [''], [BigInt(4)]])(

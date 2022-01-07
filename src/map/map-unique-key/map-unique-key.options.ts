@@ -1,1 +1,4 @@
-export type Selector<T, P> = (item: T) => P
+/**
+ * @category Types
+ */
+export type MapUniqueKeyProjection<Key, Projection> = (item: Key) => Projection
