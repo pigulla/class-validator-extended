@@ -26,6 +26,7 @@ jobs:
             - run: npm run build
 
             - uses: codecov/codecov-action@v2
+              if: matrix.node == '16'
               with:
                   files: ./coverage/unit/clover.xml,./coverage/integration/clover.xml
                   fail_ci_if_error: true
