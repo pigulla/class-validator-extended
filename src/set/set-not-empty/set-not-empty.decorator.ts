@@ -6,9 +6,20 @@ import { setNotEmpty } from './set-not-empty.predicate'
 export const SET_NOT_EMPTY = 'setNotEmpty'
 
 /**
+ * Checks if the given value is a [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
+ * with at least one item.
+ *
+ * #### Example
+ * ```typescript
+ * // Ensure the set is not empty.
+ * @SetNotEmpty()
+ * values: Set
+ * ```
+ *
  * @category Set
+ * @param options Generic class-validator options.
  */
-export function SetNotEmpty(validationOptions?: ValidationOptions): PropertyDecorator {
+export function SetNotEmpty(options?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {
             name: SET_NOT_EMPTY,
@@ -16,10 +27,10 @@ export function SetNotEmpty(validationOptions?: ValidationOptions): PropertyDeco
                 validate: (value, _arguments): boolean => setNotEmpty(value),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property should not be an empty set`,
-                    validationOptions
+                    options
                 ),
             },
         },
-        validationOptions
+        options
     )
 }

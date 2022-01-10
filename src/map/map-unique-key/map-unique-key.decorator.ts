@@ -19,25 +19,22 @@ export const MAP_UNIQUE_KEY = 'mapUniqueKey'
  *
  * @category Map
  * @param projection The function mapping each key to the value that is used for the uniqueness check.
- * @param validationOptions Additional options.
+ * @param options Generic class-validator options.
  * @typeParam Key The type of the map's keys.
- * @typeParam Projection The type returned by the `projection`.
+ * @typeParam Projection The type returned by `projection`.
  */
 export function MapUniqueKey<Key = unknown, Projection = unknown>(
     projection: MapUniqueKeyProjection<Key, Projection>,
-    validationOptions?: ValidationOptions
+    options?: ValidationOptions
 ): PropertyDecorator {
     return ValidateBy(
         {
             name: MAP_UNIQUE_KEY,
             validator: {
                 validate: (value, _arguments): boolean => mapUniqueKey(value, projection),
-                defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}all $property's keys must be unique`,
-                    validationOptions
-                ),
+                defaultMessage: buildMessage(eachPrefix => `${eachPrefix}all $property's keys must be unique`, options),
             },
         },
-        validationOptions
+        options
     )
 }

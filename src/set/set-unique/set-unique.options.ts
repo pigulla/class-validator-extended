@@ -1,4 +1,4 @@
 /**
  * @category Types
  */
-export type SetUniqueProjection<T, P> = (item: T) => P
+export type SetUniqueProjection<T, Projection> = (item: T) => Projection
