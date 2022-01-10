@@ -1,8 +1,7 @@
 import 'jest-extended'
 
 import { MAX_BIGINT } from '~'
-
-import { expectNoValidationErrors, expectValidationError } from '../../util'
+import { expectNoValidationErrors, expectValidationError } from '~test/util'
 
 import { BigIntTestClass } from './bigint-test-class'
 

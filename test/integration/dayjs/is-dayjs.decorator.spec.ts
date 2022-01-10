@@ -3,8 +3,7 @@ import 'jest-extended'
 import dayjs from 'dayjs'
 
 import { IS_DAYJS } from '~'
-
-import { expectNoValidationErrors, expectValidationError } from '../../util'
+import { expectNoValidationErrors, expectValidationError } from '~test/util'
 
 import { DayjsTestClass } from './dayjs-test-class'
 

@@ -2,8 +2,7 @@ import 'jest-extended'
 import dayjs from 'dayjs'
 
 import { MIN_DAYJS } from '~'
-
-import { expectValidationError } from '../../util'
+import { expectValidationError } from '~test/util'
 
 import { DayjsTestClass } from './dayjs-test-class'
 

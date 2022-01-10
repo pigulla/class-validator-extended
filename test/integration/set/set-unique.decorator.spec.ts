@@ -3,8 +3,7 @@ import 'jest-extended'
 import dayjs from 'dayjs'
 
 import { SET_UNIQUE } from '~'
-
-import { expectValidationError } from '../../util'
+import { expectValidationError } from '~test/util'
 
 import { SetTestClass } from './set-test-class'
 

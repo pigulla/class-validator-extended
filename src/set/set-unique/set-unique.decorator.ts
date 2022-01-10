@@ -9,7 +9,7 @@ export const SET_UNIQUE = 'setUnique'
 
 /**
  * Checks if the given value is a [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
- * without duplicates with regard to the given projection.
+ * without duplicate values with regard to the given projection.
  *
  * #### Example
  * ```typescript
@@ -19,7 +19,7 @@ export const SET_UNIQUE = 'setUnique'
  * ```
  *
  * @category Set
- * @param projection The function mapping each set item to the value that is used for the uniqueness check.
+ * @param projection The function mapping each value to the value that is used for the uniqueness check.
  * @param options Generic class-validator options.
  * @typeParam T The type of the set's values.
  * @typeParam Projection The type returned by `projection`.

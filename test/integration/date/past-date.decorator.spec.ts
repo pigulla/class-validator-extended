@@ -3,8 +3,7 @@ import dayjs from 'dayjs'
 import { advanceTo, clear } from 'jest-date-mock'
 
 import { PAST_DATE } from '~'
-
-import { expectValidationError } from '../../util'
+import { expectValidationError } from '~test/util'
 
 import { DateTestClass } from './date-test-class'
 

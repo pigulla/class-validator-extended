@@ -7,7 +7,9 @@
         "experimentalDecorators": true,
         "paths": {
             "~": ["src/index.ts"],
-            "~/*": ["src/*"]
+            "~/*": ["src/*"],
+            "~test": ["test/index.ts"],
+            "~test/*": ["test/*"]
         }
     }
 }

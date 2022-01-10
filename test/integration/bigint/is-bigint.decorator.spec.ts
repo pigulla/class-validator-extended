@@ -1,8 +1,7 @@
 import 'jest-extended'
 
 import { IS_BIGINT } from '~'
-
-import { expectValidationError } from '../../util'
+import { expectValidationError } from '~test/util'
 
 import { BigIntTestClass } from './bigint-test-class'
 

@@ -8,7 +8,7 @@ export const SET_MAX_SIZE = 'setMaxSize'
 
 /**
  * Checks if the given value is a [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
- * with no more than `maximum` items.
+ * with no more than `maximum` values.
  *
  * #### Example
  * ```typescript

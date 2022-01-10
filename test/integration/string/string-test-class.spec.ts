@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import { expectNoValidationErrors } from '../../util'
+import { expectNoValidationErrors } from '~test/util'
 
 import { StringTestClass } from './string-test-class'
 

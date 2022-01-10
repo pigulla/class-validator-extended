@@ -7,7 +7,7 @@ import { futureDayjs } from './future-dayjs.predicate'
 export const FUTURE_DAYJS = 'futureDayjs'
 
 /**
- * Checks if the given value is in the future.
+ * Checks if the given value is a Dayjs object in the future.
  *
  * Beware that the behaviour of this check depends on the current time and can thus be difficult to test. In particular,
  * as time goes by the property can become invalid without ever changing its value.

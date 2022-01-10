@@ -8,7 +8,7 @@ export const SET_MIN_SIZE = 'setMinSize'
 
 /**
  * Checks if the given value is a [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
- * with no fewer than `minimum` items.
+ * with no fewer than `minimum` values.
  *
  * #### Example
  * ```typescript

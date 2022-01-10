@@ -19,7 +19,7 @@ export const MAP_UNIQUE = 'mapUnique'
  * ```
  *
  * @category Map
- * @param projection The function mapping each map item to the value that is used for the uniqueness check.
+ * @param projection The function mapping each map entry to the value that is used for the uniqueness check.
  * @param options Generic class-validator options.
  * @typeParam T The type of the map's values.
  * @typeParam Projection The type returned by `projection`.

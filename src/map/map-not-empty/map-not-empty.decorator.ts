@@ -8,7 +8,7 @@ export const MAP_NOT_EMPTY = 'mapNotEmpty'
 
 /**
  * Checks if the given value is a [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
- * with at least one item.
+ * with at least one entry.
  *
  * #### Example
  * ```typescript

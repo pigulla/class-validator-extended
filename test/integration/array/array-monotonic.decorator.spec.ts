@@ -1,8 +1,7 @@
 import 'jest-extended'
 
 import { ARRAY_MONOTONIC } from '~'
-
-import { expectValidationError } from '../../util'
+import { expectValidationError } from '~test/util'
 
 import { ArrayTestClass } from './array-test-class'
 

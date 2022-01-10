@@ -8,7 +8,7 @@ export const MIN_BIGINT = 'minBigInt'
 
 /**
  * Checks if the given value is a [BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
- * not less than `maximum`.
+ * not less than `minimum`.
  *
  * #### Example
  * ```typescript

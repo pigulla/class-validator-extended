@@ -1,8 +1,7 @@
 import 'jest-extended'
 
 import { SET_NOT_EMPTY } from '~'
-
-import { expectValidationError } from '../../util'
+import { expectValidationError } from '~test/util'
 
 import { SetTestClass } from './set-test-class'
 

@@ -8,7 +8,7 @@ module.exports = {
             branches: 100,
             functions: 100,
             lines: 100,
-            statements: 0,
+            statements: 100,
         },
     },
     globals: {
@@ -19,6 +19,8 @@ module.exports = {
     moduleNameMapper: {
         '^~$': '<rootDir>/src/index.ts',
         '^~/(.+)': '<rootDir>/src/$1',
+        '^~test$': '<rootDir>/test/index.ts',
+        '^~test/(.+)': '<rootDir>/test/$1',
     },
     setupFiles: ['jest-date-mock'],
     setupFilesAfterEnv: ['jest-extended/all'],

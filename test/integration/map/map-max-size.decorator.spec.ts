@@ -1,8 +1,7 @@
 import 'jest-extended'
 
 import { MAP_MAX_SIZE } from '~'
-
-import { expectValidationError } from '../../util'
+import { expectValidationError } from '~test/util'
 
 import { MapTestClass } from './map-test-class'
 

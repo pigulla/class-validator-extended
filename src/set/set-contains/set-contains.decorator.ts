@@ -8,7 +8,7 @@ export const SET_CONTAINS = 'setContains'
 
 /**
  * Checks if the given value is a [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
- * and contains all required items.
+ * and contains all required values.
  *
  * #### Example
  * ```typescript

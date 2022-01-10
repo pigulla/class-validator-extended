@@ -8,7 +8,7 @@ export const SET_NOT_EMPTY = 'setNotEmpty'
 
 /**
  * Checks if the given value is a [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
- * with at least one item.
+ * with at least one value.
  *
  * #### Example
  * ```typescript

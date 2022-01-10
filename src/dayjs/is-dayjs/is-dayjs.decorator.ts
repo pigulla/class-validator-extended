@@ -8,7 +8,7 @@ import { isDayjs } from './is-dayjs.predicate'
 export const IS_DAYJS = 'isDayjs'
 
 /**
- * Checks if the given value is Dayjs object.
+ * Checks if the given value is a Dayjs object.
  *
  * Note that `dayjs` is not a constructor, so you can't simply use `@IsInstance(Dayjs)`.
  *

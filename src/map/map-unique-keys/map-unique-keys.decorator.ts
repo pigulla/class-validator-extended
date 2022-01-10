@@ -8,7 +8,7 @@ import { mapUniqueKeys } from './map-unique-keys.predicate'
 export const MAP_UNIQUE_KEYS = 'mapUniqueKeys'
 
 /**
- * Checks if the value is a [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
+ * Checks if the given value is a [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
  * whose keys are all unique with regard to the given projection.
  *
  * #### Example

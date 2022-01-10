@@ -1,8 +1,7 @@
 import 'jest-extended'
 
 import { SET_MAX_SIZE } from '~'
-
-import { expectValidationError } from '../../util'
+import { expectValidationError } from '~test/util'
 
 import { SetTestClass } from './set-test-class'
 

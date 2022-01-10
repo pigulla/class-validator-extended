@@ -3,8 +3,7 @@ import 'jest-extended'
 import dayjs from 'dayjs'
 
 import { MAP_UNIQUE } from '~'
-
-import { expectValidationError } from '../../util'
+import { expectValidationError } from '~test/util'
 
 import { MapTestClass } from './map-test-class'
 

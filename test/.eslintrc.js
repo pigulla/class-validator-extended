@@ -1,4 +1,4 @@
-/* eslint-disable unicorn/prefer-module */
+/* eslint-disable unicorn/prefer-module,@typescript-eslint/no-var-requires */
 const path = require('path')
 
 const config = require('../.eslintrc.json')

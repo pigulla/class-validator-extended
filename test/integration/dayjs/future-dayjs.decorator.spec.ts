@@ -3,8 +3,7 @@ import dayjs from 'dayjs'
 import { advanceTo, clear } from 'jest-date-mock'
 
 import { FUTURE_DAYJS } from '~'
-
-import { expectValidationError } from '../../util'
+import { expectValidationError } from '~test/util'
 
 import { DayjsTestClass } from './dayjs-test-class'
 

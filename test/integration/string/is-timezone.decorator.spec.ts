@@ -1,8 +1,7 @@
 import 'jest-extended'
 
 import { IS_TIMEZONE } from '~'
-
-import { expectValidationError } from '../../util'
+import { expectValidationError } from '~test/util'
 
 import { StringTestClass } from './string-test-class'
 
