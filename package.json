@@ -17,7 +17,9 @@
         "lint:tsc": "tsc --noEmit --project tsconfig.json && tsc --noEmit --project test/tsconfig.json",
         "lint:eslint": "eslint --max-warnings 0 --ext=ts .",
         "lint:prettier": "prettier --check .",
-        "generate-docs": "typedoc"
+        "docs": "npm run docs:generate && npm run docs:publish",
+        "docs:generate": "typedoc",
+        "docs:publish": "gh-pages --dist docs"
     },
     "repository": {
         "type": "git",
