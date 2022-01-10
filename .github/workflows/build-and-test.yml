@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Build and Test
 
 on: [push]
 
@@ -21,9 +21,10 @@ jobs:
                   node-version: ${{ matrix.node }}
 
             - run: npm i -g npm@7 --registry=https://registry.npmjs.org
-            - run: npm ci
+            - run: npm run setup
             - run: npm test
             - run: npm run build
+            - run: npm run docs:generate
 
             - uses: codecov/codecov-action@v1
               with:
