@@ -14,7 +14,7 @@
 For detailed information please read the [API docs](https://pigulla.github.io/class-validator-extended/modules.html).
 
 | Decorator                                  | Description                                                                                                 |
-|--------------------------------------------| ----------------------------------------------------------------------------------------------------------- |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
 | **Array**                                  |                                                                                                             |
 | `@ArrayMonotonic(options?)`                | Checks if the given value is an array sorted in either (strictly) ascending or (strictly) descending order. |
 | **BigInt**                                 |                                                                                                             |
