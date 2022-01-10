@@ -14,7 +14,7 @@
 For detailed information please read the [API docs](https://pigulla.github.io/class-validator-extended/modules.html).
 
 | Decorator                                  | Description                                                                                                 |
-|--------------------------------------------| ----------------------------------------------------------------------------------------------------------- |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
 | **Type**                                   |                                                                                                             |
 | `@IsBigInt(options?)`                      | Checks if the given value is a BigInt.                                                                      |
 | `@IsDayjs(options?)`                       | Checks if the given value is a Dayjs object.                                                                |
@@ -54,5 +54,5 @@ For detailed information please read the [API docs](https://pigulla.github.io/cl
 | `@SetNotEmpty(options?)`                   | Checks if the given value is a Set with at least one value.                                                 |
 | `@SetUnique(projection, options?)`         | Checks if the given value is a Set without duplicate values with regard to the given `projection`.          |
 | **String**                                 |                                                                                                             |
-| `@IsAwsRegion(options?)`                   | Checks if the given value is an AWS region string.                                                  |
+| `@IsAwsRegion(options?)`                   | Checks if the given value is an AWS region string.                                                          |
 | `@IsTimezone(options?)`                    | Checks if the given value is a valid timezone string.                                                       |
