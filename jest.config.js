@@ -2,7 +2,7 @@
 module.exports = {
     collectCoverage: true,
     collectCoverageFrom: ['src/**/*.ts'],
-    coverageReporters: ['clover', 'text', 'html'],
+    coverageReporters: ['lcov', 'text', 'html'],
     coveragePathIgnorePatterns: ['<rootDir>/src/(.+/)*index.ts'],
     coverageThreshold: {
         global: {
