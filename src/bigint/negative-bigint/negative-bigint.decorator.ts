@@ -1,4 +1,5 @@
-import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator'
+import type { ValidationOptions } from 'class-validator'
+import { buildMessage, ValidateBy } from 'class-validator'
 
 import { negativeBigInt } from './negative-bigint.predicate'
 

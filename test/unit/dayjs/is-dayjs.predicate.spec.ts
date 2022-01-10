@@ -1,5 +1,6 @@
 import 'jest-extended'
-import dayjs, { Dayjs } from 'dayjs'
+import type { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
 
 import { isDayjs } from '~'
 

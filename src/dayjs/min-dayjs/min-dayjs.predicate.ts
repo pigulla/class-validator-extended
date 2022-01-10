@@ -1,4 +1,5 @@
-import dayjs, { ConfigType, Dayjs } from 'dayjs'
+import type { ConfigType, Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
 
 import { isDayjs } from '../is-dayjs'
 

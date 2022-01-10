@@ -1,6 +1,7 @@
 import 'jest-extended'
 
-import { setUnique, SetUniqueProjection } from '~'
+import type { SetUniqueProjection } from '~'
+import { setUnique } from '~'
 
 describe('setUnique', () => {
     function selector(n: number): number {

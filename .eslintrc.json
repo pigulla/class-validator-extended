@@ -1,12 +1,13 @@
 {
     "parser": "@typescript-eslint/parser",
-    "plugins": ["unicorn", "prettier", "@typescript-eslint/eslint-plugin"],
+    "plugins": ["unicorn", "prettier", "@typescript-eslint", "@typescript-eslint/eslint-plugin"],
     "extends": [
         "eslint:recommended",
         "plugin:unicorn/recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
         "plugin:import/typescript",
+        "plugin:@typescript-eslint/recommended",
         "prettier"
     ],
     "settings": {
@@ -49,6 +50,13 @@
                 }
             }
         ],
-        "prettier/prettier": "error"
+        "prettier/prettier": "error",
+        "@typescript-eslint/consistent-type-imports": "error",
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                "argsIgnorePattern": "^_"
+            }
+        ]
     }
 }

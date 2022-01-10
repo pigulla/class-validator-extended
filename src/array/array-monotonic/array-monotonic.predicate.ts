@@ -1,4 +1,5 @@
-import { ArrayMonotonicOptions, Monotonicity } from './array-monotonic.options'
+import type { ArrayMonotonicOptions } from './array-monotonic.options'
+import { Monotonicity } from './array-monotonic.options'
 
 function checkMonotonicity(value: number, monotonicity: Monotonicity): boolean {
     switch (monotonicity) {

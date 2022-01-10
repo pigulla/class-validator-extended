@@ -1,6 +1,6 @@
 import { isMap } from '../is-map'
 
-import { MapUniqueKeysProjection } from './map-unique-keys.options'
+import type { MapUniqueKeysProjection } from './map-unique-keys.options'
 
 /**
  * @category Predicates

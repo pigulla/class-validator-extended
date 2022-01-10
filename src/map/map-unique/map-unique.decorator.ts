@@ -1,6 +1,7 @@
-import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator'
+import type { ValidationOptions } from 'class-validator'
+import { buildMessage, ValidateBy } from 'class-validator'
 
-import { MapUniqueProjection } from './map-unique.options'
+import type { MapUniqueProjection } from './map-unique.options'
 import { mapUnique } from './map-unique.predicate'
 
 /** @hidden */

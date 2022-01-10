@@ -1,6 +1,6 @@
 import { isSet } from '../is-set'
 
-import { SetUniqueProjection } from './set-unique.options'
+import type { SetUniqueProjection } from './set-unique.options'
 
 /**
  * @category Predicates

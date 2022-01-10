@@ -1,6 +1,7 @@
 import 'jest-extended'
 
-import { mapUnique, MapUniqueProjection } from '~'
+import type { MapUniqueProjection } from '~'
+import { mapUnique } from '~'
 
 describe('mapUnique', () => {
     function selector(n: number): number {

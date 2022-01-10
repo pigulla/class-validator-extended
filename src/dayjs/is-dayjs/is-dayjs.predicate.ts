@@ -1,6 +1,7 @@
-import { Dayjs, isDayjs as isDayjsNative } from 'dayjs'
+import type { Dayjs } from 'dayjs'
+import { isDayjs as isDayjsNative } from 'dayjs'
 
-import { IsDayjsOptions } from './is-dayjs.options'
+import type { IsDayjsOptions } from './is-dayjs.options'
 
 /**
  * @category Predicates

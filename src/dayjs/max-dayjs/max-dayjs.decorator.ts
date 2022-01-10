@@ -1,5 +1,6 @@
-import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator'
-import { ConfigType } from 'dayjs'
+import type { ValidationOptions } from 'class-validator'
+import { buildMessage, ValidateBy } from 'class-validator'
+import type { ConfigType } from 'dayjs'
 
 import { maxDayjs } from './max-dayjs.predicate'
 

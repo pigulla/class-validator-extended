@@ -1,7 +1,7 @@
 import 'jest-extended'
 
+import type { Dayjs } from 'dayjs'
 import dayjs from 'dayjs'
-import { Dayjs } from 'dayjs'
 
 import { minDayjs } from '~'
 

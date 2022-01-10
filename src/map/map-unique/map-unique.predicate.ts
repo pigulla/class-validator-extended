@@ -1,6 +1,6 @@
 import { isMap } from '../is-map'
 
-import { MapUniqueProjection } from './map-unique.options'
+import type { MapUniqueProjection } from './map-unique.options'
 
 /**
  * @category Predicates

@@ -12,7 +12,7 @@ export function expectNoValidationErrors(instance: object): void {
     expect(validateSync(instance, validationOptions)).toEqual([])
 }
 
-export function expectValidationError<T extends Object>(
+export function expectValidationError<T extends Record<string, unknown>>(
     instance: T,
     { property, constraint, message }: { property: keyof T; constraint: string; message: string }
 ): void {
