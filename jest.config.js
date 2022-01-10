@@ -1,8 +1,9 @@
 // eslint-disable-next-line unicorn/prefer-module
 module.exports = {
     collectCoverage: true,
+    collectCoverageFrom: ['src/**/*.ts'],
     coverageReporters: ['clover', 'text', 'html'],
-    coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/src/(.+/)*index.ts'],
+    coveragePathIgnorePatterns: ['<rootDir>/src/(.+/)*index.ts'],
     coverageThreshold: {
         global: {
             branches: 100,
