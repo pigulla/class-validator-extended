@@ -2,11 +2,11 @@ import 'jest-extended'
 import dayjs from 'dayjs'
 import { advanceTo, clear } from 'jest-date-mock'
 
+import { PAST_DAYJS } from '~'
+
 import { expectValidationError } from '../../util'
 
 import { DayjsTestClass } from './dayjs-test-class'
-
-import { PAST_DAYJS } from '~'
 
 describe('PastDayjs', () => {
     const now = dayjs('2020-05-01T06:00:00.000Z')

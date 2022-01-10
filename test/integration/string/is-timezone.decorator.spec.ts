@@ -1,10 +1,10 @@
 import 'jest-extended'
 
+import { IS_TIMEZONE } from '~'
+
 import { expectValidationError } from '../../util'
 
 import { StringTestClass } from './string-test-class'
-
-import { IS_TIMEZONE } from '~'
 
 describe('IsTimezone', () => {
     describe('isTimezone', () => {

@@ -1,11 +1,11 @@
 import 'jest-extended'
 import dayjs from 'dayjs'
 
+import { MAX_DAYJS } from '~'
+
 import { expectValidationError } from '../../util'
 
 import { DayjsTestClass } from './dayjs-test-class'
-
-import { MAX_DAYJS } from '~'
 
 describe('MaxDayjs', () => {
     describe('maxDayjs', () => {

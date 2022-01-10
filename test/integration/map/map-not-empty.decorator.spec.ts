@@ -1,10 +1,10 @@
 import 'jest-extended'
 
+import { MAP_NOT_EMPTY } from '~'
+
 import { expectValidationError } from '../../util'
 
 import { MapTestClass } from './map-test-class'
-
-import { MAP_NOT_EMPTY } from '~'
 
 describe('MapNotEmpty', () => {
     describe('mapNotEmpty', () => {

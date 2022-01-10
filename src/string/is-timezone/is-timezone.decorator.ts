@@ -13,7 +13,7 @@ export const IS_TIMEZONE = 'isTimezone'
  *
  * #### Example
  * ```typescript
- * // Ensure the value is in the future.
+ * // Ensure the value is a valid timezone.
  * @IsTimezone()
  * timezone: string
  * ```

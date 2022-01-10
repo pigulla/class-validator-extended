@@ -1,10 +1,10 @@
 import 'jest-extended'
 
+import { POSITIVE_BIGINT } from '~'
+
 import { expectValidationError } from '../../util'
 
 import { BigIntTestClass } from './bigint-test-class'
-
-import { POSITIVE_BIGINT } from '~'
 
 describe('PositiveBigInt', () => {
     describe('positiveBigInt', () => {

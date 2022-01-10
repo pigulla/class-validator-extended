@@ -1,10 +1,10 @@
 import 'jest-extended'
 
+import { SET_NOT_CONTAINS } from '~'
+
 import { expectValidationError } from '../../util'
 
 import { SetTestClass } from './set-test-class'
-
-import { SET_NOT_CONTAINS } from '~'
 
 describe('SetNotContains', () => {
     describe('setNotContains', () => {

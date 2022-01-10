@@ -1,10 +1,10 @@
 import 'jest-extended'
 
+import { MAP_CONTAINS_KEYS } from '~'
+
 import { expectValidationError } from '../../util'
 
 import { MapTestClass } from './map-test-class'
-
-import { MAP_CONTAINS_KEYS } from '~'
 
 describe('MapContainsKeys', () => {
     describe('mapContainsKeys', () => {

@@ -2,11 +2,11 @@ import 'jest-extended'
 
 import dayjs = require('dayjs')
 
+import { MAP_UNIQUE } from '~'
+
 import { expectValidationError } from '../../util'
 
 import { MapTestClass } from './map-test-class'
-
-import { MAP_UNIQUE } from '~'
 
 describe('MapUnique', () => {
     describe('mapUnique', () => {

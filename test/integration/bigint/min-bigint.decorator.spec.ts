@@ -1,10 +1,10 @@
 import 'jest-extended'
 
+import { MIN_BIGINT } from '~'
+
 import { expectNoValidationErrors, expectValidationError } from '../../util'
 
 import { BigIntTestClass } from './bigint-test-class'
-
-import { MIN_BIGINT } from '~'
 
 describe('MinBigInt', () => {
     it('should validate when the value is exactly the minimum', () => {

@@ -2,11 +2,11 @@ import 'jest-extended'
 
 import dayjs = require('dayjs')
 
+import { IS_DAYJS } from '~'
+
 import { expectNoValidationErrors, expectValidationError } from '../../util'
 
 import { DayjsTestClass } from './dayjs-test-class'
-
-import { IS_DAYJS } from '~'
 
 describe('IsDayjs', () => {
     it('should accept a valid Dayjs instance where an invalid one is sufficient', () => {

@@ -1,11 +1,11 @@
 import 'jest-extended'
 import dayjs from 'dayjs'
 
+import { MIN_DAYJS } from '~'
+
 import { expectValidationError } from '../../util'
 
 import { DayjsTestClass } from './dayjs-test-class'
-
-import { MIN_DAYJS } from '~'
 
 describe('MinDayjs', () => {
     describe('minDayjs', () => {

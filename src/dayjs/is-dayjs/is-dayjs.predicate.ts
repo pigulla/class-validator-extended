@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from 'dayjs'
+import { Dayjs, isDayjs as isDayjsNative } from 'dayjs'
 
 import { IsDayjsOptions } from './is-dayjs.options'
 
@@ -8,5 +8,5 @@ import { IsDayjsOptions } from './is-dayjs.options'
  * @param options Additional options.
  */
 export function isDayjs(value: unknown, options: IsDayjsOptions): value is Dayjs {
-    return dayjs.isDayjs(value) && (!options.is_valid || (value as Dayjs).isValid())
+    return isDayjsNative(value) && (!options.is_valid || (value as Dayjs).isValid())
 }

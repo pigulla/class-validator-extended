@@ -1,10 +1,10 @@
 import 'jest-extended'
 
+import { IS_BIGINT } from '~'
+
 import { expectValidationError } from '../../util'
 
 import { BigIntTestClass } from './bigint-test-class'
-
-import { IS_BIGINT } from '~'
 
 describe('IsBigInt', () => {
     describe('isBigInt', () => {

@@ -2,11 +2,11 @@ import 'jest-extended'
 
 import dayjs = require('dayjs')
 
+import { SET_UNIQUE } from '~'
+
 import { expectValidationError } from '../../util'
 
 import { SetTestClass } from './set-test-class'
-
-import { SET_UNIQUE } from '~'
 
 describe('SetUnique', () => {
     describe('setUnique', () => {

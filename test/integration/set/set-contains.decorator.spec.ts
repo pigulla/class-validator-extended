@@ -1,10 +1,10 @@
 import 'jest-extended'
 
+import { SET_CONTAINS } from '~'
+
 import { expectValidationError } from '../../util'
 
 import { SetTestClass } from './set-test-class'
-
-import { SET_CONTAINS } from '~'
 
 describe('SetContains', () => {
     describe('setContains', () => {

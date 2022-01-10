@@ -1,4 +1,6 @@
 {
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["unicorn", "prettier", "@typescript-eslint/eslint-plugin"],
     "extends": [
         "eslint:recommended",
         "plugin:unicorn/recommended",
@@ -7,10 +9,19 @@
         "plugin:import/typescript",
         "prettier"
     ],
-    "parser": "@typescript-eslint/parser",
-    "plugins": ["unicorn", "prettier", "@typescript-eslint/eslint-plugin"],
+    "settings": {
+        "parser": "@typescript-eslint/parser",
+        "import/parsers": {
+            "@typescript-eslint/parser": [".ts"]
+        },
+        "import/resolver": {
+            "typescript": {
+                "project": "./tsconfig.json"
+            }
+        }
+    },
     "env": {
-        "browser": true
+        "node": true
     },
     "rules": {
         "no-unused-vars": "off",

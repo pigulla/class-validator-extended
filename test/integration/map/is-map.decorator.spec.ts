@@ -1,10 +1,10 @@
 import 'jest-extended'
 
+import { IS_MAP } from '~'
+
 import { expectValidationError } from '../../util'
 
 import { MapTestClass } from './map-test-class'
-
-import { IS_MAP } from '~'
 
 describe('IsMap', () => {
     describe('isMap', () => {

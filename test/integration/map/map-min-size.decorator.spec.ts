@@ -1,10 +1,10 @@
 import 'jest-extended'
 
+import { MAP_MIN_SIZE } from '~'
+
 import { expectValidationError } from '../../util'
 
 import { MapTestClass } from './map-test-class'
-
-import { MAP_MIN_SIZE } from '~'
 
 describe('MapMinSize', () => {
     describe('mapMinSize', () => {

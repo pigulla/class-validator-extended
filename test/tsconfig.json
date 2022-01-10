@@ -1,13 +1,13 @@
 {
     "extends": "../tsconfig.json",
+    "include": ["../src/**/*.ts", "../test/**/*.ts"],
     "compilerOptions": {
-        "types": ["node", "jest"],
         "rootDir": "..",
+        "types": ["node", "jest"],
         "experimentalDecorators": true,
         "paths": {
             "~": ["src/index.ts"],
-            "~/*": ["src/*"],
+            "~/*": ["src/*"]
         }
-    },
-    "include": ["src/**/*.ts", "test/**/*.ts"],
+    }
 }

@@ -1,10 +1,10 @@
 import 'jest-extended'
 
+import { MAX_BIGINT } from '~'
+
 import { expectNoValidationErrors, expectValidationError } from '../../util'
 
 import { BigIntTestClass } from './bigint-test-class'
-
-import { MAX_BIGINT } from '~'
 
 describe('MaxBigInt', () => {
     it('should validate when the value is exactly the maximum', () => {

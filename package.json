@@ -8,12 +8,13 @@
         "lib": "src"
     },
     "scripts": {
+        "setup": "npm ci && npm install --no-save dayjs class-validator",
         "build": "rm -rf dist && tsc && npm run generate-docs",
         "test": "npm run lint && npm run jest && npm audit",
         "format": "prettier --write .",
         "jest": "jest",
         "lint": "npm run lint:tsc && npm run lint:eslint && npm run lint:prettier",
-        "lint:tsc": "tsc --noEmit",
+        "lint:tsc": "tsc --noEmit --project tsconfig.json && tsc --noEmit --project test/tsconfig.json",
         "lint:eslint": "eslint --max-warnings 0 --ext=ts .",
         "lint:prettier": "prettier --check .",
         "generate-docs": "typedoc"
@@ -46,6 +47,7 @@
         "@typescript-eslint/parser": "^5.9.0",
         "eslint": "^8.6.0",
         "eslint-config-prettier": "^8.3.0",
+        "eslint-import-resolver-typescript": "^2.5.0",
         "eslint-plugin-import": "^2.23.2",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-unicorn": "^40.0.0",
