@@ -1,4 +1,4 @@
-import { isSet } from '../../type/is-set'
+import { isSet } from '../../set/is-set'
 
 /**
  * @category Predicates

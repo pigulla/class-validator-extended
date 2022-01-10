@@ -23,7 +23,7 @@ module.exports = {
         '^~test/(.+)': '<rootDir>/test/$1',
     },
     setupFiles: ['jest-date-mock'],
-    setupFilesAfterEnv: ['jest-extended/all'],
+    setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/test/setup.ts'],
     testEnvironment: 'node',
     transform: {
         '^.+\\.ts$': 'ts-jest',

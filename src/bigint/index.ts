@@ -1,3 +1,4 @@
+export * from './is-bigint'
 export * from './max-bigint'
 export * from './min-bigint'
 export * from './negative-bigint'

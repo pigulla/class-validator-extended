@@ -1,3 +1,4 @@
+export * from './is-map'
 export * from './map-contains'
 export * from './map-contains-keys'
 export * from './map-max-size'

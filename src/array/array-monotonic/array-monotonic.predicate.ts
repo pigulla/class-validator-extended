@@ -34,7 +34,7 @@ const allowedValues = new Set(Object.values(Monotonicity))
  */
 export function arrayMonotonic<T>(value: unknown, options: ArrayMonotonicOptions<T>): value is Array<unknown> {
     if (!allowedValues.has(options.monotonicity)) {
-        const allowedValuesString = [...allowedValues].map(value => `"${value}"`).join(', ')
+        const allowedValuesString = [...allowedValues].map(allowed => `"${allowed}"`).join(', ')
         throw new TypeError(
             `Unknown monotonicity type "${options.monotonicity}" (expected one of ${allowedValuesString})`
         )

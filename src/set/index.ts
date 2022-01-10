@@ -1,3 +1,4 @@
+export * from './is-set'
 export * from './set-contains'
 export * from './set-max-size'
 export * from './set-min-size'

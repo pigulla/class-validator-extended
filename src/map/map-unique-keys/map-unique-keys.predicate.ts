@@ -1,4 +1,4 @@
-import { isMap } from '../../type/is-map'
+import { isMap } from '../../map/is-map'
 
 import type { MapUniqueKeysProjection } from './map-unique-keys.options'
 

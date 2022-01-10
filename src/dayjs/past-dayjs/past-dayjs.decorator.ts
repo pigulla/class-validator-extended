@@ -28,7 +28,7 @@ export function PastDayjs(options?: ValidationOptions): PropertyDecorator {
             validator: {
                 validate: (value, _arguments): boolean => pastDayjs(value),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must be a Dayjs instance in the past`,
+                    eachPrefix => `${eachPrefix}$property must be a Dayjs object in the past`,
                     options
                 ),
             },

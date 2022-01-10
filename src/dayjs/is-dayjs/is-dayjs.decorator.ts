@@ -35,7 +35,7 @@ export function IsDayjs(options: Partial<IsDayjsOptions> & ValidationOptions = {
                 validate: (value, _arguments): boolean => isDayjs(value, decoratorOptions),
                 defaultMessage: buildMessage(
                     eachPrefix =>
-                        `${eachPrefix}$property must be ${decoratorOptions.is_valid ? 'a valid' : 'a'} Dayjs instance`,
+                        `${eachPrefix}$property must be ${decoratorOptions.is_valid ? 'a valid' : 'a'} Dayjs object`,
                     options
                 ),
             },

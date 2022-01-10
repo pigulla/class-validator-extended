@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-import { FutureDayjs, IsDayjs, MaxDayjs, MinDayjs, PastDayjs } from '~'
+import { FutureDayjs, IsDayjs, IsDuration, MaxDayjs, MinDayjs, PastDayjs } from '~'
 
 export class DayjsTestClass {
     @IsDayjs()
@@ -14,6 +14,12 @@ export class DayjsTestClass {
 
     @IsDayjs({ is_valid: false, each: true })
     eachIsDayjsInvalid: unknown = [dayjs('2020-05-42T00:00:00.000Z'), dayjs()]
+
+    @IsDuration()
+    isDuration: unknown = dayjs.duration(3_600)
+
+    @IsDuration({ each: true })
+    eachIsDuration: unknown = [dayjs.duration(42, 'minutes'), dayjs.duration(3_600)]
 
     @MaxDayjs('2021-01-01T00:00:00.000Z')
     maxDayjs: unknown = dayjs('2020-12-31T23:59:59.999Z')

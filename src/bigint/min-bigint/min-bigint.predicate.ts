@@ -1,4 +1,4 @@
-import { isBigInt } from '../../type/is-bigint'
+import { isBigInt } from '../../bigint/is-bigint'
 
 /**
  * @category Predicates

@@ -29,7 +29,7 @@ export function FutureDayjs(options?: ValidationOptions): PropertyDecorator {
             validator: {
                 validate: (value, _arguments): boolean => futureDayjs(value),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must be a Dayjs instance in the future`,
+                    eachPrefix => `${eachPrefix}$property must be a Dayjs object in the future`,
                     options
                 ),
             },
