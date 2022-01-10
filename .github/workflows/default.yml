@@ -21,7 +21,7 @@ jobs:
                   node-version: ${{ matrix.node }}
 
             - run: npm i -g npm@7 --registry=https://registry.npmjs.org
-            - run: npm ci
+            - run: npm run setup
             - run: npm test
             - run: npm run build
 
