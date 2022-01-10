@@ -1,0 +1,98 @@
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>class-validator-extended - v0.0.2-beta</title><meta name="description" content="Documentation for class-validator-extended - v0.0.2-beta"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">class-validator-extended - v0.0.2-beta</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>class-validator-extended - v0.0.2-beta</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography"><p><img src="https://img.shields.io/npm/v/class-validator-extended?style=flat-square&cacheSeconds=3600" alt="npm">
+<img src="https://img.shields.io/github/workflow/status/pigulla/class-validator-extended/Node.js%20CI?style=flat-square&cacheSeconds=3600" alt="GitHub Workflow Status">
+<img src="https://img.shields.io/requires/github/pigulla/class-validator-extended?style=flat-square&cacheSeconds=3600" alt="requires.io">
+<img src="https://img.shields.io/codecov/c/github/pigulla/class-validator-extended?style=flat-square&cacheSeconds=3600" alt="Codecov">
+<img src="https://img.shields.io/bundlephobia/min/class-validator-extended?style=flat-square&cacheSeconds=3600" alt="npm bundle size">
+<img src="https://img.shields.io/snyk/vulnerabilities/npm/class-validator-extended?style=flat-square&cacheSeconds=3600" alt="Snyk Vulnerabilities for npm package"></p>
+
+<a href="#class-validator-extended" id="class-validator-extended" style="color: inherit; text-decoration: none;">
+  <h1>class-validator-extended</h1>
+</a>
+<blockquote>
+<p>Additional decorator and non-decorator based validation for class-validator.</p>
+</blockquote>
+
+<a href="#validation-decorators" id="validation-decorators" style="color: inherit; text-decoration: none;">
+  <h2>Validation decorators</h2>
+</a>
+<table>
+<thead>
+<tr>
+<th>Decorator</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@ArrayMonotonic(options)</code></td>
+<td>Checks if given array is sorted according to the given options.</td>
+</tr>
+<tr>
+<td><code>@IsDayjs(options)</code></td>
+<td>Checks if given value is a <a href="https://www.npmjs.com/package/dayjs">Dayjs</a> instance.</td>
+</tr>
+<tr>
+<td><code>@IsMap()</code></td>
+<td>Checks if given value is a Map instance.</td>
+</tr>
+<tr>
+<td><code>@IsSet()</code></td>
+<td>Checks if given value is a Set instance.</td>
+</tr>
+<tr>
+<td><code>@MapContains(values[])</code></td>
+<td>Checks if given map contains all values from the array of values.</td>
+</tr>
+<tr>
+<td><code>@MapContainsKeys(values[])</code></td>
+<td>Checks if given map contains all keys from the array of values.</td>
+</tr>
+<tr>
+<td><code>@MapNotContains(values[])</code></td>
+<td>Checks if given map contains none of the values from the array of values.</td>
+</tr>
+<tr>
+<td><code>@MapNotContainsKeys(values[])</code></td>
+<td>Checks if given map contains none of the keys from the array of values.</td>
+</tr>
+<tr>
+<td><code>@MapNotEmpty()</code></td>
+<td>Checks if given map is not empty.</td>
+</tr>
+<tr>
+<td><code>@SetContains(values[])</code></td>
+<td>Checks if given set contains all values from the array of values.</td>
+</tr>
+<tr>
+<td><code>@SetNotContains(values[])</code></td>
+<td>Checks if given set contains none of the values from the array of values.</td>
+</tr>
+<tr>
+<td><code>@SetNotEmpty()</code></td>
+<td>Checks if given set is empty.</td>
+</tr>
+</tbody></table>
+
+<a href="#decorator-details" id="decorator-details" style="color: inherit; text-decoration: none;">
+  <h2>Decorator Details</h2>
+</a>
+
+<a href="#arraymonotonic" id="arraymonotonic" style="color: inherit; text-decoration: none;">
+  <h3>ArrayMonotonic</h3>
+</a>
+
+<a href="#isdayjs" id="isdayjs" style="color: inherit; text-decoration: none;">
+  <h3>IsDayjs</h3>
+</a>
+
+<a href="#mapnotempty" id="mapnotempty" style="color: inherit; text-decoration: none;">
+  <h3>MapNotEmpty</h3>
+</a>
+
+<a href="#setcontains" id="setcontains" style="color: inherit; text-decoration: none;">
+  <h3>SetContains</h3>
+</a>
+
+<a href="#setnotempty" id="setnotempty" style="color: inherit; text-decoration: none;">
+  <h3>SetNotEmpty</h3>
+</a>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-enum"><a href="enums/Monotonicity.html" class="tsd-kind-icon">Monotonicity</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#ArrayMonotonicOptions" class="tsd-kind-icon">Array<wbr/>Monotonic<wbr/>Options</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#ArrayMonotonicityComparator" class="tsd-kind-icon">Array<wbr/>Monotonicity<wbr/>Comparator</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#ArrayMonotonicityProjection" class="tsd-kind-icon">Array<wbr/>Monotonicity<wbr/>Projection</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#ArrayMonotonicityProjectionOrComparator" class="tsd-kind-icon">Array<wbr/>Monotonicity<wbr/>Projection<wbr/>Or<wbr/>Comparator</a></li><li class="tsd-kind-type-alias"><a href="modules.html#IsDayjsOptions" class="tsd-kind-icon">Is<wbr/>Dayjs<wbr/>Options</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#MapUniqueKeysProjection" class="tsd-kind-icon">Map<wbr/>Unique<wbr/>Keys<wbr/>Projection</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#MapUniqueProjection" class="tsd-kind-icon">Map<wbr/>Unique<wbr/>Projection</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#SetUniqueProjection" class="tsd-kind-icon">Set<wbr/>Unique<wbr/>Projection</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#ArrayMonotonic" class="tsd-kind-icon">Array<wbr/>Monotonic</a></li><li class="tsd-kind-function"><a href="modules.html#FutureDate" class="tsd-kind-icon">Future<wbr/>Date</a></li><li class="tsd-kind-function"><a href="modules.html#FutureDayjs" class="tsd-kind-icon">Future<wbr/>Dayjs</a></li><li class="tsd-kind-function"><a href="modules.html#IsBigInt" class="tsd-kind-icon">Is<wbr/>Big<wbr/>Int</a></li><li class="tsd-kind-function"><a href="modules.html#IsDayjs" class="tsd-kind-icon">Is<wbr/>Dayjs</a></li><li class="tsd-kind-function"><a href="modules.html#IsMap" class="tsd-kind-icon">Is<wbr/>Map</a></li><li class="tsd-kind-function"><a href="modules.html#IsSet" class="tsd-kind-icon">Is<wbr/>Set</a></li><li class="tsd-kind-function"><a href="modules.html#IsTimezone" class="tsd-kind-icon">Is<wbr/>Timezone</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#MapContains" class="tsd-kind-icon">Map<wbr/>Contains</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#MapContainsKeys" class="tsd-kind-icon">Map<wbr/>Contains<wbr/>Keys</a></li><li class="tsd-kind-function"><a href="modules.html#MapMaxSize" class="tsd-kind-icon">Map<wbr/>Max<wbr/>Size</a></li><li class="tsd-kind-function"><a href="modules.html#MapMinSize" class="tsd-kind-icon">Map<wbr/>Min<wbr/>Size</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#MapNotContains" class="tsd-kind-icon">Map<wbr/>Not<wbr/>Contains</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#MapNotContainsKeys" class="tsd-kind-icon">Map<wbr/>Not<wbr/>Contains<wbr/>Keys</a></li><li class="tsd-kind-function"><a href="modules.html#MapNotEmpty" class="tsd-kind-icon">Map<wbr/>Not<wbr/>Empty</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#MapUnique" class="tsd-kind-icon">Map<wbr/>Unique</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#MapUniqueKeys" class="tsd-kind-icon">Map<wbr/>Unique<wbr/>Keys</a></li><li class="tsd-kind-function"><a href="modules.html#MaxBigInt" class="tsd-kind-icon">Max<wbr/>Big<wbr/>Int</a></li><li class="tsd-kind-function"><a href="modules.html#MaxDayjs" class="tsd-kind-icon">Max<wbr/>Dayjs</a></li><li class="tsd-kind-function"><a href="modules.html#MinBigInt" class="tsd-kind-icon">Min<wbr/>Big<wbr/>Int</a></li><li class="tsd-kind-function"><a href="modules.html#MinDayjs" class="tsd-kind-icon">Min<wbr/>Dayjs</a></li><li class="tsd-kind-function"><a href="modules.html#NegativeBigInt" class="tsd-kind-icon">Negative<wbr/>Big<wbr/>Int</a></li><li class="tsd-kind-function"><a href="modules.html#PastDate" class="tsd-kind-icon">Past<wbr/>Date</a></li><li class="tsd-kind-function"><a href="modules.html#PastDayjs" class="tsd-kind-icon">Past<wbr/>Dayjs</a></li><li class="tsd-kind-function"><a href="modules.html#PositiveBigInt" class="tsd-kind-icon">Positive<wbr/>Big<wbr/>Int</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#SetContains" class="tsd-kind-icon">Set<wbr/>Contains</a></li><li class="tsd-kind-function"><a href="modules.html#SetMaxSize" class="tsd-kind-icon">Set<wbr/>Max<wbr/>Size</a></li><li class="tsd-kind-function"><a href="modules.html#SetMinSize" class="tsd-kind-icon">Set<wbr/>Min<wbr/>Size</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#SetNotContains" class="tsd-kind-icon">Set<wbr/>Not<wbr/>Contains</a></li><li class="tsd-kind-function"><a href="modules.html#SetNotEmpty" class="tsd-kind-icon">Set<wbr/>Not<wbr/>Empty</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#SetUnique" class="tsd-kind-icon">Set<wbr/>Unique</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#arrayMonotonic" class="tsd-kind-icon">array<wbr/>Monotonic</a></li><li class="tsd-kind-function"><a href="modules.html#futureDate" class="tsd-kind-icon">future<wbr/>Date</a></li><li class="tsd-kind-function"><a href="modules.html#futureDayjs" class="tsd-kind-icon">future<wbr/>Dayjs</a></li><li class="tsd-kind-function"><a href="modules.html#isBigInt" class="tsd-kind-icon">is<wbr/>Big<wbr/>Int</a></li><li class="tsd-kind-function"><a href="modules.html#isDayjs" class="tsd-kind-icon">is<wbr/>Dayjs</a></li><li class="tsd-kind-function"><a href="modules.html#isMap" class="tsd-kind-icon">is<wbr/>Map</a></li><li class="tsd-kind-function"><a href="modules.html#isSet" class="tsd-kind-icon">is<wbr/>Set</a></li><li class="tsd-kind-function"><a href="modules.html#isTimezone" class="tsd-kind-icon">is<wbr/>Timezone</a></li><li class="tsd-kind-function"><a href="modules.html#mapContains" class="tsd-kind-icon">map<wbr/>Contains</a></li><li class="tsd-kind-function"><a href="modules.html#mapContainsKeys" class="tsd-kind-icon">map<wbr/>Contains<wbr/>Keys</a></li><li class="tsd-kind-function"><a href="modules.html#mapMaxSize" class="tsd-kind-icon">map<wbr/>Max<wbr/>Size</a></li><li class="tsd-kind-function"><a href="modules.html#mapMinSize" class="tsd-kind-icon">map<wbr/>Min<wbr/>Size</a></li><li class="tsd-kind-function"><a href="modules.html#mapNotContains" class="tsd-kind-icon">map<wbr/>Not<wbr/>Contains</a></li><li class="tsd-kind-function"><a href="modules.html#mapNotContainsKeys" class="tsd-kind-icon">map<wbr/>Not<wbr/>Contains<wbr/>Keys</a></li><li class="tsd-kind-function"><a href="modules.html#mapNotEmpty" class="tsd-kind-icon">map<wbr/>Not<wbr/>Empty</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#mapUnique" class="tsd-kind-icon">map<wbr/>Unique</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#mapUniqueKeys" class="tsd-kind-icon">map<wbr/>Unique<wbr/>Keys</a></li><li class="tsd-kind-function"><a href="modules.html#maxBigInt" class="tsd-kind-icon">max<wbr/>Big<wbr/>Int</a></li><li class="tsd-kind-function"><a href="modules.html#maxDayjs" class="tsd-kind-icon">max<wbr/>Dayjs</a></li><li class="tsd-kind-function"><a href="modules.html#minBigInt" class="tsd-kind-icon">min<wbr/>Big<wbr/>Int</a></li><li class="tsd-kind-function"><a href="modules.html#minDayjs" class="tsd-kind-icon">min<wbr/>Dayjs</a></li><li class="tsd-kind-function"><a href="modules.html#negativeBigInt" class="tsd-kind-icon">negative<wbr/>Big<wbr/>Int</a></li><li class="tsd-kind-function"><a href="modules.html#pastDate" class="tsd-kind-icon">past<wbr/>Date</a></li><li class="tsd-kind-function"><a href="modules.html#pastDayjs" class="tsd-kind-icon">past<wbr/>Dayjs</a></li><li class="tsd-kind-function"><a href="modules.html#positiveBigInt" class="tsd-kind-icon">positive<wbr/>Big<wbr/>Int</a></li><li class="tsd-kind-function"><a href="modules.html#setContains" class="tsd-kind-icon">set<wbr/>Contains</a></li><li class="tsd-kind-function"><a href="modules.html#setMaxSize" class="tsd-kind-icon">set<wbr/>Max<wbr/>Size</a></li><li class="tsd-kind-function"><a href="modules.html#setMinSize" class="tsd-kind-icon">set<wbr/>Min<wbr/>Size</a></li><li class="tsd-kind-function"><a href="modules.html#setNotContains" class="tsd-kind-icon">set<wbr/>Not<wbr/>Contains</a></li><li class="tsd-kind-function"><a href="modules.html#setNotEmpty" class="tsd-kind-icon">set<wbr/>Not<wbr/>Empty</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#setUnique" class="tsd-kind-icon">set<wbr/>Unique</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
