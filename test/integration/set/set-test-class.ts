@@ -1,5 +1,5 @@
 import { Dayjs } from 'dayjs'
-import dayjs = require('dayjs')
+import dayjs from 'dayjs'
 
 import { IsSet, SetContains, SetMaxSize, SetMinSize, SetNotContains, SetNotEmpty, SetUnique } from '~'
 

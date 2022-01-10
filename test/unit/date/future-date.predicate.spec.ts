@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import dayjs = require('dayjs')
+import dayjs from 'dayjs'
 import { advanceTo, clear } from 'jest-date-mock'
 
 import { futureDate } from '~'

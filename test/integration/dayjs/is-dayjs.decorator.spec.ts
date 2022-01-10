@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import dayjs = require('dayjs')
+import dayjs from 'dayjs'
 
 import { IS_DAYJS } from '~'
 

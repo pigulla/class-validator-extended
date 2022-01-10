@@ -1,6 +1,6 @@
 import 'jest-extended'
 
-import dayjs = require('dayjs')
+import dayjs from 'dayjs'
 import { Dayjs } from 'dayjs'
 
 import { maxDayjs } from '~'

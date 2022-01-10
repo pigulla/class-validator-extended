@@ -1,4 +1,4 @@
-import dayjs = require('dayjs')
+import dayjs from 'dayjs'
 
 import { FutureDayjs, IsDayjs, MaxDayjs, MinDayjs, PastDayjs } from '~'
 

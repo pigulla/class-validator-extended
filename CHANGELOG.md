@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.0.2-beta] - 2021-05-??
+## [0.0.2-beta] - 2022-01-??
 
 ### Changed
 
@@ -15,12 +15,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
--   `MapContainsKeys`: Added new validator.
+-   `IsBigInt`: Added new validator.
+-   `MaxBigInt`: Added new validator.
+-   `MinBigInt`: Added new validator.
+-   `NegativeBigInt`: Added new validator.
+-   `PositiveBigInt`: Added new validator.
+-   `FutureDate`: Added new validator.
+-   `PastDate`: Added new validator.
+-   `FutureDayjs`: Added new validator.
+-   `MaxDayjs`: Added new validator.
+-   `MinDayjs`: Added new validator.
+-   `PastDayjs`: Added new validator.
+-   `IsMap`: Added new validator.
 -   `MapContains`: Added new validator.
--   `MapNotContainsKeys`: Added new validator.
+-   `MapContainsKeys`: Added new validator.
+-   `MapMaxSize`: Added new validator.
+-   `MapMinSize`: Added new validator.
 -   `MapNotContains`: Added new validator.
+-   `MapNotContainsKeys`: Added new validator.
+-   `MapUnique`: Added new validator.
+-   `MapUniqueKeys`: Added new validator.
+-   `IsSet`: Added new validator.
 -   `SetContains`: Added new validator.
+-   `SetMaxSize`: Added new validator.
+-   `SetMinSize`: Added new validator.
 -   `SetNotContains`: Added new validator.
+-   `SetUnique`: Added new validator.
+-   `IsTimezone`: Added new validator.
 -   `ArrayMonotonic`: Added an option to use a comparator instead of a selector function.
 
 ## [0.0.1-beta] - 2021-05-23

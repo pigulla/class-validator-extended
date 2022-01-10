@@ -1,10 +1,10 @@
 import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator'
 
-import { MapUniqueKeyProjection } from './map-unique-key.options'
-import { mapUniqueKey } from './map-unique-key.predicate'
+import { MapUniqueKeysProjection } from './map-unique-keys.options'
+import { mapUniqueKeys } from './map-unique-keys.predicate'
 
 /** @hidden */
-export const MAP_UNIQUE_KEY = 'mapUniqueKey'
+export const MAP_UNIQUE_KEYS = 'mapUniqueKeys'
 
 /**
  * Checks if the value is a [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
@@ -13,7 +13,7 @@ export const MAP_UNIQUE_KEY = 'mapUniqueKey'
  * #### Example
  * ```typescript
  * // Ensure there are no duplicate user ids in the map.
- * @MapUniqueKey<User>(user => user.id)
+ * @MapUniqueKeys<User>(user => user.id)
  * postsByUser: Map<User, Post[]>
  * ```
  *
@@ -23,15 +23,15 @@ export const MAP_UNIQUE_KEY = 'mapUniqueKey'
  * @typeParam Key The type of the map's keys.
  * @typeParam Projection The type returned by `projection`.
  */
-export function MapUniqueKey<Key = unknown, Projection = unknown>(
-    projection: MapUniqueKeyProjection<Key, Projection>,
+export function MapUniqueKeys<Key = unknown, Projection = unknown>(
+    projection: MapUniqueKeysProjection<Key, Projection>,
     options?: ValidationOptions
 ): PropertyDecorator {
     return ValidateBy(
         {
-            name: MAP_UNIQUE_KEY,
+            name: MAP_UNIQUE_KEYS,
             validator: {
-                validate: (value, _arguments): boolean => mapUniqueKey(value, projection),
+                validate: (value, _arguments): boolean => mapUniqueKeys(value, projection),
                 defaultMessage: buildMessage(eachPrefix => `${eachPrefix}all $property's keys must be unique`, options),
             },
         },

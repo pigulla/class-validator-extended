@@ -1,5 +1,5 @@
 import { Dayjs } from 'dayjs'
-import dayjs = require('dayjs')
+import dayjs from 'dayjs'
 
 import {
     IsMap,
@@ -11,7 +11,7 @@ import {
     MapNotContainsKeys,
     MapNotEmpty,
     MapUnique,
-    MapUniqueKey,
+    MapUniqueKeys,
 } from '~'
 
 export class MapTestClass {
@@ -158,14 +158,14 @@ export class MapTestClass {
         new Map([]),
     ]
 
-    @MapUniqueKey<Dayjs>(day => day.format('dddd'))
-    mapUniqueKey: unknown = new Map([
+    @MapUniqueKeys<Dayjs>(day => day.format('dddd'))
+    mapUniqueKeys: unknown = new Map([
         [dayjs('2020-05-01T00:00:00.000Z'), 42],
         [dayjs('2020-05-02T00:00:00.000Z'), 13],
     ])
 
-    @MapUniqueKey<Dayjs, string>(day => day.format('dddd'), { each: true })
-    eachMapUniqueKey: unknown = [
+    @MapUniqueKeys<Dayjs, string>(day => day.format('dddd'), { each: true })
+    eachMapUniqueKeys: unknown = [
         new Map([
             [dayjs('2020-05-01T00:00:00.000Z'), 'Saturday'],
             [dayjs('2020-05-06T00:00:00.000Z'), 'Thursday'],
