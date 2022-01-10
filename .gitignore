@@ -105,3 +105,6 @@ dist
 
 # IDEs
 .idea/
+
+# Generated documentation
+docs/

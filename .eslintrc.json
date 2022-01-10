@@ -1,22 +1,32 @@
 {
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["unicorn", "prettier", "@typescript-eslint", "@typescript-eslint/eslint-plugin"],
     "extends": [
         "eslint:recommended",
         "plugin:unicorn/recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
         "plugin:import/typescript",
+        "plugin:@typescript-eslint/recommended",
         "prettier"
     ],
-    "parser": "@typescript-eslint/parser",
-    "plugins": ["unicorn", "prettier", "@typescript-eslint/eslint-plugin"],
+    "settings": {
+        "parser": "@typescript-eslint/parser",
+        "import/parsers": {
+            "@typescript-eslint/parser": [".ts"]
+        },
+        "import/resolver": {
+            "typescript": {
+                "project": "./tsconfig.json"
+            }
+        }
+    },
     "env": {
-        "browser": true
+        "node": true
     },
     "rules": {
-        "no-dupe-class-members": "off",
         "no-unused-vars": "off",
         "prefer-arrow-callback": "error",
-        "@typescript-eslint/explicit-member-accessibility": "error",
         "import/prefer-default-export": "off",
         "import/no-default-export": "error",
         "import/order": [
@@ -31,8 +41,22 @@
             }
         ],
         "unicorn/no-null": "off",
-        "unicorn/no-array-callback-reference": "off",
-        "unicorn/no-array-reduce": "off",
-        "prettier/prettier": "error"
+        "unicorn/numeric-separators-style": [
+            "error",
+            {
+                "number": {
+                    "minimumDigits": 4,
+                    "groupLength": 3
+                }
+            }
+        ],
+        "prettier/prettier": "error",
+        "@typescript-eslint/consistent-type-imports": "error",
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                "argsIgnorePattern": "^_"
+            }
+        ]
     }
 }
