@@ -19,7 +19,7 @@ export const IS_DAYJS = 'isDayjs'
  * dateOfBirth: Dayjs
  * ```
  *
- * @category Dayjs
+ * @category Type
  * @param options
  * Accepts the following options (in addition to generic class-validator options):
  *   - `is_valid: boolean = true`

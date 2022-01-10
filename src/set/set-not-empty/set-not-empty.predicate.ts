@@ -1,5 +1,4 @@
-import { isSet } from '../is-set'
-
+import { isSet } from '../../type/is-set'
 /**
  * @category Predicates
  * @param value The value to validate.

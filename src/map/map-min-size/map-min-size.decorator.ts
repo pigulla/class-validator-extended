@@ -14,7 +14,7 @@ export const MAP_MIN_SIZE = 'mapMinSize'
  * ```typescript
  * // Ensure the map has at least 5 entries.
  * @MapMinSize(5)
- * values: Map
+ * values: Map<string, string>
  * ```
  *
  * @category Map

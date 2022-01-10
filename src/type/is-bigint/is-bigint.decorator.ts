@@ -16,7 +16,7 @@ export const IS_BIGINT = 'isBigInt'
  * hugeNumber: BigInt
  * ```
  *
- * @category BigInt
+ * @category Type
  * @param options Generic class-validator options.
  */
 export function IsBigInt(options?: ValidationOptions): PropertyDecorator {

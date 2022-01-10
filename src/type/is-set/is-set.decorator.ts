@@ -15,10 +15,10 @@ export const IS_SET = 'isSet'
  * ```typescript
  * // Ensure the value is a Set.
  * @IsSet()
- * values: Set
+ * values: Set<string>
  * ```
  *
- * @category Set
+ * @category Type
  * @param options Generic class-validator options.
  */
 export function IsSet(options?: ValidationOptions): PropertyDecorator {

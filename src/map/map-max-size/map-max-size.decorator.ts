@@ -14,7 +14,7 @@ export const MAP_MAX_SIZE = 'mapMaxSize'
  * ```typescript
  * // Ensure the map has at most 5 entries.
  * @MapMaxSize(5)
- * values: Map
+ * values: Map<string, string>
  * ```
  *
  * @category Map

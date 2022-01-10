@@ -9,7 +9,8 @@
         "CHANGELOG.md",
         "LICENSE",
         "README.md",
-        "dist/"
+        "dist/",
+        "docs/"
     ],
     "directories": {
         "test": "test",

@@ -14,7 +14,7 @@ export const SET_MAX_SIZE = 'setMaxSize'
  * ```typescript
  * // Ensure the set has at most 5 entries.
  * @SetMaxSize(5)
- * values: Set
+ * values: Set<string>
  * ```
  *
  * @category Set
