@@ -9,7 +9,7 @@
     },
     "scripts": {
         "setup": "npm ci && npm install --no-save dayjs class-validator",
-        "build": "rm -rf dist && tsc && npm run generate-docs",
+        "build": "rm -rf dist && tsc && npm run docs:generate",
         "test": "npm run lint && npm run jest && npm audit",
         "format": "prettier --write .",
         "jest": "jest",
