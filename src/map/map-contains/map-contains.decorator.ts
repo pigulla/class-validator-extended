@@ -20,14 +20,17 @@ export const MAP_CONTAINS = 'mapContains'
  * @category Map
  * @param required The values required in the given map.
  * @param options Generic class-validator options.
- * @typeParam T The type of values to check for.
+ * @typeParam Value The type of values to check for.
  */
-export function MapContains<T = unknown>(required: Iterable<T>, options?: ValidationOptions): PropertyDecorator {
+export function MapContains<Value = unknown>(
+    required: Iterable<Value>,
+    options?: ValidationOptions
+): PropertyDecorator {
     return ValidateBy(
         {
             name: MAP_CONTAINS,
             validator: {
-                validate: (value, _arguments): boolean => mapContains<T>(value, required),
+                validate: (value, _arguments): boolean => mapContains<Value>(value, required),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must contain $constraint1 values`,
                     options

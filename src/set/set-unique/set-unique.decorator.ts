@@ -21,11 +21,11 @@ export const SET_UNIQUE = 'setUnique'
  * @category Set
  * @param projection The function mapping each value to the value that is used for the uniqueness check.
  * @param options Generic class-validator options.
- * @typeParam T The type of the set's values.
+ * @typeParam Value The type of the set's values.
  * @typeParam Projection The type returned by `projection`.
  */
-export function SetUnique<T = unknown, Projection = unknown>(
-    projection: SetUniqueProjection<T, Projection>,
+export function SetUnique<Value = unknown, Projection = unknown>(
+    projection: SetUniqueProjection<Value, Projection>,
     options?: ValidationOptions
 ): PropertyDecorator {
     return ValidateBy(
