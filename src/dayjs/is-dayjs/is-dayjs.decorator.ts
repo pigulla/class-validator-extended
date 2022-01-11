@@ -19,7 +19,7 @@ export const IS_DAYJS = 'isDayjs'
  * dateOfBirth: Dayjs
  * ```
  *
- * @category Dayjs
+ * @category Type
  * @param options
  * Accepts the following options (in addition to generic class-validator options):
  *   - `is_valid: boolean = true`
@@ -35,7 +35,7 @@ export function IsDayjs(options: Partial<IsDayjsOptions> & ValidationOptions = {
                 validate: (value, _arguments): boolean => isDayjs(value, decoratorOptions),
                 defaultMessage: buildMessage(
                     eachPrefix =>
-                        `${eachPrefix}$property must be ${decoratorOptions.is_valid ? 'a valid' : 'a'} Dayjs instance`,
+                        `${eachPrefix}$property must be ${decoratorOptions.is_valid ? 'a valid' : 'a'} Dayjs object`,
                     options
                 ),
             },

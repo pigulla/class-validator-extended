@@ -1,4 +1,4 @@
-import { isSet } from '../is-set'
+import { isSet } from '../../set/is-set'
 
 import type { SetUniqueProjection } from './set-unique.options'
 

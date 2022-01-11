@@ -15,10 +15,11 @@ export const IS_MAP = 'isMap'
  * ```typescript
  * // Ensure the value is a Map.
  * @IsMap()
- * values: Map
+ * values: Map<string, string>
  * ```
  *
- * @category Map
+ * @category Type
+ * @param options Generic class-validator options.
  */
 export function IsMap(options?: ValidationOptions): PropertyDecorator {
     return ValidateBy(

@@ -24,9 +24,10 @@ jobs:
             - run: npm run setup
             - run: npm test
             - run: npm run build
-            - run: npm run docs:generate
 
-            - uses: codecov/codecov-action@v1
+            - uses: codecov/codecov-action@v2
+              if: matrix.node == '16'
               with:
+                  files: ./coverage/unit/lcov.info,./coverage/integration/lcov.info
                   fail_ci_if_error: true
                   verbose: true

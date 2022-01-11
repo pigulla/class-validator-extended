@@ -9,18 +9,21 @@
         "CHANGELOG.md",
         "LICENSE",
         "README.md",
-        "dist/"
+        "dist/",
+        "docs/"
     ],
     "directories": {
         "test": "test",
         "lib": "src"
     },
     "scripts": {
-        "setup": "npm ci && npm install --no-save dayjs class-validator",
+        "setup": "npm ci && npm install --no-save dayjs class-validator && rm -rf coverage dist docs",
         "build": "rm -rf dist && tsc && npm run docs:generate",
         "test": "npm run lint && npm run jest && npm audit",
         "format": "prettier --write .",
-        "jest": "jest",
+        "jest": "npm run jest:unit && npm run jest:integration",
+        "jest:unit": "jest --config=jest.unit.config.js",
+        "jest:integration": "jest --config=jest.integration.config.js",
         "lint": "npm run lint:tsc && npm run lint:eslint && npm run lint:prettier",
         "lint:tsc": "tsc --noEmit --project tsconfig.json && tsc --noEmit --project test/tsconfig.json",
         "lint:eslint": "eslint --max-warnings 0 --ext=ts .",
@@ -53,6 +56,7 @@
         "@types/validator": "^13.7.1",
         "@typescript-eslint/eslint-plugin": "^5.9.0",
         "@typescript-eslint/parser": "^5.9.0",
+        "dayjs": "^1.10.7",
         "eslint": "^8.6.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-import-resolver-typescript": "^2.5.0",

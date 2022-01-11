@@ -14,7 +14,7 @@ export const SET_MIN_SIZE = 'setMinSize'
  * ```typescript
  * // Ensure the set has at least 5 entries.
  * @SetMinSize(5)
- * values: Set
+ * values: Set<string>
  * ```
  *
  * @category Set

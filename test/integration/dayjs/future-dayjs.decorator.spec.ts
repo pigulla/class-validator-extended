@@ -24,7 +24,7 @@ describe('FutureDayjs', () => {
             expectValidationError(new DayjsTestClass({ futureDayjs: value }), {
                 property: 'futureDayjs',
                 constraint: FUTURE_DAYJS,
-                message: 'futureDayjs must be a Dayjs instance in the future',
+                message: 'futureDayjs must be a Dayjs object in the future',
             })
         }
     )
@@ -35,7 +35,7 @@ describe('FutureDayjs', () => {
             expectValidationError(new DayjsTestClass({ eachFutureDayjs: value }), {
                 property: 'eachFutureDayjs',
                 constraint: FUTURE_DAYJS,
-                message: 'each value in eachFutureDayjs must be a Dayjs instance in the future',
+                message: 'each value in eachFutureDayjs must be a Dayjs object in the future',
             })
         }
     )

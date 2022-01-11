@@ -14,7 +14,7 @@ export const SET_NOT_EMPTY = 'setNotEmpty'
  * ```typescript
  * // Ensure the set is not empty.
  * @SetNotEmpty()
- * values: Set
+ * values: Set<string>
  * ```
  *
  * @category Set

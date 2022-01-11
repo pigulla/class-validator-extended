@@ -25,7 +25,7 @@ describe('PastDayjs', () => {
                 expectValidationError(new DayjsTestClass({ pastDayjs: value }), {
                     property: 'pastDayjs',
                     constraint: PAST_DAYJS,
-                    message: 'pastDayjs must be a Dayjs instance in the past',
+                    message: 'pastDayjs must be a Dayjs object in the past',
                 })
             }
         )
@@ -38,7 +38,7 @@ describe('PastDayjs', () => {
                 expectValidationError(new DayjsTestClass({ eachPastDayjs: value }), {
                     property: 'eachPastDayjs',
                     constraint: PAST_DAYJS,
-                    message: 'each value in eachPastDayjs must be a Dayjs instance in the past',
+                    message: 'each value in eachPastDayjs must be a Dayjs object in the past',
                 })
             }
         )

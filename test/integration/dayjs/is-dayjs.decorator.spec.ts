@@ -16,7 +16,7 @@ describe('IsDayjs', () => {
         )
     })
 
-    it('should require each item to be a Dayjs instance', () => {
+    it('should require each item to be a Dayjs object', () => {
         expectValidationError(
             new DayjsTestClass({
                 eachIsDayjsInvalid: [dayjs('2020-05-19T00:00:00.000Z'), null],
@@ -24,7 +24,7 @@ describe('IsDayjs', () => {
             {
                 property: 'eachIsDayjsInvalid',
                 constraint: IS_DAYJS,
-                message: `each value in eachIsDayjsInvalid must be a Dayjs instance`,
+                message: `each value in eachIsDayjsInvalid must be a Dayjs object`,
             }
         )
     })
@@ -35,7 +35,7 @@ describe('IsDayjs', () => {
             expectValidationError(new DayjsTestClass({ isDayjs: value }), {
                 property: 'isDayjs',
                 constraint: IS_DAYJS,
-                message: `isDayjs must be a valid Dayjs instance`,
+                message: `isDayjs must be a valid Dayjs object`,
             })
         }
     )
@@ -46,7 +46,7 @@ describe('IsDayjs', () => {
             expectValidationError(new DayjsTestClass({ eachIsDayjs: value }), {
                 property: 'eachIsDayjs',
                 constraint: IS_DAYJS,
-                message: 'each value in eachIsDayjs must be a valid Dayjs instance',
+                message: 'each value in eachIsDayjs must be a valid Dayjs object',
             })
         }
     )

@@ -1,8 +1,9 @@
 // eslint-disable-next-line unicorn/prefer-module
 module.exports = {
     collectCoverage: true,
-    coverageReporters: ['clover', 'text', 'html'],
-    coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/src/(.+/)*index.ts'],
+    collectCoverageFrom: ['src/**/*.ts'],
+    coverageReporters: ['lcov', 'text', 'html'],
+    coveragePathIgnorePatterns: ['<rootDir>/src/(.+/)*index.ts'],
     coverageThreshold: {
         global: {
             branches: 100,
@@ -23,7 +24,7 @@ module.exports = {
         '^~test/(.+)': '<rootDir>/test/$1',
     },
     setupFiles: ['jest-date-mock'],
-    setupFilesAfterEnv: ['jest-extended/all'],
+    setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/test/setup.ts'],
     testEnvironment: 'node',
     transform: {
         '^.+\\.ts$': 'ts-jest',
