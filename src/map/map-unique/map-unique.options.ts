@@ -1,4 +1,4 @@
 /**
  * @category Types
  */
-export type MapUniqueProjection<T, P> = (item: T) => P
+export type MapUniqueProjection<Value, Projection> = (item: Value) => Projection

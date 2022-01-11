@@ -33,10 +33,7 @@ const allowedValues = new Set(Object.values(Monotonicity))
  * @param options Additional options (see {@link ArrayMonotonic}).
  * @typeParam T The type of the array elements.
  */
-export function arrayMonotonic<T = unknown>(
-    value: unknown,
-    options: ArrayMonotonicOptions<T>
-): value is Array<unknown> {
+export function arrayMonotonic<T = unknown>(value: unknown, options: ArrayMonotonicOptions<T>): value is Array<T> {
     if (!allowedValues.has(options.monotonicity)) {
         const allowedValuesString = [...allowedValues].map(allowed => `"${allowed}"`).join(', ')
         throw new TypeError(

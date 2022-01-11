@@ -20,14 +20,14 @@ export const MAP_CONTAINS_KEYS = 'mapContainsKeys'
  * @category Map
  * @param required The keys required in the given map.
  * @param options Generic class-validator options.
- * @typeParam T The type of keys to check for.
+ * @typeParam Key The type of keys to check for.
  */
-export function MapContainsKeys<T = unknown>(required: T[], options?: ValidationOptions): PropertyDecorator {
+export function MapContainsKeys<Key = unknown>(required: Key[], options?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {
             name: MAP_CONTAINS_KEYS,
             validator: {
-                validate: (value, _arguments): boolean => mapContainsKeys<T>(value, required),
+                validate: (value, _arguments): boolean => mapContainsKeys<Key>(value, required),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must contain $constraint1 keys`,
                     options

@@ -20,14 +20,17 @@ export const SET_CONTAINS = 'setContains'
  * @category Set
  * @param required The values required in the given set.
  * @param options Generic class-validator options.
- * @typeParam T The type of values to check for.
+ * @typeParam Value The type of values to check for.
  */
-export function SetContains<T = unknown>(required: Iterable<T>, options?: ValidationOptions): PropertyDecorator {
+export function SetContains<Value = unknown>(
+    required: Iterable<Value>,
+    options?: ValidationOptions
+): PropertyDecorator {
     return ValidateBy(
         {
             name: SET_CONTAINS,
             validator: {
-                validate: (value, _arguments): boolean => setContains<T>(value, required),
+                validate: (value, _arguments): boolean => setContains<Value>(value, required),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must contain $constraint1 values`,
                     options

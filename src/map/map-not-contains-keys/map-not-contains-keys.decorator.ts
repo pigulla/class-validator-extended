@@ -20,17 +20,17 @@ export const MAP_NOT_CONTAINS_KEYS = 'mapNotContainsKeys'
  * @category Map
  * @param forbidden The values forbidden in the given map.
  * @param options Generic class-validator options.
- * @typeParam T The type of keys to check for.
+ * @typeParam Key The type of keys to check for.
  */
-export function MapNotContainsKeys<T = unknown>(
-    forbidden: Iterable<T>,
+export function MapNotContainsKeys<Key = unknown>(
+    forbidden: Iterable<Key>,
     options?: ValidationOptions
 ): PropertyDecorator {
     return ValidateBy(
         {
             name: MAP_NOT_CONTAINS_KEYS,
             validator: {
-                validate: (value, _arguments): boolean => mapNotContainsKeys<T>(value, forbidden),
+                validate: (value, _arguments): boolean => mapNotContainsKeys<Key>(value, forbidden),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property should not contain $constraint1 keys`,
                     options

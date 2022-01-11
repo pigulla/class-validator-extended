@@ -6,8 +6,13 @@ import type { SetUniqueProjection } from './set-unique.options'
  * @category Predicates
  * @param value The value to validate.
  * @param projection The function mapping each value to the value that is used for the uniqueness check.
+ * @typeParam Value The type of the set's values.
+ * @typeParam Projection The type returned by `projection`.
  */
-export function setUnique<T, P>(value: unknown, projection: SetUniqueProjection<T, P>): value is Set<T> {
+export function setUnique<Value, Projection>(
+    value: unknown,
+    projection: SetUniqueProjection<Value, Projection>
+): value is Set<Value> {
     if (typeof projection !== 'function') {
         throw new TypeError('Parameter "projection" must be a function')
     }
@@ -16,8 +21,8 @@ export function setUnique<T, P>(value: unknown, projection: SetUniqueProjection<
         return false
     }
 
-    const seen = new Set<P>()
-    const set = value as Set<T>
+    const seen = new Set<Projection>()
+    const set = value as Set<Value>
 
     for (const item of set.keys()) {
         const selected = projection(item)
