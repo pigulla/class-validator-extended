@@ -1,13 +1,19 @@
-![npm](https://img.shields.io/npm/v/class-validator-extended?style=flat-square&cacheSeconds=3600)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pigulla/class-validator-extended/Node.js%20CI?style=flat-square&cacheSeconds=3600)
-![requires.io](https://img.shields.io/requires/github/pigulla/class-validator-extended?style=flat-square&cacheSeconds=3600)
-![Codecov](https://img.shields.io/codecov/c/github/pigulla/class-validator-extended?style=flat-square&cacheSeconds=3600)
-![npm bundle size](https://img.shields.io/bundlephobia/min/class-validator-extended?style=flat-square&cacheSeconds=3600)
-![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/class-validator-extended?style=flat-square&cacheSeconds=3600)
+[![npm](https://img.shields.io/npm/v/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://www.npmjs.com/package/class-validator-extended)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pigulla/class-validator-extended/Node.js%20CI?style=flat-square&cacheSeconds=3600)](https://github.com/pigulla/class-validator-extended/actions?query=branch%3Amain)
+[![GitHub Issues](https://img.shields.io/github/issues-raw/pigulla/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://github.com/pigulla/class-validator-extended/issues)
+[![requires.io](https://img.shields.io/requires/github/pigulla/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://requires.io/github/pigulla/class-validator-extended/requirements/?branch=main)
+[![Codecov](https://img.shields.io/codecov/c/github/pigulla/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://app.codecov.io/gh/pigulla/class-validator-extended)
+[![npm bundle size](https://img.shields.io/bundlephobia/min/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://bundlephobia.com/package/class-validator-extended)
+[![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://snyk.io/advisor/npm-package/class-validator-extended)
 
 # class-validator-extended
 
 > Additional decorator and non-decorator based validation for [class-validator](https://github.com/typestack/class-validator).
+
+- ✅ Thoroughly tested
+- ✅ Well documented
+- ✅ No additional dependencies ([Day.js](https://day.js.org/) is supported but optional)
+- ✅ Uses [Semantic Versioning](https://semver.org/) and keeps a [nice](https://keepachangelog.com/en/1.0.0/) [Changelog](CHANGELOG.md)
 
 ## Validation decorators
 
