@@ -12,10 +12,10 @@
 
 #### Safe and simple to use
 
-- 🕵️‍♀️ Thoroughly tested
-- 🕮 Well documented
-- ✨ No additional dependencies ([Day.js](https://day.js.org/) is supported but optional)
-- 😊 Uses [Semantic Versioning](https://semver.org/) and keeps a [nice](https://keepachangelog.com/en/1.0.0/) [Changelog](CHANGELOG.md)
+-   🕵️‍♀️ Thoroughly tested
+-   🕮 Well documented
+-   ✨ No additional dependencies ([Day.js](https://day.js.org/) is supported but optional)
+-   😊 Uses [Semantic Versioning](https://semver.org/) and keeps a [nice](https://keepachangelog.com/en/1.0.0/) [Changelog](CHANGELOG.md)
 
 ## Validation decorators
 
