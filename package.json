@@ -1,6 +1,6 @@
 {
     "name": "class-validator-extended",
-    "version": "0.0.2-beta",
+    "version": "0.0.3-beta",
     "description": "Additional decorator and non-decorator based validation for class-validator.",
     "main": "dist/index.js",
     "files": [
@@ -15,6 +15,11 @@
     "directories": {
         "test": "test",
         "lib": "src"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
     },
     "scripts": {
         "setup": "npm ci && npm install --no-save dayjs class-validator && rm -rf coverage dist docs",
@@ -56,6 +61,7 @@
         "@types/validator": "^13.7.1",
         "@typescript-eslint/eslint-plugin": "^5.9.0",
         "@typescript-eslint/parser": "^5.9.0",
+        "cz-conventional-changelog": "^3.3.0",
         "dayjs": "^1.10.7",
         "eslint": "^8.6.0",
         "eslint-config-prettier": "^8.3.0",
