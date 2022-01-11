@@ -27,7 +27,7 @@ export function MapContains<T = unknown>(required: Iterable<T>, options?: Valida
         {
             name: MAP_CONTAINS,
             validator: {
-                validate: (value, _arguments): boolean => mapContains(value, required),
+                validate: (value, _arguments): boolean => mapContains<T>(value, required),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must contain $constraint1 values`,
                     options

@@ -16,7 +16,7 @@ export const IS_TIMEZONE = 'isTimezone'
  * ```typescript
  * // Ensure the value is a valid timezone.
  * @IsTimezone()
- * timezone: string
+ * timezone: string = 'Pacific/Guam'
  * ```
  *
  * @category String

@@ -6,10 +6,12 @@ import type { MapUniqueProjection } from './map-unique.options'
  * @category Predicates
  * @param value The value to validate.
  * @param projection The function mapping each value to the value that is used for the uniqueness check.
+ * @typeParam Value The type of the map's values.
+ * @typeParam Projection The type returned by `projection`.
  */
-export function mapUnique<Key, Projection>(
+export function mapUnique<Value, Projection>(
     value: unknown,
-    projection: MapUniqueProjection<Key, Projection>
+    projection: MapUniqueProjection<Value, Projection>
 ): value is Map<unknown, unknown> {
     if (typeof projection !== 'function') {
         throw new TypeError('Parameter "projection" must be a function')
@@ -20,7 +22,7 @@ export function mapUnique<Key, Projection>(
     }
 
     const seen = new Set<Projection>()
-    const map = value as Map<unknown, Key>
+    const map = value as Map<unknown, Value>
 
     for (const item of map.values()) {
         const selected = projection(item)

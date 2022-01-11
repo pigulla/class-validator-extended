@@ -27,7 +27,7 @@ export function MapContainsKeys<T = unknown>(required: T[], options?: Validation
         {
             name: MAP_CONTAINS_KEYS,
             validator: {
-                validate: (value, _arguments): boolean => mapContainsKeys(value, required),
+                validate: (value, _arguments): boolean => mapContainsKeys<T>(value, required),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must contain $constraint1 keys`,
                     options

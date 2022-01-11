@@ -5,7 +5,7 @@ import { isMap } from '../../map/is-map'
  * @param value The value to validate.
  * @param required List of mandatory values for this map.
  */
-export function mapContains(value: unknown, required: Iterable<unknown>): value is Map<unknown, unknown> {
+export function mapContains<T = unknown>(value: unknown, required: Iterable<T>): value is Map<unknown, unknown> {
     if (!isMap(value)) {
         return false
     }

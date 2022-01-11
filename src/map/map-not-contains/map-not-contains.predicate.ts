@@ -4,8 +4,9 @@ import { isMap } from '../../map/is-map'
  * @category Predicates
  * @param value The value to validate.
  * @param forbidden List of forbidden values for this map.
+ * @typeParam T The type of values to check for.
  */
-export function mapNotContains(value: unknown, forbidden: Iterable<unknown>): value is Map<unknown, unknown> {
+export function mapNotContains<T>(value: unknown, forbidden: Iterable<T>): value is Map<unknown, unknown> {
     if (!isMap(value)) {
         return false
     }

@@ -21,11 +21,11 @@ export const MAP_UNIQUE = 'mapUnique'
  * @category Map
  * @param projection The function mapping each map entry to the value that is used for the uniqueness check.
  * @param options Generic class-validator options.
- * @typeParam T The type of the map's values.
+ * @typeParam Value The type of the map's values.
  * @typeParam Projection The type returned by `projection`.
  */
-export function MapUnique<Key = unknown, Projection = Key>(
-    projection: MapUniqueProjection<Key, Projection>,
+export function MapUnique<Value = unknown, Projection = Value>(
+    projection: MapUniqueProjection<Value, Projection>,
     options?: ValidationOptions
 ): PropertyDecorator {
     return ValidateBy(

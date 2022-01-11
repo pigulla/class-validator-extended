@@ -27,7 +27,7 @@ export function SetContains<T = unknown>(required: Iterable<T>, options?: Valida
         {
             name: SET_CONTAINS,
             validator: {
-                validate: (value, _arguments): boolean => setContains(value, required),
+                validate: (value, _arguments): boolean => setContains<T>(value, required),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must contain $constraint1 values`,
                     options

@@ -16,7 +16,7 @@ export const IS_AWS_REGION = 'isAwsRegion'
  * ```typescript
  * // Ensure the value is a valid looking AWS region
  * @IsAwsRegion()
- * region: string
+ * region: string = 'eu-central-1
  * ```
  *
  * @category String

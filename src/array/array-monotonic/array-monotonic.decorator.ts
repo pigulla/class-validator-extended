@@ -35,18 +35,18 @@ export const ARRAY_MONOTONIC = 'arrayMonotonic'
  * Accepts the following options (in addition to generic class-validator options):
  *   - `monotonicity: Monotonicity`
  *     The required ordering of the array.
- *   - `projection: (element) => number` (*mutually exclusive with `comparator`)
+ *   - `projection: (element) => number` (*mutually exclusive with `comparator`*)
  *     Project an array element to a number which is then used for comparison.
- *   - `comparator: (a, b) => number` (*mutually exclusive with `projection`)
+ *   - `comparator: (a, b) => number` (*mutually exclusive with `projection`*)
  *     Directly compare two elements (as in [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)).
- *
+ * @typeParam T The type of the array elements.
  */
-export function ArrayMonotonic<T>(options: ArrayMonotonicOptions<T> & ValidationOptions) {
+export function ArrayMonotonic<T = unknown>(options: ArrayMonotonicOptions<T> & ValidationOptions) {
     return ValidateBy(
         {
             name: ARRAY_MONOTONIC,
             validator: {
-                validate: (value, _arguments): boolean => arrayMonotonic(value, options),
+                validate: (value, _arguments): boolean => arrayMonotonic<T>(value, options),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be a ${options.monotonicity} array`,
                     options

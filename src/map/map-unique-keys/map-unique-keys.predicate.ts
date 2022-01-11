@@ -6,11 +6,13 @@ import type { MapUniqueKeysProjection } from './map-unique-keys.options'
  * @category Predicates
  * @param value The value to validate.
  * @param projection The function mapping each key to the value that is used for the uniqueness check.
+ * @typeParam Key The type of the map's keys.
+ * @typeParam Projection The type returned by `projection`.
  */
 export function mapUniqueKeys<Key, Projection>(
     value: unknown,
     projection: MapUniqueKeysProjection<Key, Projection>
-): value is Map<Key, unknown> {
+): value is Map<unknown, unknown> {
     if (typeof projection !== 'function') {
         throw new TypeError('Parameter "projection" must be a function')
     }

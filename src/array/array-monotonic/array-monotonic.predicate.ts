@@ -30,9 +30,13 @@ const allowedValues = new Set(Object.values(Monotonicity))
 /**
  * @category Predicates
  * @param value The value to validate.
- * @param options Additional options.
+ * @param options Additional options (see {@link ArrayMonotonic}).
+ * @typeParam T The type of the array elements.
  */
-export function arrayMonotonic<T>(value: unknown, options: ArrayMonotonicOptions<T>): value is Array<unknown> {
+export function arrayMonotonic<T = unknown>(
+    value: unknown,
+    options: ArrayMonotonicOptions<T>
+): value is Array<unknown> {
     if (!allowedValues.has(options.monotonicity)) {
         const allowedValuesString = [...allowedValues].map(allowed => `"${allowed}"`).join(', ')
         throw new TypeError(

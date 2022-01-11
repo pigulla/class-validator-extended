@@ -9,6 +9,8 @@ export const IS_DURATION = 'isDuration'
 /**
  * Checks if the given value is a Dayjs Duration object.
  *
+ * This requires the Duration-plugin to be loaded. If this is not the case, an error will be thrown.
+ *
  * #### Example
  * ```typescript
  * // Ensure the value is a Dayjs Duration object.

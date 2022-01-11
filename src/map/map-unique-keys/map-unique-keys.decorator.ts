@@ -32,7 +32,7 @@ export function MapUniqueKeys<Key = unknown, Projection = unknown>(
         {
             name: MAP_UNIQUE_KEYS,
             validator: {
-                validate: (value, _arguments): boolean => mapUniqueKeys(value, projection),
+                validate: (value, _arguments): boolean => mapUniqueKeys<Key, Projection>(value, projection),
                 defaultMessage: buildMessage(eachPrefix => `${eachPrefix}all $property's keys must be unique`, options),
             },
         },

@@ -1,5 +1,9 @@
 const regExp = /^[a-z]{2}-[a-z]+-([1-9]|1\d)$/
 
-export function isAwsRegion(input: unknown): input is string {
-    return typeof input === 'string' && regExp.test(input)
+/**
+ * @category Predicates
+ * @param value The value to validate.
+ */
+export function isAwsRegion(value: unknown): value is string {
+    return typeof value === 'string' && regExp.test(value)
 }

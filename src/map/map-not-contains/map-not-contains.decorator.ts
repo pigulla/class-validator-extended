@@ -27,7 +27,7 @@ export function MapNotContains<T = unknown>(forbidden: Iterable<T>, options?: Va
         {
             name: MAP_NOT_CONTAINS,
             validator: {
-                validate: (value, _arguments): boolean => mapNotContains(value, forbidden),
+                validate: (value, _arguments): boolean => mapNotContains<T>(value, forbidden),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property should not contain $constraint1 values`,
                     options
