@@ -4,6 +4,6 @@ export {
     ArrayMonotonicOptions,
     ArrayMonotonicityComparator,
     ArrayMonotonicityProjection,
-    ArrayMonotonicityProjectionOrComparator,
+    ArrayMonotonicityFunction,
     Monotonicity,
 } from './array-monotonic.options'

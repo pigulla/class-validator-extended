@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+-   `ArrayMonotonic`: Make the comparator/projection optional.
+
 ## [0.0.4] - 2022-01-12
 
 ### Added

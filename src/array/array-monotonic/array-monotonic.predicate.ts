@@ -18,11 +18,13 @@ function checkMonotonicity(value: number, monotonicity: Monotonicity): boolean {
 }
 
 function compareItems<T>(a: T, b: T, options: ArrayMonotonicOptions<T>): boolean {
-    if ('projection' in options) {
+    if (options.projection) {
         return checkMonotonicity(options.projection(b) - options.projection(a), options.monotonicity)
+    } else if (options.comparator) {
+        return checkMonotonicity(options.comparator(b, a), options.monotonicity)
     }
 
-    return checkMonotonicity(options.comparator(b, a), options.monotonicity)
+    return checkMonotonicity(Number(b) - Number(a), options.monotonicity)
 }
 
 const allowedValues = new Set(Object.values(Monotonicity))
