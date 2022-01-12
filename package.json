@@ -1,6 +1,6 @@
 {
     "name": "class-validator-extended",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Additional decorator and non-decorator based validation for class-validator.",
     "main": "dist/index.js",
     "files": [
@@ -33,7 +33,8 @@
         "lint:tsc": "tsc --noEmit --project tsconfig.json && tsc --noEmit --project test/tsconfig.json",
         "lint:eslint": "eslint --max-warnings 0 --ext=ts .",
         "lint:prettier": "prettier --check .",
-        "docs:generate": "typedoc"
+        "docs:generate": "typedoc",
+        "prepublishOnly": "npm run setup && npm test && npm run build"
     },
     "repository": {
         "type": "git",
