@@ -1,4 +1,4 @@
-import { IsTimezone, IsAwsRegion } from '~'
+import { IsTimezone, IsAwsRegion, IsAwsARN } from '~'
 
 export class StringTestClass {
     @IsTimezone()
@@ -12,6 +12,12 @@ export class StringTestClass {
 
     @IsAwsRegion({ each: true })
     eachIsAwsRegion: unknown = ['eu-central-1']
+
+    @IsAwsARN()
+    isAwsARN: unknown = 'arn:aws:clouddirectory:us-west-2:123456789012:schema/development/cognito'
+
+    @IsAwsARN({ each: true })
+    eachIsAwsARN: unknown = ['arn:aws:clouddirectory:us-west-2:123456789012:schema/development/cognito']
 
     constructor(fields: Partial<StringTestClass> = {}) {
         for (const [k, v] of Object.entries(fields)) {

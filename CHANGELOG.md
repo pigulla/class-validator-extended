@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+-   `IsAwsARN`: Added new validator.
 -   `IsAwsRegion`: Added new validator.
 -   `IsDuration`: Added new validator.
 
@@ -20,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+-   `ArrayMonotonic`: Added an option to use a comparator instead of a projection function.
 -   `FutureDate`: Added new validator.
 -   `FutureDayjs`: Added new validator.
 -   `IsBigInt`: Added new validator.
@@ -47,7 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   `SetMinSize`: Added new validator.
 -   `SetNotContains`: Added new validator.
 -   `SetUnique`: Added new validator.
--   `ArrayMonotonic`: Added an option to use a comparator instead of a selector function.
 
 ## [0.0.1-beta] - 2021-05-23
 
