@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.3] - 2022-01-12
 
-*This release was unpublished due to a broken package.*
+_This release was unpublished due to a broken release bundle._
 
 ## [0.0.2-beta] - 2022-01-10
 
