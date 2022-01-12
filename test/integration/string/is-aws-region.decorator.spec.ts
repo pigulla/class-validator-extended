@@ -7,7 +7,7 @@ import { StringTestClass } from './string-test-class'
 
 describe('IsAwsRegion', () => {
     describe('isAwsRegion', () => {
-        it.each<[unknown]>([[null], [undefined], [42], [''], ['eu'], ['eu-42']])(
+        it.each<[unknown]>([[null], [undefined], [42], [''], ['eu'], ['eu-42'], ['eu-central-0']])(
             'should fail validation for %p',
             value => {
                 expectValidationError(new StringTestClass({ isAwsRegion: value }), {
@@ -20,7 +20,7 @@ describe('IsAwsRegion', () => {
     })
 
     describe('eachIsAwsRegion', () => {
-        it.each<[unknown[]]>([[[undefined]], [['']], [['eu-central-1', 'eu-central-99']]])(
+        it.each<[unknown[]]>([[[undefined]], [['']], [['eu-central-0', 'eu-central-1']]])(
             'should fail validation for %p',
             value => {
                 expectValidationError(new StringTestClass({ eachIsAwsRegion: value }), {
