@@ -24,7 +24,7 @@
     "scripts": {
         "setup": "npm ci && npm install --no-save dayjs class-validator && rm -rf coverage dist docs",
         "build": "rm -rf dist && tsc && npm run docs:generate",
-        "test": "npm run lint && npm run jest && npm audit",
+        "test": "npm run lint && npm run jest && npm audit --production",
         "format": "prettier --write .",
         "jest": "npm run jest:unit && npm run jest:integration",
         "jest:unit": "jest --config=jest.unit.config.js",
