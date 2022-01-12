@@ -12,6 +12,19 @@
         "dist/",
         "docs/"
     ],
+    "keywords": [
+        "validator",
+        "validation",
+        "decorators",
+        "typescript",
+        "class-validator",
+        "plugin"
+    ],
+    "author": {
+        "name": "Raphael Pigulla",
+        "email": "pigulla@four66.com"
+    },
+    "license": "MIT",
     "directories": {
         "test": "test",
         "lib": "src"
@@ -40,19 +53,6 @@
         "type": "git",
         "url": "git+https://github.com/pigulla/class-validator-extended.git"
     },
-    "keywords": [
-        "validator",
-        "validation",
-        "decorators",
-        "typescript",
-        "class-validator",
-        "plugin"
-    ],
-    "author": {
-        "name": "Raphael Pigulla",
-        "email": "pigulla@four66.com"
-    },
-    "license": "MIT",
     "bugs": {
         "url": "https://github.com/pigulla/class-validator-extended/issues"
     },
@@ -63,7 +63,6 @@
         "@typescript-eslint/eslint-plugin": "^5.9.0",
         "@typescript-eslint/parser": "^5.9.0",
         "cz-conventional-changelog": "^3.3.0",
-        "dayjs": "^1.10.7",
         "eslint": "^8.6.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-import-resolver-typescript": "^2.5.0",
@@ -79,7 +78,9 @@
         "typescript": "^4.5.4"
     },
     "peerDependencies": {
-        "class-validator": "*",
+        "class-validator": "*"
+    },
+    "optionalDependencies": {
         "dayjs": "*"
     }
 }
