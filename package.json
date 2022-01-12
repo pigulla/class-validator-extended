@@ -1,6 +1,6 @@
 {
     "name": "class-validator-extended",
-    "version": "0.0.3-beta",
+    "version": "0.0.3",
     "description": "Additional decorator and non-decorator based validation for class-validator.",
     "main": "dist/index.js",
     "files": [

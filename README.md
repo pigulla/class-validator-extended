@@ -15,7 +15,7 @@
 -   🕵️‍♀️ Thoroughly tested
 -   🕮 Well documented
 -   ✨ No additional dependencies ([Day.js](https://day.js.org/) is supported but optional)
--   😊 Uses [Semantic Versioning](https://semver.org/) and keeps a [nice](https://keepachangelog.com/en/1.0.0/) [Changelog](CHANGELOG.md)
+-   😊 Uses [Semantic Versioning](https://semver.org/) and keeps a [nice](https://keepachangelog.com/en/1.0.0/) [Changelog](https://github.com/pigulla/class-validator-extended/blob/main/CHANGELOG.md)
 
 ## Validation decorators
 
@@ -63,4 +63,5 @@ For detailed information please read the [API docs](https://pigulla.github.io/cl
 | `@SetUnique(projection, options?)`         | Checks if the given value is a Set without duplicate values with regard to the given `projection`.          |     [🔗](https://pigulla.github.io/class-validator-extended/modules.html#SetUnique)      |
 | **String**                                 |                                                                                                             |                                                                                          |
 | `@IsAwsRegion(options?)`                   | Checks if the given value is an AWS region string.                                                          |    [🔗](https://pigulla.github.io/class-validator-extended/modules.html#IsAwsRegion)     |
+| `@IsAwsARN(options?)`                      | Checks if the given value is an AWS ARN string.                                                             |    [🔗](https://pigulla.github.io/class-validator-extended/modules.html#IsAwsRegion)     |
 | `@IsTimezone(options?)`                    | Checks if the given value is a valid timezone string.                                                       |     [🔗](https://pigulla.github.io/class-validator-extended/modules.html#IsTimezone)     |
