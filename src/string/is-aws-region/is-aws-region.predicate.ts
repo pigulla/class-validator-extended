@@ -1,4 +1,4 @@
-const regExp = /^[a-z]{2}-[a-z]+-([1-9]|1\d)$/
+const regExp = /^[a-z]{2}-[a-z]+-([1-9]\d*)$/
 
 /**
  * @category Predicates

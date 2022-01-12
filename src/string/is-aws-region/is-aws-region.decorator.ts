@@ -9,14 +9,14 @@ export const IS_AWS_REGION = 'isAwsRegion'
 /**
  * Checks if the given value is an AWS region string.
  *
- * Beware that this decorator only checks for syntactic validity, it does not actually check if the region exists. For
+ * Beware that this decorator only checks for syntactic validity, it does not check if the region really exists. For
  * instance, it will accept "eu-central-9" which - at the time of writing - does not exist.
  *
  * #### Example
  * ```typescript
  * // Ensure the value is a valid looking AWS region
  * @IsAwsRegion()
- * region: string = 'eu-central-1
+ * region: string = 'eu-central-1'
  * ```
  *
  * @category String

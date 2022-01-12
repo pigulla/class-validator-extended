@@ -32,7 +32,7 @@ describe('isAwsRegion', () => {
         expect(isAwsRegion(value)).toBeTrue()
     })
 
-    it.each([[null], [undefined], [''], ['default'], ['eu-central-42'], ['north-1']])(
+    it.each([[null], [undefined], [''], ['default'], ['eu-central-0'], ['north-1']])(
         'should be false for %p',
         value => {
             expect(isAwsRegion(value)).toBeFalse()
