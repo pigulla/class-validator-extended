@@ -1,35 +1,47 @@
 import 'jest-extended'
 
-import { MIN_BIGINT } from '~'
-import { expectNoValidationErrors, expectValidationError } from '~test/util'
+import dayjs from 'dayjs'
+import { advanceTo, clear } from 'jest-date-mock'
 
-import { BigIntTestClass } from './bigint-test-class'
+import { MIN_BIGINT, MinBigInt, minBigInt } from '~'
+import { expectValidationError } from '~test/util'
 
-describe('MinBigInt', () => {
-    it('should validate when the value is exactly the minimum', () => {
-        expectNoValidationErrors(new BigIntTestClass({ minBigInt: BigInt(50) }))
+jest.mock('~/bigint/min-bigint/min-bigint.predicate')
+
+describe('@MinBigInt', () => {
+    const mockedMinBigInt = minBigInt as unknown as jest.Mock
+    const min = BigInt(9_000)
+    const now = dayjs('2020-05-01T06:00:00.000Z')
+
+    type Options = Parameters<typeof MinBigInt>
+    const matrix: Record<string, Options[]> = {
+        'property must not be less than 9000': [[min], [min, {}], [min, { each: undefined }], [min, { each: false }]],
+        'each value in property must not be less than 9000': [[min, { each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedMinBigInt.mockReturnValue(false)
+        advanceTo(now.toDate())
     })
 
-    describe('minBigInt', () => {
-        it.each<[unknown]>([[null], [undefined], [42], [BigInt(49)]])('should fail validation for %p', value => {
-            expectValidationError(new BigIntTestClass({ minBigInt: value }), {
-                property: 'minBigInt',
-                constraint: MIN_BIGINT,
-                message: 'minBigInt must not be less than $constraint1',
+    afterEach(() => {
+        clear()
+    })
+
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %o', options => {
+                class TestClass {
+                    @MinBigInt(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: MIN_BIGINT,
+                    message,
+                })
             })
         })
-    })
-
-    describe('eachMinBigInt', () => {
-        it.each<[unknown[]]>([[[BigInt(10), 42]], [[undefined]], [[42]], [[BigInt(100), BigInt(0)]]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new BigIntTestClass({ eachMinBigInt: value }), {
-                    property: 'eachMinBigInt',
-                    constraint: MIN_BIGINT,
-                    message: 'each value in eachMinBigInt must not be less than $constraint1',
-                })
-            }
-        )
-    })
+    }
 })

@@ -1,17 +1,17 @@
 import type { ValidationOptions } from 'class-validator'
 import { buildMessage, ValidateBy } from 'class-validator'
 import dayjs from 'dayjs'
-import type { ConfigType, Dayjs, OpUnitType } from 'dayjs'
+import type { ConfigType, OpUnitType } from 'dayjs'
 
 import { minDayjs } from './min-dayjs.predicate'
 
 /** @hidden */
 export const MIN_DAYJS = 'minDayjs'
 
-function message(minimum: Dayjs, options?: { allow_invalid?: boolean; inclusive?: boolean }): string {
+function message(options?: { allow_invalid?: boolean; inclusive?: boolean }): string {
     return `${options?.allow_invalid ? 'a' : 'a valid'} Dayjs object not ${
         options?.inclusive ? 'before or on' : 'before'
-    } ${dayjs(minimum).toISOString()}`
+    } $constraint1`
 }
 
 /**
@@ -42,10 +42,11 @@ export function MinDayjs(
     return ValidateBy(
         {
             name: MIN_DAYJS,
+            constraints: [dayjs(minimum).toISOString()],
             validator: {
                 validate: (value, _arguments): boolean => minDayjs(value, minimum),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must be ${message(dayjs(minimum), options)}`,
+                    eachPrefix => `${eachPrefix}$property must be ${message(options)}`,
                     options
                 ),
             },

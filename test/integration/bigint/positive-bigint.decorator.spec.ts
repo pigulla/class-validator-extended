@@ -1,34 +1,46 @@
 import 'jest-extended'
 
-import { POSITIVE_BIGINT } from '~'
+import dayjs from 'dayjs'
+import { advanceTo, clear } from 'jest-date-mock'
+
+import { POSITIVE_BIGINT, PositiveBigInt, positiveBigInt } from '~'
 import { expectValidationError } from '~test/util'
 
-import { BigIntTestClass } from './bigint-test-class'
+jest.mock('~/bigint/positive-bigint/positive-bigint.predicate')
 
-describe('PositiveBigInt', () => {
-    describe('positiveBigInt', () => {
-        it.each<[unknown]>([[null], [undefined], [42], [BigInt(0)], [BigInt(-42)]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new BigIntTestClass({ positiveBigInt: value }), {
-                    property: 'positiveBigInt',
-                    constraint: POSITIVE_BIGINT,
-                    message: 'positiveBigInt must be a positive BigInt',
-                })
-            }
-        )
+describe('@PositiveBigInt', () => {
+    const mockedPositiveBigInt = positiveBigInt as unknown as jest.Mock
+    const now = dayjs('2020-05-01T06:00:00.000Z')
+
+    type Options = Parameters<typeof PositiveBigInt>
+    const matrix: Record<string, Options[]> = {
+        'property must be a positive BigInt': [[], [{}], [{ each: undefined }], [{ each: false }]],
+        'each value in property must be a positive BigInt': [[{ each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedPositiveBigInt.mockReturnValue(false)
+        advanceTo(now.toDate())
     })
 
-    describe('eachPositiveBigInt', () => {
-        it.each<[unknown[]]>([[[BigInt(10), 42]], [[undefined]], [[42]], [[BigInt(5), BigInt(0)]]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new BigIntTestClass({ eachPositiveBigInt: value }), {
-                    property: 'eachPositiveBigInt',
-                    constraint: POSITIVE_BIGINT,
-                    message: 'each value in eachPositiveBigInt must be a positive BigInt',
-                })
-            }
-        )
+    afterEach(() => {
+        clear()
     })
+
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @PositiveBigInt(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: POSITIVE_BIGINT,
+                    message,
+                })
+            })
+        })
+    }
 })

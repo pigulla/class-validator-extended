@@ -10,7 +10,7 @@ describe('@IsDuration', () => {
 
     type Options = Parameters<typeof IsDuration>
     const matrix: Record<string, Options[]> = {
-        'property must be a Dayjs duration object': [[{ each: undefined }], [{ each: false }]],
+        'property must be a Dayjs duration object': [[], [{}], [{ each: undefined }], [{ each: false }]],
         'each value in property must be a Dayjs duration object': [[{ each: true }]],
     }
 

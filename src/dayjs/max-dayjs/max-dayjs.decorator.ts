@@ -1,17 +1,17 @@
 import type { ValidationOptions } from 'class-validator'
 import { buildMessage, ValidateBy } from 'class-validator'
 import dayjs from 'dayjs'
-import type { ConfigType, Dayjs, OpUnitType } from 'dayjs'
+import type { ConfigType, OpUnitType } from 'dayjs'
 
 import { maxDayjs } from './max-dayjs.predicate'
 
 /** @hidden */
 export const MAX_DAYJS = 'maxDayjs'
 
-function message(maximum: Dayjs, options?: { allow_invalid?: boolean; inclusive?: boolean }): string {
+function message(options?: { allow_invalid?: boolean; inclusive?: boolean }): string {
     return `${options?.allow_invalid ? 'a' : 'a valid'} Dayjs object not ${
         options?.inclusive ? 'after or on' : 'after'
-    } ${dayjs(maximum).toISOString()}`
+    } $constraint1`
 }
 
 /**
@@ -42,10 +42,11 @@ export function MaxDayjs(
     return ValidateBy(
         {
             name: MAX_DAYJS,
+            constraints: [dayjs(maximum).toISOString()],
             validator: {
                 validate: (value, _arguments): boolean => maxDayjs(value, maximum, options),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must be ${message(dayjs(maximum), options)}`,
+                    eachPrefix => `${eachPrefix}$property must be ${message(options)}`,
                     options
                 ),
             },

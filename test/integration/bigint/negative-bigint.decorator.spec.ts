@@ -1,34 +1,46 @@
 import 'jest-extended'
 
-import { NEGATIVE_BIGINT } from '~'
+import dayjs from 'dayjs'
+import { advanceTo, clear } from 'jest-date-mock'
+
+import { NEGATIVE_BIGINT, NegativeBigInt, negativeBigInt } from '~'
 import { expectValidationError } from '~test/util'
 
-import { BigIntTestClass } from './bigint-test-class'
+jest.mock('~/bigint/negative-bigint/negative-bigint.predicate')
 
-describe('NegativeBigInt', () => {
-    describe('negativeBigInt', () => {
-        it.each<[unknown]>([[null], [undefined], [42], [BigInt(0)], [BigInt(42)]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new BigIntTestClass({ negativeBigInt: value }), {
-                    property: 'negativeBigInt',
-                    constraint: NEGATIVE_BIGINT,
-                    message: 'negativeBigInt must be a negative BigInt',
-                })
-            }
-        )
+describe('@NegativeBigInt', () => {
+    const mockedNegativeBigInt = negativeBigInt as unknown as jest.Mock
+    const now = dayjs('2020-05-01T06:00:00.000Z')
+
+    type Options = Parameters<typeof NegativeBigInt>
+    const matrix: Record<string, Options[]> = {
+        'property must be a negative BigInt': [[], [{}], [{ each: undefined }], [{ each: false }]],
+        'each value in property must be a negative BigInt': [[{ each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedNegativeBigInt.mockReturnValue(false)
+        advanceTo(now.toDate())
     })
 
-    describe('eachNegativeBigInt', () => {
-        it.each<[unknown[]]>([[[BigInt(10), 42]], [[undefined]], [[42]], [[BigInt(-5), BigInt(0)]]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new BigIntTestClass({ eachNegativeBigInt: value }), {
-                    property: 'eachNegativeBigInt',
-                    constraint: NEGATIVE_BIGINT,
-                    message: 'each value in eachNegativeBigInt must be a negative BigInt',
-                })
-            }
-        )
+    afterEach(() => {
+        clear()
     })
+
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @NegativeBigInt(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: NEGATIVE_BIGINT,
+                    message,
+                })
+            })
+        })
+    }
 })

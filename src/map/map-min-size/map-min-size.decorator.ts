@@ -25,6 +25,7 @@ export function MapMinSize(minimum: number, options?: ValidationOptions): Proper
     return ValidateBy(
         {
             name: MAP_MIN_SIZE,
+            constraints: [minimum],
             validator: {
                 validate: (value, _arguments): boolean => mapMinSize(value, minimum),
                 defaultMessage: buildMessage(

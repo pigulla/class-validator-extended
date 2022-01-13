@@ -60,10 +60,11 @@ export function ArrayMonotonic<T = unknown>(options: ArrayMonotonicOptions<T> & 
     return ValidateBy(
         {
             name: ARRAY_MONOTONIC,
+            constraints: [options.monotonicity],
             validator: {
                 validate: (value, _arguments): boolean => arrayMonotonic<T>(value, options),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must be a ${options.monotonicity} array`,
+                    eachPrefix => `${eachPrefix}$property must be a $constraint1 array`,
                     options
                 ),
             },

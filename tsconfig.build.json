@@ -7,6 +7,6 @@
 
         // Experimental
         "emitDecoratorMetadata": false,
-        "experimentalDecorators": false,
+        "experimentalDecorators": false
     }
 }

@@ -1,34 +1,37 @@
 import 'jest-extended'
 
-import { IS_AWS_REGION } from '~'
+import { IS_AWS_REGION, IsAwsRegion, isAwsRegion } from '~'
 import { expectValidationError } from '~test/util'
 
-import { StringTestClass } from './string-test-class'
+jest.mock('~/string/is-aws-region/is-aws-region.predicate')
 
-describe('IsAwsRegion', () => {
-    describe('isAwsRegion', () => {
-        it.each<[unknown]>([[null], [undefined], [42], [''], ['eu'], ['eu-42'], ['eu-central-0']])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new StringTestClass({ isAwsRegion: value }), {
-                    property: 'isAwsRegion',
-                    constraint: IS_AWS_REGION,
-                    message: `isAwsRegion must be an AWS region string`,
-                })
-            }
-        )
+describe('@IsAwsRegion', () => {
+    const mockedIsAwsRegion = isAwsRegion as unknown as jest.Mock
+
+    type Options = Parameters<typeof IsAwsRegion>
+    const matrix: Record<string, Options[]> = {
+        'property must be an AWS region string': [[], [{}], [{ each: undefined }], [{ each: false }]],
+        'each value in property must be an AWS region string': [[{ each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedIsAwsRegion.mockReturnValue(false)
     })
 
-    describe('eachIsAwsRegion', () => {
-        it.each<[unknown[]]>([[[undefined]], [['']], [['eu-central-0', 'eu-central-1']]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new StringTestClass({ eachIsAwsRegion: value }), {
-                    property: 'eachIsAwsRegion',
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @IsAwsRegion(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
                     constraint: IS_AWS_REGION,
-                    message: 'each value in eachIsAwsRegion must be an AWS region string',
+                    message,
                 })
-            }
-        )
-    })
+            })
+        })
+    }
 })

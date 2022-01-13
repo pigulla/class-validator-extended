@@ -26,10 +26,7 @@ export function SetNotEmpty(options?: ValidationOptions): PropertyDecorator {
             name: SET_NOT_EMPTY,
             validator: {
                 validate: (value, _arguments): boolean => setNotEmpty(value),
-                defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property should not be an empty set`,
-                    options
-                ),
+                defaultMessage: buildMessage(eachPrefix => `${eachPrefix}$property must not be an empty set`, options),
             },
         },
         options

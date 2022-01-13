@@ -27,7 +27,10 @@ export function IsMap(options?: ValidationOptions): PropertyDecorator {
             name: IS_MAP,
             validator: {
                 validate: (value, _arguments): boolean => isMap(value),
-                defaultMessage: buildMessage(eachPrefix => `${eachPrefix}$property must be a Map instance`, options),
+                defaultMessage: buildMessage(
+                    eachPrefix => `${eachPrefix}$property must be an instance of Map`,
+                    options
+                ),
             },
         },
         options

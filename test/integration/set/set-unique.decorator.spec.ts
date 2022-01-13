@@ -1,54 +1,43 @@
 import 'jest-extended'
 
-import dayjs from 'dayjs'
-
-import { SET_UNIQUE } from '~'
+import { SET_UNIQUE, SetUnique, setUnique } from '~'
 import { expectValidationError } from '~test/util'
 
-import { SetTestClass } from './set-test-class'
+jest.mock('~/set/set-unique/set-unique.predicate')
 
-describe('SetUnique', () => {
-    describe('setUnique', () => {
-        it.each<[unknown]>([
-            [null],
-            [undefined],
-            [new Map()],
-            [
-                new Set([
-                    dayjs('2020-05-01T00:00:00.000Z'),
-                    dayjs('2020-05-07T00:00:00.000Z'),
-                    dayjs('2020-05-08T00:00:00.000Z'),
-                ]),
-            ],
-        ])('should fail validation for %p', value => {
-            expectValidationError(new SetTestClass({ setUnique: value }), {
-                property: 'setUnique',
-                constraint: SET_UNIQUE,
-                message: `all setUnique's values must be unique`,
-            })
-        })
+describe('@SetUnique', () => {
+    const mockedSetUnique = setUnique as unknown as jest.Mock
+    const projection = jest.fn()
+
+    type Options = Parameters<typeof SetUnique>
+    const matrix: Record<string, Options[]> = {
+        'property must have unique values': [
+            [projection],
+            [projection, {}],
+            [projection, { each: undefined }],
+            [projection, { each: false }],
+        ],
+        'each value in property must have unique values': [[projection, { each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedSetUnique.mockReturnValue(false)
     })
 
-    describe('eachSetUnique', () => {
-        it.each<[unknown[]]>([
-            [[null]],
-            [[undefined]],
-            [[new Map()]],
-            [
-                [
-                    new Set([
-                        dayjs('2020-05-07T00:00:00.000Z'),
-                        dayjs('2020-05-12T00:00:00.000Z'),
-                        dayjs('2020-05-14T00:00:00.000Z'),
-                    ]),
-                ],
-            ],
-        ])('should fail validation for %p', value => {
-            expectValidationError(new SetTestClass({ eachSetUnique: value }), {
-                property: 'eachSetUnique',
-                constraint: SET_UNIQUE,
-                message: `each value in all eachSetUnique's values must be unique`,
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @SetUnique(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: SET_UNIQUE,
+                    message,
+                })
             })
         })
-    })
+    }
 })

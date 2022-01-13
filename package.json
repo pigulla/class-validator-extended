@@ -80,5 +80,8 @@
     },
     "peerDependencies": {
         "class-validator": "*"
+    },
+    "optionalDependencies": {
+        "dayjs": "*"
     }
 }
