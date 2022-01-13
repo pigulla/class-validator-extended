@@ -42,7 +42,7 @@ class Foo {
 }
 ```
 
-If you don't have [dayjs](https://day.js.org/) installed you need to use the `minimal` export:
+If you don't have [Dayjs](https://day.js.org/) installed you need to use the `minimal` export:
 ```typescript
 import { MaxBigInt } from 'class-validator-extended/dist/minimal'
 ```
