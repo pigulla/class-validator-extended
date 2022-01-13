@@ -29,7 +29,7 @@ export function IsDayjs(options?: { allow_invalid?: boolean } & ValidationOption
         {
             name: IS_DAYJS,
             validator: {
-                validate: (value, _arguments): boolean => isDayjs(value, options),
+                validate: (value, _arguments): boolean => isDayjs(value, { allow_invalid: options?.allow_invalid }),
                 defaultMessage: buildMessage(
                     eachPrefix =>
                         `${eachPrefix}$property must be ${options?.allow_invalid ? 'a' : 'a valid'} Dayjs object`,

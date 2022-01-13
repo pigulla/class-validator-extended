@@ -1,41 +1,37 @@
-import dayjs from 'dayjs'
 import 'jest-extended'
 
-import { IS_DURATION } from '~'
+import { IS_DURATION, IsDuration, isDuration } from '~'
 import { expectValidationError } from '~test/util'
 
-import { DayjsTestClass } from './dayjs-test-class'
+jest.mock('~/dayjs/is-duration/is-duration.predicate')
 
-describe('IsDuration', () => {
-    describe('isDuration', () => {
-        it.each<[unknown]>([
-            [null],
-            [undefined],
-            [42],
-            [new Date('2021-01-01T00:00:00.000Z')],
-            [dayjs('2021-01-01T00:00:00.000Z')],
-        ])('should fail validation for %p', value => {
-            expectValidationError(new DayjsTestClass({ isDuration: value }), {
-                property: 'isDuration',
-                constraint: IS_DURATION,
-                message: `isDuration must be a Dayjs duration object`,
-            })
-        })
+describe('@IsDuration', () => {
+    const mockedIsDuration = isDuration as unknown as jest.Mock
+
+    type Options = Parameters<typeof IsDuration>
+    const matrix: Record<string, Options[]> = {
+        'property must be a Dayjs duration object': [[{ each: undefined }], [{ each: false }]],
+        'each value in property must be a Dayjs duration object': [[{ each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedIsDuration.mockReturnValue(false)
     })
 
-    describe('eachIsDuration', () => {
-        it.each<[unknown[]]>([
-            [[BigInt(10), 42]],
-            [[undefined]],
-            [[42]],
-            [[new Date('2021-01-01T00:00:00.000Z')]],
-            [[dayjs('2021-01-01T00:00:00.000Z')]],
-        ])('should fail validation for %p', value => {
-            expectValidationError(new DayjsTestClass({ eachIsDuration: value }), {
-                property: 'eachIsDuration',
-                constraint: IS_DURATION,
-                message: 'each value in eachIsDuration must be a Dayjs duration object',
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @IsDuration(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: IS_DURATION,
+                    message,
+                })
             })
         })
-    })
+    }
 })

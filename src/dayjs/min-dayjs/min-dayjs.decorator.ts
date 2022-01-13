@@ -1,12 +1,18 @@
 import type { ValidationOptions } from 'class-validator'
 import { buildMessage, ValidateBy } from 'class-validator'
-import type { ConfigType } from 'dayjs'
 import dayjs from 'dayjs'
+import type { ConfigType, Dayjs, OpUnitType } from 'dayjs'
 
 import { minDayjs } from './min-dayjs.predicate'
 
 /** @hidden */
 export const MIN_DAYJS = 'minDayjs'
+
+function message(minimum: Dayjs, options?: { allow_invalid?: boolean; inclusive?: boolean }): string {
+    return `${options?.allow_invalid ? 'a' : 'a valid'} Dayjs object not ${
+        options?.inclusive ? 'before or on' : 'before'
+    } ${dayjs(minimum).toISOString()}`
+}
 
 /**
  * Checks if the given value is a valid Dayjs object not earlier than `minimum`.
@@ -14,7 +20,7 @@ export const MIN_DAYJS = 'minDayjs'
  * #### Example
  * ```typescript
  * // Ensure the value is after the infamous Y2K.
- * @MinDayjs('2000-01-01T00:00:00.000Z')
+ * @MinDayjs('2000-01-01Z', { granularity: 'day', inclusive: true })
  * y2kUnsafeDate: Dayjs
  * ```
  *
@@ -26,10 +32,12 @@ export const MIN_DAYJS = 'minDayjs'
  *     If true, allows the Dayjs object to be invalid (see [isValid()](https://day.js.org/docs/en/parse/is-valid)).
  *   - `inclusive: boolean = false`
  *     If true, allows the `maximum` date as well.
+ *  - `granularity: string = 'milliseconds'`
+ *     Defines the granularity, e.g. "day" to ignore hours, minutes, seconds and milliseconds.
  */
 export function MinDayjs(
     minimum: ConfigType,
-    options?: { allow_invalid?: boolean; inclusive?: boolean } & ValidationOptions
+    options?: { allow_invalid?: boolean; inclusive?: boolean; granularity?: OpUnitType } & ValidationOptions
 ): PropertyDecorator {
     return ValidateBy(
         {
@@ -37,10 +45,7 @@ export function MinDayjs(
             validator: {
                 validate: (value, _arguments): boolean => minDayjs(value, minimum),
                 defaultMessage: buildMessage(
-                    eachPrefix =>
-                        `${eachPrefix}$property must be ${
-                            options?.allow_invalid ? 'a' : 'a valid'
-                        } Dayjs object not before ${dayjs(minimum).toISOString()}`,
+                    eachPrefix => `${eachPrefix}$property must be ${message(dayjs(minimum), options)}`,
                     options
                 ),
             },
