@@ -26,8 +26,9 @@
     },
     "license": "MIT",
     "directories": {
-        "test": "test",
-        "lib": "src"
+        "doc": "docs",
+        "lib": "src",
+        "test": "test"
     },
     "config": {
         "commitizen": {
@@ -74,6 +75,7 @@
         "jest-extended": "^1.2.0",
         "prettier": "^2.3.0",
         "ts-jest": "^27.0.1",
+        "type-fest": "^2.9.0",
         "typedoc": "^0.22.10",
         "typescript": "^4.5.4"
     },

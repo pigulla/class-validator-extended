@@ -7,8 +7,13 @@ import { isDayjs } from '../../dayjs/is-dayjs'
  * @category Predicates
  * @param value The value to validate.
  * @param minimum The minimum allowed value.
+ * @param options Additional options (see {@link MinDays}).
  */
-export function minDayjs(value: unknown, minimum: ConfigType): value is Dayjs {
+export function minDayjs(
+    value: unknown,
+    minimum: ConfigType,
+    options: { allow_invalid?: boolean } = {}
+): value is Dayjs {
     const min = dayjs(minimum)
 
     if (!min.isValid()) {
@@ -16,5 +21,5 @@ export function minDayjs(value: unknown, minimum: ConfigType): value is Dayjs {
     }
 
     // Let's not rely on the isSameOrBefore-plugin which might or might not be registered.
-    return isDayjs(value, { is_valid: true }) && !(min.isAfter(value) || min.isSame(value))
+    return isDayjs(value, options) && !(min.isAfter(value) || min.isSame(value))
 }
