@@ -1,56 +1,43 @@
 import 'jest-extended'
 
-import { MAP_CONTAINS_KEYS } from '~'
+import { MAP_CONTAINS_KEYS, MapContainsKeys, mapContainsKeys } from '~'
 import { expectValidationError } from '~test/util'
 
-import { MapTestClass } from './map-test-class'
+jest.mock('~/map/map-contains-keys/map-contains-keys.predicate')
 
-describe('MapContainsKeys', () => {
-    describe('mapContainsKeys', () => {
-        it.each<[unknown]>([
-            [null],
-            [undefined],
-            [new Set()],
-            [new Map([['foo', 'bar']])],
-            [
-                new Map([
-                    ['bar', 'foo'],
-                    ['baz', 'bam'],
-                ]),
-            ],
-        ])('should fail validation for %p', value => {
-            expectValidationError(new MapTestClass({ mapContainsKeys: value }), {
-                property: 'mapContainsKeys',
-                constraint: MAP_CONTAINS_KEYS,
-                message: 'mapContainsKeys must contain $constraint1 keys',
-            })
-        })
+describe('@MapContainsKeys', () => {
+    const mockedMapContainsKeys = mapContainsKeys as unknown as jest.Mock
+    const required = [1, 2, 3]
+
+    type Options = Parameters<typeof MapContainsKeys>
+    const matrix: Record<string, Options[]> = {
+        'property must contain all of the following keys: 1, 2, 3': [
+            [required],
+            [required, {}],
+            [required, { each: undefined }],
+            [required, { each: false }],
+        ],
+        'each value in property must contain all of the following keys: 1, 2, 3': [[required, { each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedMapContainsKeys.mockReturnValue(false)
     })
 
-    describe('eachMapContainsKeys', () => {
-        it.each<[unknown[]]>([
-            [[null]],
-            [[undefined]],
-            [[new Set()]],
-            [[new Map([[42, 'bla']]), new Map()]],
-            [
-                [
-                    new Map([
-                        ['foo', 1],
-                        ['bar', 2],
-                    ]),
-                    new Map([
-                        ['foo', 'foo'],
-                        ['xxx', 'bar'],
-                    ]),
-                ],
-            ],
-        ])('should fail validation for %p', value => {
-            expectValidationError(new MapTestClass({ eachMapContainsKeys: value }), {
-                property: 'eachMapContainsKeys',
-                constraint: MAP_CONTAINS_KEYS,
-                message: 'each value in eachMapContainsKeys must contain $constraint1 keys',
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @MapContainsKeys(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: MAP_CONTAINS_KEYS,
+                    message,
+                })
             })
         })
-    })
+    }
 })

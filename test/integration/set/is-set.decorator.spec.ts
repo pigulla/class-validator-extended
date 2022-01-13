@@ -1,31 +1,37 @@
 import 'jest-extended'
 
-import { IS_SET } from '~'
+import { IS_SET, IsSet, isSet } from '~'
 import { expectValidationError } from '~test/util'
 
-import { SetTestClass } from './set-test-class'
+jest.mock('~/set/is-set/is-set.predicate')
 
-describe('IsSet', () => {
-    describe('isSet', () => {
-        it.each<[unknown]>([[null], [undefined], [new Map()]])('should fail validation for %p', value => {
-            expectValidationError(new SetTestClass({ isSet: value }), {
-                property: 'isSet',
-                constraint: IS_SET,
-                message: 'isSet must be a Set instance',
+describe('@IsSet', () => {
+    const mockedIsSet = isSet as unknown as jest.Mock
+
+    type Options = Parameters<typeof IsSet>
+    const matrix: Record<string, Options[]> = {
+        'property must be an instance of Set': [[], [{}], [{ each: undefined }], [{ each: false }]],
+        'each value in property must be an instance of Set': [[{ each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedIsSet.mockReturnValue(false)
+    })
+
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @IsSet(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: IS_SET,
+                    message,
+                })
             })
         })
-    })
-
-    describe('eachIsSet', () => {
-        it.each<[unknown[]]>([[[null]], [[undefined]], [[new Map()]], [[new Map(), new Set()]]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new SetTestClass({ eachIsSet: value }), {
-                    property: 'eachIsSet',
-                    constraint: IS_SET,
-                    message: 'each value in eachIsSet must be a Set instance',
-                })
-            }
-        )
-    })
+    }
 })

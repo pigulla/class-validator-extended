@@ -1,31 +1,37 @@
 import 'jest-extended'
 
-import { MAP_NOT_EMPTY } from '~'
+import { MAP_NOT_EMPTY, MapNotEmpty, mapNotEmpty } from '~'
 import { expectValidationError } from '~test/util'
 
-import { MapTestClass } from './map-test-class'
+jest.mock('~/map/map-not-empty/map-not-empty.predicate')
 
-describe('MapNotEmpty', () => {
-    describe('mapNotEmpty', () => {
-        it.each<[unknown]>([[null], [undefined], [new Map()]])('should fail validation for %p', value => {
-            expectValidationError(new MapTestClass({ mapNotEmpty: value }), {
-                property: 'mapNotEmpty',
-                constraint: MAP_NOT_EMPTY,
-                message: 'mapNotEmpty should not be an empty map',
+describe('@MapNotEmpty', () => {
+    const mockedMapNotEmpty = mapNotEmpty as unknown as jest.Mock
+
+    type Options = Parameters<typeof MapNotEmpty>
+    const matrix: Record<string, Options[]> = {
+        'property must not be an empty map': [[], [{}], [{ each: undefined }], [{ each: false }]],
+        'each value in property must not be an empty map': [[{ each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedMapNotEmpty.mockReturnValue(false)
+    })
+
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @MapNotEmpty(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: MAP_NOT_EMPTY,
+                    message,
+                })
             })
         })
-    })
-
-    describe('eachMapNotEmpty', () => {
-        it.each<[unknown[]]>([[[BigInt(10), 42]], [[undefined]], [[new Map()]], [[new Map([['k', 'v']]), new Map()]]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new MapTestClass({ eachMapNotEmpty: value }), {
-                    property: 'eachMapNotEmpty',
-                    constraint: MAP_NOT_EMPTY,
-                    message: 'each value in eachMapNotEmpty should not be an empty map',
-                })
-            }
-        )
-    })
+    }
 })

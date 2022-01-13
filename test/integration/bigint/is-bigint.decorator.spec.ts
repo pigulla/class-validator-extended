@@ -1,28 +1,37 @@
 import 'jest-extended'
 
-import { IS_BIGINT } from '~'
+import { IS_BIGINT, IsBigInt, isBigInt } from '~'
 import { expectValidationError } from '~test/util'
 
-import { BigIntTestClass } from './bigint-test-class'
+jest.mock('~/bigint/is-bigint/is-bigint.predicate')
 
-describe('IsBigInt', () => {
-    describe('isBigInt', () => {
-        it.each<[unknown]>([[null], [undefined], [42]])('should fail validation for %p', value => {
-            expectValidationError(new BigIntTestClass({ isBigInt: value }), {
-                property: 'isBigInt',
-                constraint: IS_BIGINT,
-                message: `isBigInt must be a BigInt`,
-            })
-        })
+describe('@IsBigInt', () => {
+    const mockedIsBigInt = isBigInt as unknown as jest.Mock
+
+    type Options = Parameters<typeof IsBigInt>
+    const matrix: Record<string, Options[]> = {
+        'property must be a BigInt': [[], [{}], [{ each: undefined }], [{ each: false }]],
+        'each value in property must be a BigInt': [[{ each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedIsBigInt.mockReturnValue(false)
     })
 
-    describe('eachIsBigInt', () => {
-        it.each<[unknown[]]>([[[BigInt(10), 42]], [[undefined]], [[42]]])('should fail validation for %p', value => {
-            expectValidationError(new BigIntTestClass({ eachIsBigInt: value }), {
-                property: 'eachIsBigInt',
-                constraint: IS_BIGINT,
-                message: 'each value in eachIsBigInt must be a BigInt',
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @IsBigInt(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: IS_BIGINT,
+                    message,
+                })
             })
         })
-    })
+    }
 })

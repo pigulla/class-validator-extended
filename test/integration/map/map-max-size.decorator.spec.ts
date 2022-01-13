@@ -1,55 +1,43 @@
 import 'jest-extended'
 
-import { MAP_MAX_SIZE } from '~'
+import { MAP_MAX_SIZE, MapMaxSize, mapMaxSize } from '~'
 import { expectValidationError } from '~test/util'
 
-import { MapTestClass } from './map-test-class'
+jest.mock('~/map/map-max-size/map-max-size.predicate')
 
-describe('MapMaxSize', () => {
-    describe('mapMaxSize', () => {
-        it.each<[unknown]>([
-            [null],
-            [undefined],
-            [new Set()],
-            [
-                new Map([
-                    [1, null],
-                    [2, null],
-                    [3, null],
-                    [4, null],
-                ]),
-            ],
-        ])('should fail validation for %p', value => {
-            expectValidationError(new MapTestClass({ mapMaxSize: value }), {
-                property: 'mapMaxSize',
-                constraint: MAP_MAX_SIZE,
-                message: 'mapMaxSize must contain not more than $constraint1 elements',
-            })
-        })
+describe('@MapMaxSize', () => {
+    const mockedMapMaxSize = mapMaxSize as unknown as jest.Mock
+    const maximum = 13
+
+    type Options = Parameters<typeof MapMaxSize>
+    const matrix: Record<string, Options[]> = {
+        'property must contain not more than 13 elements': [
+            [maximum],
+            [maximum, {}],
+            [maximum, { each: undefined }],
+            [maximum, { each: false }],
+        ],
+        'each value in property must contain not more than 13 elements': [[maximum, { each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedMapMaxSize.mockReturnValue(false)
     })
 
-    describe('eachMapMaxSize', () => {
-        it.each<[unknown[]]>([
-            [[null]],
-            [[undefined]],
-            [[new Set()]],
-            [
-                [
-                    new Map([
-                        [1, null],
-                        [2, null],
-                        [3, null],
-                        [4, null],
-                    ]),
-                    new Map(),
-                ],
-            ],
-        ])('should fail validation for %p', value => {
-            expectValidationError(new MapTestClass({ eachMapMaxSize: value }), {
-                property: 'eachMapMaxSize',
-                constraint: MAP_MAX_SIZE,
-                message: 'each value in eachMapMaxSize must contain not more than $constraint1 elements',
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @MapMaxSize(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: MAP_MAX_SIZE,
+                    message,
+                })
             })
         })
-    })
+    }
 })

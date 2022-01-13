@@ -1,37 +1,43 @@
 import 'jest-extended'
 
-import { SET_NOT_CONTAINS } from '~'
+import { SET_NOT_CONTAINS, SetNotContains, setNotContains } from '~'
 import { expectValidationError } from '~test/util'
 
-import { SetTestClass } from './set-test-class'
+jest.mock('~/set/set-not-contains/set-not-contains.predicate')
 
-describe('SetNotContains', () => {
-    describe('setNotContains', () => {
-        it.each<[unknown]>([[null], [undefined], [new Map()], [new Set([13, 'baz'])]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new SetTestClass({ setNotContains: value }), {
-                    property: 'setNotContains',
-                    constraint: SET_NOT_CONTAINS,
-                    message: 'setNotContains should not contain $constraint1 values',
-                })
-            }
-        )
+describe('@SetNotContains', () => {
+    const mockedSetNotContains = setNotContains as unknown as jest.Mock
+    const required = [1, 2, 3]
+
+    type Options = Parameters<typeof SetNotContains>
+    const matrix: Record<string, Options[]> = {
+        'property must not contain any of the following values: 1, 2, 3': [
+            [required],
+            [required, {}],
+            [required, { each: undefined }],
+            [required, { each: false }],
+        ],
+        'each value in property must not contain any of the following values: 1, 2, 3': [[required, { each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedSetNotContains.mockReturnValue(false)
     })
 
-    describe('eachSetNotContains', () => {
-        it.each<[unknown[]]>([
-            [[null]],
-            [[undefined]],
-            [[new Set([7, 8, 9])]],
-            [[new Set(['foo', 0, 7]), new Set([1, 2, 3])]],
-            [[new Map([[0, 1]]), new Map()]],
-        ])('should fail validation for %p', value => {
-            expectValidationError(new SetTestClass({ eachSetNotContains: value }), {
-                property: 'eachSetNotContains',
-                constraint: SET_NOT_CONTAINS,
-                message: 'each value in eachSetNotContains should not contain $constraint1 values',
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @SetNotContains(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: SET_NOT_CONTAINS,
+                    message,
+                })
             })
         })
-    })
+    }
 })

@@ -1,34 +1,43 @@
 import 'jest-extended'
 
-import { SET_CONTAINS } from '~'
+import { SET_CONTAINS, SetContains, setContains } from '~'
 import { expectValidationError } from '~test/util'
 
-import { SetTestClass } from './set-test-class'
+jest.mock('~/set/set-contains/set-contains.predicate')
 
-describe('SetContains', () => {
-    describe('setContains', () => {
-        it.each<[unknown]>([[null], [undefined], [new Set()], [new Set([[42, 'bla']])]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new SetTestClass({ setContains: value }), {
-                    property: 'setContains',
-                    constraint: SET_CONTAINS,
-                    message: 'setContains must contain $constraint1 values',
-                })
-            }
-        )
+describe('@SetContains', () => {
+    const mockedSetContains = setContains as unknown as jest.Mock
+    const required = [1, 2, 3]
+
+    type Options = Parameters<typeof SetContains>
+    const matrix: Record<string, Options[]> = {
+        'property must contain all of the following values: 1, 2, 3': [
+            [required],
+            [required, {}],
+            [required, { each: undefined }],
+            [required, { each: false }],
+        ],
+        'each value in property must contain all of the following values: 1, 2, 3': [[required, { each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedSetContains.mockReturnValue(false)
     })
 
-    describe('eachSetContains', () => {
-        it.each<[unknown[]]>([[[null]], [[undefined]], [[new Set()]], [[new Set([[42, 'bla']]), new Map()]]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new SetTestClass({ eachSetContains: value }), {
-                    property: 'eachSetContains',
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @SetContains(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
                     constraint: SET_CONTAINS,
-                    message: 'each value in eachSetContains must contain $constraint1 values',
+                    message,
                 })
-            }
-        )
-    })
+            })
+        })
+    }
 })

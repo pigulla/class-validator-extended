@@ -32,10 +32,6 @@ describe('arrayMonotonic', () => {
         it('when compared using a comparator', () => {
             expect(arrayMonotonic(values, { comparator: direct_comparator, monotonicity })).toBeTrue()
         })
-
-        it('when compared ordinally', () => {
-            expect(arrayMonotonic(values, { monotonicity })).toBeTrue()
-        })
     })
 
     describe.each<[number[], Monotonicity]>([
@@ -55,10 +51,6 @@ describe('arrayMonotonic', () => {
 
         it('when compared using a comparator', () => {
             expect(arrayMonotonic(values, { comparator: direct_comparator, monotonicity })).toBeFalse()
-        })
-
-        it('when compared ordinally', () => {
-            expect(arrayMonotonic(values, { monotonicity })).toBeFalse()
         })
     })
 
