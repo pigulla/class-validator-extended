@@ -1,6 +1,0 @@
-export * from './array'
-export * from './bigint'
-export * from './date'
-export * from './map'
-export * from './set'
-export * from './string'

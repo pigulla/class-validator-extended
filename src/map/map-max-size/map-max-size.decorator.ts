@@ -25,7 +25,6 @@ export function MapMaxSize(maximum: number, options?: ValidationOptions): Proper
     return ValidateBy(
         {
             name: MAP_MAX_SIZE,
-            constraints: [maximum],
             validator: {
                 validate: (value, _arguments): boolean => mapMaxSize(value, maximum),
                 defaultMessage: buildMessage(

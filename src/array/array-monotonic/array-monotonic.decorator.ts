@@ -22,25 +22,12 @@ export const ARRAY_MONOTONIC = 'arrayMonotonic'
  * users: User[]
  * ```
  * ```typescript
- * // Ensure the array is sorted in ascending order, allowing duplicates.
+ * // Ensure the array is sorted in ascending order, allowing no duplicates.
  * @ArrayMonotonic({
- *     monotonicity: Monotonicity.WEAKLY_INCREASING
+ *     monotonicity: Monotonicity.STRICTLY_INCREASING,
+ *     comparator: (a, b) => a - b
  * })
- * numbers: number[]
- *
- * // Ensure the array is sorted by user id in descending order, allowing no duplicates.
- * @ArrayMonotonic<User>({
- *     monotonicity: Monotonicity.STRICTLY_DECREASING,
- *     projection: user => user.id
- * })
- * users: User[]
- *
- * // Same as above, but using a comparator.
- * @ArrayMonotonic<User>({
- *     monotonicity: Monotonicity.STRICTLY_DECREASING,
- *     comparator: (a, b) => b.id - a.id
- * })
- * users: User[]
+ * values: number[]
  * ```
  *
  * @category Array
@@ -48,23 +35,20 @@ export const ARRAY_MONOTONIC = 'arrayMonotonic'
  * Accepts the following options (in addition to generic class-validator options):
  *   - `monotonicity: Monotonicity`
  *     The required ordering of the array.
- *   - `projection?: (element) => number` (*mutually exclusive with `comparator`*)
+ *   - `projection: (element) => number` (*mutually exclusive with `comparator`*)
  *     Project an array element to a number which is then used for comparison.
- *   - `comparator?: (a, b) => number` (*mutually exclusive with `projection`*)
+ *   - `comparator: (a, b) => number` (*mutually exclusive with `projection`*)
  *     Directly compare two elements (as in [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)).
- *
- * If neither `projection` nor `comparator` is given, the values are compared ordinally.
  * @typeParam T The type of the array elements.
  */
 export function ArrayMonotonic<T = unknown>(options: ArrayMonotonicOptions<T> & ValidationOptions) {
     return ValidateBy(
         {
             name: ARRAY_MONOTONIC,
-            constraints: [options.monotonicity],
             validator: {
                 validate: (value, _arguments): boolean => arrayMonotonic<T>(value, options),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must be a $constraint1 array`,
+                    eachPrefix => `${eachPrefix}$property must be a ${options.monotonicity} array`,
                     options
                 ),
             },

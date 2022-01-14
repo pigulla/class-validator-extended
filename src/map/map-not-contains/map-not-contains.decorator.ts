@@ -32,10 +32,7 @@ export function MapNotContains<Value = unknown>(
             validator: {
                 validate: (value, _arguments): boolean => mapNotContains<Value>(value, forbidden),
                 defaultMessage: buildMessage(
-                    eachPrefix =>
-                        `${eachPrefix}$property must not contain any of the following values: ${[...forbidden].join(
-                            ', '
-                        )}`,
+                    eachPrefix => `${eachPrefix}$property should not contain $constraint1 values`,
                     options
                 ),
             },

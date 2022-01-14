@@ -25,11 +25,10 @@ export function MaxBigInt(maximum: number | BigInt, options?: ValidationOptions)
     return ValidateBy(
         {
             name: MAX_BIGINT,
-            constraints: [maximum],
             validator: {
                 validate: (value, _arguments): boolean => maxBigInt(value, maximum),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must not be larger than $constraint1`,
+                    eachPrefix => `${eachPrefix}$property must not be more than $constraint1`,
                     options
                 ),
             },

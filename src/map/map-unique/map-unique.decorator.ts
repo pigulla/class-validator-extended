@@ -33,7 +33,10 @@ export function MapUnique<Value = unknown, Projection = Value>(
             name: MAP_UNIQUE,
             validator: {
                 validate: (value, _arguments): boolean => mapUnique<Value, Projection>(value, projection),
-                defaultMessage: buildMessage(eachPrefix => `${eachPrefix}$property must have unique values`, options),
+                defaultMessage: buildMessage(
+                    eachPrefix => `${eachPrefix}all $property's values must be unique`,
+                    options
+                ),
             },
         },
         options

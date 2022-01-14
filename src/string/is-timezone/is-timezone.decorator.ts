@@ -28,7 +28,10 @@ export function IsTimezone(options?: ValidationOptions): PropertyDecorator {
             name: IS_TIMEZONE,
             validator: {
                 validate: (value, _arguments): boolean => isTimezone(value),
-                defaultMessage: buildMessage(eachPrefix => `${eachPrefix}$property must be a timezone string`, options),
+                defaultMessage: buildMessage(
+                    eachPrefix => `${eachPrefix}$property must be a valid timezone string`,
+                    options
+                ),
             },
         },
         options

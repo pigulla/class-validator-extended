@@ -32,8 +32,7 @@ export function MapContains<Value = unknown>(
             validator: {
                 validate: (value, _arguments): boolean => mapContains<Value>(value, required),
                 defaultMessage: buildMessage(
-                    eachPrefix =>
-                        `${eachPrefix}$property must contain all of the following values: ${[...required].join(', ')}`,
+                    eachPrefix => `${eachPrefix}$property must contain $constraint1 values`,
                     options
                 ),
             },

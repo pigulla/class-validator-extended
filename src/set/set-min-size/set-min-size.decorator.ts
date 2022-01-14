@@ -25,7 +25,6 @@ export function SetMinSize(minimum: number, options?: ValidationOptions): Proper
     return ValidateBy(
         {
             name: SET_MIN_SIZE,
-            constraints: [minimum],
             validator: {
                 validate: (value, _arguments): boolean => setMinSize(value, minimum),
                 defaultMessage: buildMessage(

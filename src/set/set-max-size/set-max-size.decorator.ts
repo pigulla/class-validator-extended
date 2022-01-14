@@ -25,7 +25,6 @@ export function SetMaxSize(maximum: number, options?: ValidationOptions): Proper
     return ValidateBy(
         {
             name: SET_MAX_SIZE,
-            constraints: [maximum],
             validator: {
                 validate: (value, _arguments): boolean => setMaxSize(value, maximum),
                 defaultMessage: buildMessage(

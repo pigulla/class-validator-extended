@@ -3,7 +3,7 @@ module.exports = {
     collectCoverage: true,
     collectCoverageFrom: ['src/**/*.ts'],
     coverageReporters: ['lcov', 'text'],
-    coveragePathIgnorePatterns: ['<rootDir>/src/(.+/)*index.ts', '<rootDir>/src/minimal.ts'],
+    coveragePathIgnorePatterns: ['<rootDir>/src/(.+/)*index.ts'],
     coverageThreshold: {
         global: {
             branches: 100,
@@ -23,7 +23,6 @@ module.exports = {
         '^~test$': '<rootDir>/test/index.ts',
         '^~test/(.+)': '<rootDir>/test/$1',
     },
-    resetMocks: true,
     setupFiles: ['jest-date-mock'],
     setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/test/setup.ts'],
     testEnvironment: 'node',

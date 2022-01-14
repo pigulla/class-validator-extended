@@ -7,7 +7,7 @@
         "lib": ["ES6"],
         "module": "commonjs",
         "outDir": "./dist",
-        "removeComments": false,
+        "removeComments": true,
         "rootDir": "src",
         "sourceMap": true,
         "target": "ES6",

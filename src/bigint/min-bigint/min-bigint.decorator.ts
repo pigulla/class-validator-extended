@@ -25,7 +25,6 @@ export function MinBigInt(minimum: number | BigInt, options?: ValidationOptions)
     return ValidateBy(
         {
             name: MIN_BIGINT,
-            constraints: [minimum],
             validator: {
                 validate: (value, _arguments): boolean => minBigInt(value, minimum),
                 defaultMessage: buildMessage(

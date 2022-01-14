@@ -17,39 +17,6 @@
 -   ✨ No additional dependencies ([Day.js](https://day.js.org/) is supported but optional)
 -   😊 Uses [Semantic Versioning](https://semver.org/) and keeps a [nice](https://keepachangelog.com/en/1.0.0/) [Changelog](https://github.com/pigulla/class-validator-extended/blob/main/CHANGELOG.md)
 
-## Installation
-
-Use your favorite package manager to install:
-
-```bash
-npm install class-validator-extended
-```
-
-For obvious reasons, [class-validator](https://github.com/typestack/class-validator) needs to be installed.
-
-## Usage
-
-Just use the decorators like any of the built-in ones:
-
-```typescript
-import { ArrayMinSize } from 'class-validator'
-import { ArrayMonotonic } from 'class-validator-extended'
-
-class Foo {
-    @ArrayMinSize(2)
-    @ArrayMonotonic()
-    values: [1, 13, 42]
-}
-```
-
-If you don't have [Dayjs](https://day.js.org/) installed you need to use the `minimal` export:
-
-```typescript
-import { MaxBigInt } from 'class-validator-extended/dist/minimal'
-```
-
-Please note that Dayjs is an [optional dependency](https://docs.npmjs.com/cli/v8/configuring-npm/package-json#optionaldependencies) and will by default be installed by npm and yarn. To avoid this use `npm install --omit optional` or `yarn install --ignore-optional`, respectively.
-
 ## Validation decorators
 
 For detailed information please read the [API docs](https://pigulla.github.io/class-validator-extended/modules.html).
