@@ -7,9 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   `IsDayjs`: Replaced `is_valid` option with `allow_invalid`.
+-   `dayjs` is now an `optionalDependency` instead of a `peerDependency`
+
 ### Added
 
 -   `ArrayMonotonic`: Make the comparator/projection optional.
+-   `FutureDayjs` Added `allow_invalid`, `granularity` and `inclusive` options.
+-   `PastDayjs` Added `allow_invalid`, `granularity` and `inclusive` options.
+-   `MaxDayjs` Added `allow_invalid`, `granularity` and `inclusive` options.
+-   `MinDayjs` Added `allow_invalid`, `granularity` and `inclusive` options.
+-   You can now import `dist/minimal` if you installed the package without optional dependencies.
 
 ## [0.0.4] - 2022-01-12
 
