@@ -12,6 +12,7 @@
         "Date",
         "Dayjs",
         "Map",
+        "Number",
         "Set",
         "String",
         "Predicates",
