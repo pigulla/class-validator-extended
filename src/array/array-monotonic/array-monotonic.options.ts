@@ -1,6 +1,8 @@
 /**
  * @category Types
  */
+import type { RequireExactlyOne } from 'type-fest'
+
 export type ArrayMonotonicityComparator<T> = (a: T, b: T) => number
 
 /**
@@ -21,17 +23,16 @@ export enum Monotonicity {
 /**
  * @category Types
  */
-export type ArrayMonotonicityProjectionOrComparator<T> =
-    | {
-          projection: ArrayMonotonicityProjection<T>
-      }
-    | {
-          comparator: ArrayMonotonicityComparator<T>
-      }
+export type ArrayMonotonicityFunction<T> = {
+    projection: ArrayMonotonicityProjection<T>
+    comparator: ArrayMonotonicityComparator<T>
+}
 
 /**
  * @category Types
  */
-export type ArrayMonotonicOptions<T> = ArrayMonotonicityProjectionOrComparator<T> & {
+export type ArrayMonotonicOptions<T> = Partial<
+    RequireExactlyOne<ArrayMonotonicityFunction<T>, 'projection' | 'comparator'>
+> & {
     monotonicity: Monotonicity
 }
