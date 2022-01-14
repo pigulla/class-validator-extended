@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.5] - 2022-01-14
+
 ### Changed
 
 -   `IsDayjs`: Replaced `is_valid` option with `allow_invalid`.
