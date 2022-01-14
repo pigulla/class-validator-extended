@@ -1,13 +1,20 @@
 import type { ValidationOptions } from 'class-validator'
 import { buildMessage, ValidateBy } from 'class-validator'
+import type { OpUnitType } from 'dayjs'
 
 import { pastDayjs } from './past-dayjs.predicate'
+
+function message(options?: { allow_invalid?: boolean; inclusive?: boolean }): string {
+    return `${options?.allow_invalid ? 'a' : 'a valid'} Dayjs object ${
+        options?.inclusive ? 'in the past or today' : 'in the past'
+    }`
+}
 
 /** @hidden */
 export const PAST_DAYJS = 'pastDayjs'
 
 /**
- * Checks if the given value is a Dayjs object in the past.
+ * Checks if the given value is a valid Dayjs object in the past.
  *
  * Beware that the behaviour of this check depends on the current time and can thus be difficult to test.
  *
@@ -19,16 +26,25 @@ export const PAST_DAYJS = 'pastDayjs'
  * ```
  *
  * @category Dayjs
- * @param options Generic class-validator options.
+ * @param options
+ * Accepts the following options (in addition to generic class-validator options):
+ *   - `allow_invalid: boolean = false`
+ *     If true, allows the Dayjs object to be invalid (see [isValid()](https://day.js.org/docs/en/parse/is-valid)).
+ *   - `inclusive: boolean = false`
+ *     If true, allow the current date as well.
+ *   - `granularity: string = 'milliseconds'`
+ *     Defines the granularity, e.g. "day" to ignore hours, minutes, seconds and milliseconds.
  */
-export function PastDayjs(options?: ValidationOptions): PropertyDecorator {
+export function PastDayjs(
+    options?: { allow_invalid?: boolean; inclusive?: boolean; granularity?: OpUnitType } & ValidationOptions
+): PropertyDecorator {
     return ValidateBy(
         {
             name: PAST_DAYJS,
             validator: {
                 validate: (value, _arguments): boolean => pastDayjs(value),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must be a Dayjs object in the past`,
+                    eachPrefix => `${eachPrefix}$property must be ${message(options)}`,
                     options
                 ),
             },
