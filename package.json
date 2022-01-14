@@ -9,12 +9,25 @@
         "CHANGELOG.md",
         "LICENSE",
         "README.md",
-        "dist/",
-        "docs/"
+        "dist/"
     ],
+    "keywords": [
+        "validator",
+        "validation",
+        "decorators",
+        "typescript",
+        "class-validator",
+        "plugin"
+    ],
+    "author": {
+        "name": "Raphael Pigulla",
+        "email": "pigulla@four66.com"
+    },
+    "license": "MIT",
     "directories": {
-        "test": "test",
-        "lib": "src"
+        "doc": "docs",
+        "lib": "src",
+        "test": "test"
     },
     "config": {
         "commitizen": {
@@ -22,8 +35,8 @@
         }
     },
     "scripts": {
-        "setup": "npm ci && npm install --no-save dayjs class-validator && rm -rf coverage dist docs",
-        "build": "rm -rf dist && tsc && npm run docs:generate",
+        "setup": "npm ci && rm -rf coverage dist docs",
+        "build": "rm -rf dist && tsc --project tsconfig.build.json && npm run docs:generate",
         "test": "npm run lint && npm run jest && npm audit --production",
         "format": "prettier --write .",
         "jest": "npm run jest:unit && npm run jest:integration",
@@ -40,19 +53,6 @@
         "type": "git",
         "url": "git+https://github.com/pigulla/class-validator-extended.git"
     },
-    "keywords": [
-        "validator",
-        "validation",
-        "decorators",
-        "typescript",
-        "class-validator",
-        "plugin"
-    ],
-    "author": {
-        "name": "Raphael Pigulla",
-        "email": "pigulla@four66.com"
-    },
-    "license": "MIT",
     "bugs": {
         "url": "https://github.com/pigulla/class-validator-extended/issues"
     },
@@ -63,7 +63,6 @@
         "@typescript-eslint/eslint-plugin": "^5.9.0",
         "@typescript-eslint/parser": "^5.9.0",
         "cz-conventional-changelog": "^3.3.0",
-        "dayjs": "^1.10.7",
         "eslint": "^8.6.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-import-resolver-typescript": "^2.5.0",
@@ -75,11 +74,14 @@
         "jest-extended": "^1.2.0",
         "prettier": "^2.3.0",
         "ts-jest": "^27.0.1",
+        "type-fest": "^2.9.0",
         "typedoc": "^0.22.10",
         "typescript": "^4.5.4"
     },
     "peerDependencies": {
-        "class-validator": "*",
+        "class-validator": "*"
+    },
+    "optionalDependencies": {
         "dayjs": "*"
     }
 }
