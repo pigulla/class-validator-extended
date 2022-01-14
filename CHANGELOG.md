@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 -   `Nullable`: Added new validator.
+-   `Optional`: Added new validator.
 
 ## [0.0.5] - 2022-01-14
 
