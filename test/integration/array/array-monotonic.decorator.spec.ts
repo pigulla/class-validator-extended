@@ -1,24 +1,43 @@
 import 'jest-extended'
 
-import { ARRAY_MONOTONIC } from '~'
+import { ARRAY_MONOTONIC, ArrayMonotonic, arrayMonotonic, Monotonicity } from '~'
 import { expectValidationError } from '~test/util'
 
-import { ArrayTestClass } from './array-test-class'
+jest.mock('~/array/array-monotonic/array-monotonic.predicate')
 
-describe('ArrayMonotonic', () => {
-    it('strictlyIncreasingSelector should fail validation', () => {
-        expectValidationError(new ArrayTestClass({ strictlyIncreasingSelector: null }), {
-            constraint: ARRAY_MONOTONIC,
-            property: 'strictlyIncreasingSelector',
-            message: 'strictlyIncreasingSelector must be a strictly increasing array',
-        })
+describe('@ArrayMonotonic', () => {
+    const mockedArrayMonotonic = arrayMonotonic as unknown as jest.Mock
+
+    type Options = Parameters<typeof ArrayMonotonic>
+    const matrix: Record<string, Options[]> = {
+        'property must be a weakly decreasing array': [
+            [{ monotonicity: Monotonicity.WEAKLY_DECREASING }],
+            [{ monotonicity: Monotonicity.WEAKLY_DECREASING, each: undefined }],
+            [{ monotonicity: Monotonicity.WEAKLY_DECREASING, each: false }],
+        ],
+        'each value in property must be a strictly increasing array': [
+            [{ monotonicity: Monotonicity.STRICTLY_INCREASING, each: true }],
+        ],
+    }
+
+    beforeEach(() => {
+        mockedArrayMonotonic.mockReturnValue(false)
     })
 
-    it('eachStrictlyDecreasingSelector should fail validation', () => {
-        expectValidationError(new ArrayTestClass({ eachStrictlyDecreasingSelector: [[3, 2, 2, 1]] }), {
-            constraint: ARRAY_MONOTONIC,
-            property: 'eachStrictlyDecreasingSelector',
-            message: 'each value in eachStrictlyDecreasingSelector must be a strictly decreasing array',
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @ArrayMonotonic(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: ARRAY_MONOTONIC,
+                    message,
+                })
+            })
         })
-    })
+    }
 })
