@@ -1,46 +1,43 @@
 import 'jest-extended'
 
-import { MAP_MIN_SIZE } from '~'
+import { MAP_MIN_SIZE, MapMinSize, mapMinSize } from '~'
 import { expectValidationError } from '~test/util'
 
-import { MapTestClass } from './map-test-class'
+jest.mock('~/map/map-min-size/map-min-size.predicate')
 
-describe('MapMinSize', () => {
-    describe('mapMinSize', () => {
-        it.each<[unknown]>([[null], [undefined], [new Set()], [new Map()], [new Map([[1, null]])]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new MapTestClass({ mapMinSize: value }), {
-                    property: 'mapMinSize',
-                    constraint: MAP_MIN_SIZE,
-                    message: 'mapMinSize must contain at least $constraint1 elements',
-                })
-            }
-        )
+describe('@MapMinSize', () => {
+    const mockedMapMinSize = mapMinSize as unknown as jest.Mock
+    const minimum = 13
+
+    type Options = Parameters<typeof MapMinSize>
+    const matrix: Record<string, Options[]> = {
+        'property must contain at least 13 elements': [
+            [minimum],
+            [minimum, {}],
+            [minimum, { each: undefined }],
+            [minimum, { each: false }],
+        ],
+        'each value in property must contain at least 13 elements': [[minimum, { each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedMapMinSize.mockReturnValue(false)
     })
 
-    describe('eachMapMinSize', () => {
-        it.each<[unknown[]]>([
-            [[null]],
-            [[undefined]],
-            [[new Set()]],
-            [
-                [
-                    new Map([
-                        [1, null],
-                        [2, null],
-                        [3, null],
-                        [4, null],
-                    ]),
-                    new Map(),
-                ],
-            ],
-        ])('should fail validation for %p', value => {
-            expectValidationError(new MapTestClass({ eachMapMinSize: value }), {
-                property: 'eachMapMinSize',
-                constraint: MAP_MIN_SIZE,
-                message: 'each value in eachMapMinSize must contain at least $constraint1 elements',
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @MapMinSize(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: MAP_MIN_SIZE,
+                    message,
+                })
             })
         })
-    })
+    }
 })

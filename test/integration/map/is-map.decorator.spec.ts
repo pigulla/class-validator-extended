@@ -1,31 +1,37 @@
 import 'jest-extended'
 
-import { IS_MAP } from '~'
+import { IS_MAP, IsMap, isMap } from '~'
 import { expectValidationError } from '~test/util'
 
-import { MapTestClass } from './map-test-class'
+jest.mock('~/map/is-map/is-map.predicate')
 
-describe('IsMap', () => {
-    describe('isMap', () => {
-        it.each<[unknown]>([[null], [undefined], [new Set()]])('should fail validation for %p', value => {
-            expectValidationError(new MapTestClass({ isMap: value }), {
-                property: 'isMap',
-                constraint: IS_MAP,
-                message: 'isMap must be a Map instance',
+describe('@IsMap', () => {
+    const mockedIsMap = isMap as unknown as jest.Mock
+
+    type Options = Parameters<typeof IsMap>
+    const matrix: Record<string, Options[]> = {
+        'property must be an instance of Map': [[], [{}], [{ each: undefined }], [{ each: false }]],
+        'each value in property must be an instance of Map': [[{ each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedIsMap.mockReturnValue(false)
+    })
+
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @IsMap(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: IS_MAP,
+                    message,
+                })
             })
         })
-    })
-
-    describe('eachIsMap', () => {
-        it.each<[unknown[]]>([[[null]], [[undefined]], [[new Set()]], [[new Map(), new Set()]]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new MapTestClass({ eachIsMap: value }), {
-                    property: 'eachIsMap',
-                    constraint: IS_MAP,
-                    message: 'each value in eachIsMap must be a Map instance',
-                })
-            }
-        )
-    })
+    }
 })

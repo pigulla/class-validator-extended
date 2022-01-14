@@ -26,10 +26,7 @@ export function MapNotEmpty(options?: ValidationOptions): PropertyDecorator {
             name: MAP_NOT_EMPTY,
             validator: {
                 validate: (value, _arguments): boolean => mapNotEmpty(value),
-                defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property should not be an empty map`,
-                    options
-                ),
+                defaultMessage: buildMessage(eachPrefix => `${eachPrefix}$property must not be an empty map`, options),
             },
         },
         options

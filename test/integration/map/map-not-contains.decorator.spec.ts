@@ -1,45 +1,43 @@
 import 'jest-extended'
 
-import { MAP_NOT_CONTAINS } from '~'
+import { MAP_NOT_CONTAINS, MapNotContains, mapNotContains } from '~'
 import { expectValidationError } from '~test/util'
 
-import { MapTestClass } from './map-test-class'
+jest.mock('~/map/map-not-contains/map-not-contains.predicate')
 
-describe('MapNotContains', () => {
-    describe('mapNotContains', () => {
-        it.each<[unknown]>([[null], [undefined], [new Set()], [new Map([[1, 'baz']])]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new MapTestClass({ mapNotContains: value }), {
-                    property: 'mapNotContains',
-                    constraint: MAP_NOT_CONTAINS,
-                    message: 'mapNotContains should not contain $constraint1 values',
-                })
-            }
-        )
+describe('@MapNotContains', () => {
+    const mockedMapNotContains = mapNotContains as unknown as jest.Mock
+    const forbidden = [1, 2, 3]
+
+    type Options = Parameters<typeof MapNotContains>
+    const matrix: Record<string, Options[]> = {
+        'property must not contain any of the following values: 1, 2, 3': [
+            [forbidden],
+            [forbidden, {}],
+            [forbidden, { each: undefined }],
+            [forbidden, { each: false }],
+        ],
+        'each value in property must not contain any of the following values: 1, 2, 3': [[forbidden, { each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedMapNotContains.mockReturnValue(false)
     })
 
-    describe('eachMapNotContains', () => {
-        it.each<[unknown[]]>([
-            [[null]],
-            [[undefined]],
-            [[new Set()]],
-            [
-                [
-                    new Map([['foo', 0]]),
-                    new Map([
-                        ['bar', 1],
-                        ['foo', 2],
-                    ]),
-                ],
-            ],
-            [[new Map([[0, 1]]), new Map()]],
-        ])('should fail validation for %p', value => {
-            expectValidationError(new MapTestClass({ eachMapNotContains: value }), {
-                property: 'eachMapNotContains',
-                constraint: MAP_NOT_CONTAINS,
-                message: 'each value in eachMapNotContains should not contain $constraint1 values',
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @MapNotContains(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: MAP_NOT_CONTAINS,
+                    message,
+                })
             })
         })
-    })
+    }
 })

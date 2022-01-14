@@ -1,53 +1,43 @@
 import 'jest-extended'
 
-import dayjs from 'dayjs'
-
-import { MAP_UNIQUE } from '~'
+import { MAP_UNIQUE, MapUnique, mapUnique } from '~'
 import { expectValidationError } from '~test/util'
 
-import { MapTestClass } from './map-test-class'
+jest.mock('~/map/map-unique/map-unique.predicate')
 
-describe('MapUnique', () => {
-    describe('mapUnique', () => {
-        it.each<[unknown]>([
-            [null],
-            [undefined],
-            [new Set()],
-            [
-                new Map([
-                    [0, 42],
-                    [1, 42],
-                ]),
-            ],
-        ])('should fail validation for %p', value => {
-            expectValidationError(new MapTestClass({ mapUnique: value }), {
-                property: 'mapUnique',
-                constraint: MAP_UNIQUE,
-                message: `all mapUnique's values must be unique`,
-            })
-        })
+describe('@MapUnique', () => {
+    const mockedMapUnique = mapUnique as unknown as jest.Mock
+    const projection = jest.fn()
+
+    type Options = Parameters<typeof MapUnique>
+    const matrix: Record<string, Options[]> = {
+        'property must have unique values': [
+            [projection],
+            [projection, {}],
+            [projection, { each: undefined }],
+            [projection, { each: false }],
+        ],
+        'each value in property must have unique values': [[projection, { each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedMapUnique.mockReturnValue(false)
     })
 
-    describe('eachMapUnique', () => {
-        it.each<[unknown[]]>([
-            [[null]],
-            [[undefined]],
-            [[new Set()]],
-            [
-                [
-                    new Map([
-                        [0, dayjs('2020-05-01T00:00:00.000Z')],
-                        [2, dayjs('2020-05-01T00:00:00.000Z')],
-                        [4, dayjs('2020-05-08T00:00:00.000Z')],
-                    ]),
-                ],
-            ],
-        ])('should fail validation for %p', value => {
-            expectValidationError(new MapTestClass({ eachMapUnique: value }), {
-                property: 'eachMapUnique',
-                constraint: MAP_UNIQUE,
-                message: `each value in all eachMapUnique's values must be unique`,
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @MapUnique(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: MAP_UNIQUE,
+                    message,
+                })
             })
         })
-    })
+    }
 })

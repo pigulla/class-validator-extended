@@ -1,35 +1,47 @@
 import 'jest-extended'
 
-import { MAX_BIGINT } from '~'
-import { expectNoValidationErrors, expectValidationError } from '~test/util'
+import dayjs from 'dayjs'
+import { advanceTo, clear } from 'jest-date-mock'
 
-import { BigIntTestClass } from './bigint-test-class'
+import { MAX_BIGINT, MaxBigInt, maxBigInt } from '~'
+import { expectValidationError } from '~test/util'
 
-describe('MaxBigInt', () => {
-    it('should validate when the value is exactly the maximum', () => {
-        expectNoValidationErrors(new BigIntTestClass({ maxBigInt: BigInt(1_000) }))
+jest.mock('~/bigint/max-bigint/max-bigint.predicate')
+
+describe('@MaxBigInt', () => {
+    const mockedMaxBigInt = maxBigInt as unknown as jest.Mock
+    const max = BigInt(9_000)
+    const now = dayjs('2020-05-01T06:00:00.000Z')
+
+    type Options = Parameters<typeof MaxBigInt>
+    const matrix: Record<string, Options[]> = {
+        'property must not be larger than 9000': [[max], [max, {}], [max, { each: undefined }], [max, { each: false }]],
+        'each value in property must not be larger than 9000': [[max, { each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedMaxBigInt.mockReturnValue(false)
+        advanceTo(now.toDate())
     })
 
-    describe('maxBigInt', () => {
-        it.each<[unknown]>([[null], [undefined], [42], [BigInt(2_000)]])(' should fail validation for %p', value => {
-            expectValidationError(new BigIntTestClass({ maxBigInt: value }), {
-                property: 'maxBigInt',
-                constraint: MAX_BIGINT,
-                message: 'maxBigInt must not be more than $constraint1',
+    afterEach(() => {
+        clear()
+    })
+
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %o', options => {
+                class TestClass {
+                    @MaxBigInt(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: MAX_BIGINT,
+                    message,
+                })
             })
         })
-    })
-
-    describe('eachMaxBigInt', () => {
-        it.each<[unknown[]]>([[[BigInt(10), 42]], [[undefined]], [[42]], [[BigInt(2_000), BigInt(3_000)]]])(
-            'eachMaxBigInt should fail validation for %p',
-            value => {
-                expectValidationError(new BigIntTestClass({ eachMaxBigInt: value }), {
-                    property: 'eachMaxBigInt',
-                    constraint: MAX_BIGINT,
-                    message: 'each value in eachMaxBigInt must not be more than $constraint1',
-                })
-            }
-        )
-    })
+    }
 })

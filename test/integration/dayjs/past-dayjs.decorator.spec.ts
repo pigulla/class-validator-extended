@@ -1,46 +1,71 @@
 import 'jest-extended'
-import dayjs from 'dayjs'
-import { advanceTo, clear } from 'jest-date-mock'
 
-import { PAST_DAYJS } from '~'
+import { PAST_DAYJS, PastDayjs, pastDayjs } from '~'
 import { expectValidationError } from '~test/util'
 
-import { DayjsTestClass } from './dayjs-test-class'
+jest.mock('~/dayjs/past-dayjs/past-dayjs.predicate')
 
-describe('PastDayjs', () => {
-    const now = dayjs('2020-05-01T06:00:00.000Z')
+describe('@PastDayjs', () => {
+    const mockedPastDayjs = pastDayjs as unknown as jest.Mock
+
+    type Options = Parameters<typeof PastDayjs>
+    const matrix: Record<string, Options[]> = {
+        'property must be a valid Dayjs object in the past': [
+            [],
+            [{}],
+            [{ each: undefined, allow_invalid: undefined, inclusive: undefined, granularity: undefined }],
+            [{ each: undefined, allow_invalid: false, inclusive: undefined, granularity: 'minutes' }],
+            [{ each: undefined, allow_invalid: undefined, inclusive: false, granularity: undefined }],
+            [{ each: undefined, allow_invalid: false, inclusive: false, granularity: 'minutes' }],
+            [{ each: false, allow_invalid: undefined, inclusive: undefined, granularity: undefined }],
+            [{ each: false, allow_invalid: false, inclusive: undefined, granularity: 'minutes' }],
+            [{ each: false, allow_invalid: undefined, inclusive: false, granularity: undefined }],
+            [{ each: false, allow_invalid: false, inclusive: false, granularity: 'minutes' }],
+        ],
+        'each value in property must be a valid Dayjs object in the past': [
+            [{ each: true, allow_invalid: undefined, inclusive: undefined, granularity: undefined }],
+            [{ each: true, allow_invalid: false, inclusive: undefined, granularity: 'minutes' }],
+            [{ each: true, allow_invalid: undefined, inclusive: false, granularity: undefined }],
+            [{ each: true, allow_invalid: false, inclusive: false, granularity: 'minutes' }],
+        ],
+        'property must be a Dayjs object in the past': [
+            [{ each: undefined, allow_invalid: true, inclusive: undefined, granularity: undefined }],
+            [{ each: undefined, allow_invalid: true, inclusive: undefined, granularity: 'minutes' }],
+            [{ each: undefined, allow_invalid: true, inclusive: false, granularity: undefined }],
+            [{ each: undefined, allow_invalid: true, inclusive: false, granularity: 'minutes' }],
+        ],
+        'each value in property must be a Dayjs object in the past': [
+            [{ each: true, allow_invalid: true, inclusive: undefined, granularity: undefined }],
+            [{ each: true, allow_invalid: true, inclusive: undefined, granularity: 'minutes' }],
+        ],
+        'property must be a Dayjs object in the past or today': [
+            [{ each: undefined, allow_invalid: true, inclusive: true, granularity: undefined }],
+            [{ each: undefined, allow_invalid: true, inclusive: true, granularity: 'minutes' }],
+        ],
+        'each value in property must be a Dayjs object in the past or today': [
+            [{ each: true, allow_invalid: true, inclusive: true, granularity: undefined }],
+            [{ each: true, allow_invalid: true, inclusive: true, granularity: 'minutes' }],
+        ],
+    }
 
     beforeEach(() => {
-        advanceTo(now.toDate())
+        mockedPastDayjs.mockReturnValue(false)
     })
 
-    afterEach(() => {
-        clear()
-    })
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @PastDayjs(...options)
+                    property: unknown
+                }
 
-    describe('pastDayjs', () => {
-        it.each<[unknown]>([[null], [undefined], [42], [now], [now.add(1, 'minute')]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new DayjsTestClass({ pastDayjs: value }), {
-                    property: 'pastDayjs',
+                expectValidationError(new TestClass(), {
+                    property: 'property',
                     constraint: PAST_DAYJS,
-                    message: 'pastDayjs must be a Dayjs object in the past',
+                    message,
                 })
-            }
-        )
-    })
-
-    describe('eachPastDayjs', () => {
-        it.each<[unknown[]]>([[[null, now.add(1, 'hour')]], [[undefined]], [[now]]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new DayjsTestClass({ eachPastDayjs: value }), {
-                    property: 'eachPastDayjs',
-                    constraint: PAST_DAYJS,
-                    message: 'each value in eachPastDayjs must be a Dayjs object in the past',
-                })
-            }
-        )
-    })
+            })
+        })
+    }
 })

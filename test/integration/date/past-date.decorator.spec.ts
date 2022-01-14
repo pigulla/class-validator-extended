@@ -1,16 +1,25 @@
 import 'jest-extended'
+
 import dayjs from 'dayjs'
 import { advanceTo, clear } from 'jest-date-mock'
 
-import { PAST_DATE } from '~'
+import { PAST_DATE, PastDate, pastDate } from '~'
 import { expectValidationError } from '~test/util'
 
-import { DateTestClass } from './date-test-class'
+jest.mock('~/date/past-date/past-date.predicate')
 
-describe('PastDate', () => {
+describe('@PastDate', () => {
+    const mockedPastDate = pastDate as unknown as jest.Mock
     const now = dayjs('2020-05-01T06:00:00.000Z')
 
+    type Options = Parameters<typeof PastDate>
+    const matrix: Record<string, Options[]> = {
+        'property must be a Date instance in the past': [[], [{}], [{ each: undefined }], [{ each: false }]],
+        'each value in property must be a Date instance in the past': [[{ each: true }]],
+    }
+
     beforeEach(() => {
+        mockedPastDate.mockReturnValue(false)
         advanceTo(now.toDate())
     })
 
@@ -18,29 +27,20 @@ describe('PastDate', () => {
         clear()
     })
 
-    describe('pastDate', () => {
-        it.each<[unknown]>([[null], [undefined], [42], [now.toDate()], [now.add(1, 'minute').toDate()]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new DateTestClass({ pastDate: value }), {
-                    property: 'pastDate',
-                    constraint: PAST_DATE,
-                    message: 'pastDate must be a Date instance in the past',
-                })
-            }
-        )
-    })
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @PastDate(...options)
+                    property: unknown
+                }
 
-    describe('eachPastDate', () => {
-        it.each<[unknown[]]>([[[null, now.add(1, 'hour').toDate()]], [[undefined]], [[now.toDate()]]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new DateTestClass({ eachPastDate: value }), {
-                    property: 'eachPastDate',
+                expectValidationError(new TestClass(), {
+                    property: 'property',
                     constraint: PAST_DATE,
-                    message: 'each value in eachPastDate must be a Date instance in the past',
+                    message,
                 })
-            }
-        )
-    })
+            })
+        })
+    }
 })

@@ -1,31 +1,37 @@
 import 'jest-extended'
 
-import { SET_NOT_EMPTY } from '~'
+import { SET_NOT_EMPTY, SetNotEmpty, setNotEmpty } from '~'
 import { expectValidationError } from '~test/util'
 
-import { SetTestClass } from './set-test-class'
+jest.mock('~/set/set-not-empty/set-not-empty.predicate')
 
-describe('SetNotEmpty', () => {
-    describe('setNotEmpty', () => {
-        it.each<[unknown]>([[null], [undefined], [new Set()]])('should fail validation for %p', value => {
-            expectValidationError(new SetTestClass({ setNotEmpty: value }), {
-                property: 'setNotEmpty',
-                constraint: SET_NOT_EMPTY,
-                message: 'setNotEmpty should not be an empty set',
+describe('@SetNotEmpty', () => {
+    const mockedSetNotEmpty = setNotEmpty as unknown as jest.Mock
+
+    type Options = Parameters<typeof SetNotEmpty>
+    const matrix: Record<string, Options[]> = {
+        'property must not be an empty set': [[], [{}], [{ each: undefined }], [{ each: false }]],
+        'each value in property must not be an empty set': [[{ each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedSetNotEmpty.mockReturnValue(false)
+    })
+
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @SetNotEmpty(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: SET_NOT_EMPTY,
+                    message,
+                })
             })
         })
-    })
-
-    describe('eachSetNotEmpty', () => {
-        it.each<[unknown[]]>([[[BigInt(10), 42]], [[undefined]], [[new Set()]], [[new Set([1]), new Map()]]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new SetTestClass({ eachSetNotEmpty: value }), {
-                    property: 'eachSetNotEmpty',
-                    constraint: SET_NOT_EMPTY,
-                    message: 'each value in eachSetNotEmpty should not be an empty set',
-                })
-            }
-        )
-    })
+    }
 })

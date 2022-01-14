@@ -1,53 +1,52 @@
 import 'jest-extended'
 
-import dayjs from 'dayjs'
+import { IS_DAYJS, IsDayjs, isDayjs } from '~'
+import { expectValidationError } from '~test/util'
 
-import { IS_DAYJS } from '~'
-import { expectNoValidationErrors, expectValidationError } from '~test/util'
+jest.mock('~/dayjs/is-dayjs/is-dayjs.predicate')
 
-import { DayjsTestClass } from './dayjs-test-class'
+describe('@IsDayjs', () => {
+    const mockedIsDayjs = isDayjs as unknown as jest.Mock
 
-describe('IsDayjs', () => {
-    it('should accept a valid Dayjs instance where an invalid one is sufficient', () => {
-        expectNoValidationErrors(
-            new DayjsTestClass({
-                isDayjsInvalid: dayjs('2020-05-19T00:00:00.000Z'),
-            })
-        )
+    type Options = Parameters<typeof IsDayjs>
+    const matrix: Record<string, Options[]> = {
+        'property must be a valid Dayjs object': [
+            [],
+            [{}],
+            [{ each: undefined, allow_invalid: undefined }],
+            [{ each: undefined, allow_invalid: false }],
+            [{ each: false, allow_invalid: undefined }],
+            [{ each: false, allow_invalid: false }],
+        ],
+        'each value in property must be a valid Dayjs object': [
+            [{ each: true, allow_invalid: undefined }],
+            [{ each: true, allow_invalid: false }],
+        ],
+        'property must be a Dayjs object': [
+            [{ each: undefined, allow_invalid: true }],
+            [{ each: false, allow_invalid: true }],
+        ],
+        'each value in property must be a Dayjs object': [[{ each: true, allow_invalid: true }]],
+    }
+
+    beforeEach(() => {
+        mockedIsDayjs.mockReturnValue(false)
     })
 
-    it('should require each item to be a Dayjs object', () => {
-        expectValidationError(
-            new DayjsTestClass({
-                eachIsDayjsInvalid: [dayjs('2020-05-19T00:00:00.000Z'), null],
-            }),
-            {
-                property: 'eachIsDayjsInvalid',
-                constraint: IS_DAYJS,
-                message: `each value in eachIsDayjsInvalid must be a Dayjs object`,
-            }
-        )
-    })
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @IsDayjs(...options)
+                    property: unknown
+                }
 
-    it.each<[unknown]>([[null], [undefined], [42], [dayjs('not a valid date')]])(
-        'isDayjs should fail validation for %p',
-        value => {
-            expectValidationError(new DayjsTestClass({ isDayjs: value }), {
-                property: 'isDayjs',
-                constraint: IS_DAYJS,
-                message: `isDayjs must be a valid Dayjs object`,
+                expectValidationError(new TestClass(), {
+                    property: 'property',
+                    constraint: IS_DAYJS,
+                    message,
+                })
             })
-        }
-    )
-
-    it.each<[unknown[]]>([[[dayjs(), dayjs('not a valid date')]], [[undefined]], [[dayjs('not a valid date')]]])(
-        'eachIsDayjs should fail validation for %p',
-        value => {
-            expectValidationError(new DayjsTestClass({ eachIsDayjs: value }), {
-                property: 'eachIsDayjs',
-                constraint: IS_DAYJS,
-                message: 'each value in eachIsDayjs must be a valid Dayjs object',
-            })
-        }
-    )
+        })
+    }
 })

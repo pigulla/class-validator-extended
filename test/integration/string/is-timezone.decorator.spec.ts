@@ -1,34 +1,37 @@
 import 'jest-extended'
 
-import { IS_TIMEZONE } from '~'
+import { IS_TIMEZONE, IsTimezone, isTimezone } from '~'
 import { expectValidationError } from '~test/util'
 
-import { StringTestClass } from './string-test-class'
+jest.mock('~/string/is-timezone/is-timezone.predicate')
 
-describe('IsTimezone', () => {
-    describe('isTimezone', () => {
-        it.each<[unknown]>([[null], [undefined], [42], [''], ['Bad Salzufflen']])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new StringTestClass({ isTimezone: value }), {
-                    property: 'isTimezone',
-                    constraint: IS_TIMEZONE,
-                    message: `isTimezone must be a valid timezone string`,
-                })
-            }
-        )
+describe('@IsTimezone', () => {
+    const mockedIsAwsRegion = isTimezone as unknown as jest.Mock
+
+    type Options = Parameters<typeof IsTimezone>
+    const matrix: Record<string, Options[]> = {
+        'property must be a timezone string': [[], [{}], [{ each: undefined }], [{ each: false }]],
+        'each value in property must be a timezone string': [[{ each: true }]],
+    }
+
+    beforeEach(() => {
+        mockedIsAwsRegion.mockReturnValue(false)
     })
 
-    describe('eachIsTimezone', () => {
-        it.each<[unknown[]]>([[[undefined]], [['']], [['UTC', 'Bad Salzufflen']]])(
-            'should fail validation for %p',
-            value => {
-                expectValidationError(new StringTestClass({ eachIsTimezone: value }), {
-                    property: 'eachIsTimezone',
+    for (const [message, optionsList] of Object.entries(matrix)) {
+        describe(`should return the error message "${message}"`, () => {
+            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+                class TestClass {
+                    @IsTimezone(...options)
+                    property: unknown
+                }
+
+                expectValidationError(new TestClass(), {
+                    property: 'property',
                     constraint: IS_TIMEZONE,
-                    message: 'each value in eachIsTimezone must be a valid timezone string',
+                    message,
                 })
-            }
-        )
-    })
+            })
+        })
+    }
 })
