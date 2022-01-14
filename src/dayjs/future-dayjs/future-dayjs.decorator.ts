@@ -30,7 +30,7 @@ export const FUTURE_DAYJS = 'futureDayjs'
  * @param options
  * Accepts the following options (in addition to generic class-validator options):
  *   - `allow_invalid: boolean = false`
- *     If true, allows the Dayjs object to be invalid (see [isValid()](https://day.js.org/docs/en/parse/is-valid)).
+ *     If true, allow the Dayjs object to be invalid (see [isValid()](https://day.js.org/docs/en/parse/is-valid)).
  *   - `inclusive: boolean = false`
  *     If true, allow the current date as well.
  *   - `granularity: string = 'milliseconds'`
