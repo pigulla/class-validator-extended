@@ -29,7 +29,8 @@ export function MapContainsKeys<Key = unknown>(required: Key[], options?: Valida
             validator: {
                 validate: (value, _arguments): boolean => mapContainsKeys<Key>(value, required),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must contain $constraint1 keys`,
+                    eachPrefix =>
+                        `${eachPrefix}$property must contain all of the following keys: ${[...required].join(', ')}`,
                     options
                 ),
             },

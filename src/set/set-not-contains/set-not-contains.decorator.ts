@@ -32,7 +32,10 @@ export function SetNotContains<Value = unknown>(
             validator: {
                 validate: (value, _arguments): boolean => setNotContains<Value>(value, forbidden),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property should not contain $constraint1 values`,
+                    eachPrefix =>
+                        `${eachPrefix}$property must not contain any of the following values: ${[...forbidden].join(
+                            ', '
+                        )}`,
                     options
                 ),
             },

@@ -32,7 +32,8 @@ export function SetContains<Value = unknown>(
             validator: {
                 validate: (value, _arguments): boolean => setContains<Value>(value, required),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must contain $constraint1 values`,
+                    eachPrefix =>
+                        `${eachPrefix}$property must contain all of the following values: ${[...required].join(', ')}`,
                     options
                 ),
             },
