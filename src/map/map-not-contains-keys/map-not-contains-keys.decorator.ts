@@ -32,7 +32,10 @@ export function MapNotContainsKeys<Key = unknown>(
             validator: {
                 validate: (value, _arguments): boolean => mapNotContainsKeys<Key>(value, forbidden),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property should not contain $constraint1 keys`,
+                    eachPrefix =>
+                        `${eachPrefix}$property must not contain any of the following keys: ${[...forbidden].join(
+                            ', '
+                        )}`,
                     options
                 ),
             },

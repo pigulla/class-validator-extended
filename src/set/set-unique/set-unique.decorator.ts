@@ -33,10 +33,7 @@ export function SetUnique<Value = unknown, Projection = unknown>(
             name: SET_UNIQUE,
             validator: {
                 validate: (value, _arguments): boolean => setUnique(value, projection),
-                defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}all $property's values must be unique`,
-                    options
-                ),
+                defaultMessage: buildMessage(eachPrefix => `${eachPrefix}$property must have unique values`, options),
             },
         },
         options
