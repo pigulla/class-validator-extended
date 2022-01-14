@@ -1,7 +1,5 @@
 import { isSet } from '../../set/is-set'
 
-import type { SetUniqueProjection } from './set-unique.options'
-
 /**
  * @category Predicates
  * @param value The value to validate.
@@ -11,7 +9,7 @@ import type { SetUniqueProjection } from './set-unique.options'
  */
 export function setUnique<Value, Projection>(
     value: unknown,
-    projection: SetUniqueProjection<Value, Projection>
+    projection: (item: Value) => Projection
 ): value is Set<Value> {
     if (typeof projection !== 'function') {
         throw new TypeError('Parameter "projection" must be a function')

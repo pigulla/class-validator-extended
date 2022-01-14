@@ -1,18 +1,6 @@
 /**
  * @category Types
  */
-import type { RequireExactlyOne } from 'type-fest'
-
-export type ArrayMonotonicityComparator<T> = (a: T, b: T) => number
-
-/**
- * @category Types
- */
-export type ArrayMonotonicityProjection<T> = (item: T) => number
-
-/**
- * @category Types
- */
 export enum Monotonicity {
     WEAKLY_INCREASING = 'weakly increasing',
     STRICTLY_INCREASING = 'strictly increasing',
@@ -22,17 +10,9 @@ export enum Monotonicity {
 
 /**
  * @category Types
+ * @typeParam T The type of the array elements.
  */
-export type ArrayMonotonicityFunction<T> = {
-    projection: ArrayMonotonicityProjection<T>
-    comparator: ArrayMonotonicityComparator<T>
-}
-
-/**
- * @category Types
- */
-export type ArrayMonotonicOptions<T> = Partial<
-    RequireExactlyOne<ArrayMonotonicityFunction<T>, 'projection' | 'comparator'>
-> & {
-    monotonicity: Monotonicity
-}
+export type ArrayMonotonicOptions<T> =
+    | { monotonicity: Monotonicity; projection: (item: T) => number }
+    | { monotonicity: Monotonicity; comparator: (a: T, b: T) => number }
+    | { monotonicity: Monotonicity }

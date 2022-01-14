@@ -1,15 +1,14 @@
 import 'jest-extended'
 
-import type { MapUniqueProjection } from '~'
 import { mapUnique } from '~'
 
 describe('mapUnique', () => {
-    function selector(n: number): number {
+    function projection(n: number): number {
         return n % 4
     }
 
-    it.each<[unknown]>([[undefined], [null], ['']])('should throw for %p as the selector', value => {
-        expect(() => mapUnique(0, value as MapUniqueProjection<unknown, unknown>)).toThrow(TypeError)
+    it.each<[unknown]>([[undefined], [null], ['']])('should throw for %p as the projection', value => {
+        expect(() => mapUnique(0, value as (value: number) => number)).toThrow(TypeError)
     })
 
     it.each<[Map<unknown, unknown>]>([
@@ -24,7 +23,7 @@ describe('mapUnique', () => {
             ]),
         ],
     ])('should be true for %p', set => {
-        expect(mapUnique(set, selector)).toBeTrue()
+        expect(mapUnique(set, projection)).toBeTrue()
     })
 
     it.each<[unknown]>([
@@ -39,6 +38,6 @@ describe('mapUnique', () => {
             ]),
         ],
     ])('should be false for %p', set => {
-        expect(mapUnique(set, selector)).toBeFalse()
+        expect(mapUnique(set, projection)).toBeFalse()
     })
 })

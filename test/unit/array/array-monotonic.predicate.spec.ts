@@ -1,9 +1,8 @@
 import 'jest-extended'
-import type { ArrayMonotonicityComparator, ArrayMonotonicityProjection } from '~'
 import { arrayMonotonic, Monotonicity } from '~'
 
-const identity: ArrayMonotonicityProjection<number> = (x: number): number => x
-const direct_comparator: ArrayMonotonicityComparator<number> = (a: number, b: number): number => a - b
+const identity = (x: number): number => x
+const direct_comparator = (a: number, b: number): number => a - b
 
 describe('arrayMonotonic', () => {
     describe.each<[number[], Monotonicity]>([

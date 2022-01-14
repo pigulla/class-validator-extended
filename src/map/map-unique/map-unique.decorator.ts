@@ -1,7 +1,6 @@
 import type { ValidationOptions } from 'class-validator'
 import { buildMessage, ValidateBy } from 'class-validator'
 
-import type { MapUniqueProjection } from './map-unique.options'
 import { mapUnique } from './map-unique.predicate'
 
 /** @hidden */
@@ -25,7 +24,7 @@ export const MAP_UNIQUE = 'mapUnique'
  * @typeParam Projection The type returned by `projection`.
  */
 export function MapUnique<Value = unknown, Projection = Value>(
-    projection: MapUniqueProjection<Value, Projection>,
+    projection: (item: Value) => Projection,
     options?: ValidationOptions
 ): PropertyDecorator {
     return ValidateBy(

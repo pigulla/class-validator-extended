@@ -1,7 +1,5 @@
 import { isMap } from '../../map/is-map'
 
-import type { MapUniqueKeysProjection } from './map-unique-keys.options'
-
 /**
  * @category Predicates
  * @param value The value to validate.
@@ -11,7 +9,7 @@ import type { MapUniqueKeysProjection } from './map-unique-keys.options'
  */
 export function mapUniqueKeys<Key, Projection>(
     value: unknown,
-    projection: MapUniqueKeysProjection<Key, Projection>
+    projection: (item: Key) => Projection
 ): value is Map<unknown, unknown> {
     if (typeof projection !== 'function') {
         throw new TypeError('Parameter "projection" must be a function')

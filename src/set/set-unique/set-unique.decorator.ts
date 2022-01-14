@@ -1,7 +1,6 @@
 import type { ValidationOptions } from 'class-validator'
 import { buildMessage, ValidateBy } from 'class-validator'
 
-import type { SetUniqueProjection } from './set-unique.options'
 import { setUnique } from './set-unique.predicate'
 
 /** @hidden */
@@ -25,7 +24,7 @@ export const SET_UNIQUE = 'setUnique'
  * @typeParam Projection The type returned by `projection`.
  */
 export function SetUnique<Value = unknown, Projection = unknown>(
-    projection: SetUniqueProjection<Value, Projection>,
+    projection: (item: Value) => Projection,
     options?: ValidationOptions
 ): PropertyDecorator {
     return ValidateBy(

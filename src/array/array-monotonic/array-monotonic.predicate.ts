@@ -18,9 +18,9 @@ function checkMonotonicity(value: number, monotonicity: Monotonicity): boolean {
 }
 
 function compareItems<T>(a: T, b: T, options: ArrayMonotonicOptions<T>): boolean {
-    if (options.projection) {
+    if ('projection' in options) {
         return checkMonotonicity(options.projection(b) - options.projection(a), options.monotonicity)
-    } else if (options.comparator) {
+    } else if ('comparator' in options) {
         return checkMonotonicity(options.comparator(b, a), options.monotonicity)
     }
 

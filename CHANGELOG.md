@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   `IsDayjs`: Replaced `is_valid` option with `allow_invalid`.
 -   `dayjs` is now an `optionalDependency` instead of a `peerDependency`
+-   Most decorator options are now inlined and thus simpler to use and more readable in the generated documentation.
 
 ### Added
 
