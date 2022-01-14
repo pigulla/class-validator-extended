@@ -4,6 +4,19 @@
     "treatWarningsAsErrors": true,
     "includeVersion": true,
     "categorizeByGroup": false,
-    "categoryOrder": ["Type", "Array", "BigInt", "Date", "Dayjs", "Map", "Set", "String", "Predicates", "Types", "*"],
+    "categoryOrder": [
+        "Type",
+        "Common",
+        "Array",
+        "BigInt",
+        "Date",
+        "Dayjs",
+        "Map",
+        "Set",
+        "String",
+        "Predicates",
+        "Types",
+        "*"
+    ],
     "sort": ["alphabetical"]
 }

@@ -1,5 +1,6 @@
 export * from './array'
 export * from './bigint'
+export * from './common'
 export * from './date'
 export * from './dayjs'
 export * from './map'
