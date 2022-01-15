@@ -12,8 +12,8 @@ export const MAP_NOT_CONTAINS_KEYS = 'mapNotContainsKeys'
  *
  * #### Example
  * ```typescript
- * // Ensure the map contains does not include the keys 13 and 42.
- * @MapNotContainsKeys(13, 42)
+ * // Ensure the map does not contain the keys 13 and 42.
+ * @MapNotContainsKeys([13, 42])
  * values: Map<number, string>
  * ```
  *

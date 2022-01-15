@@ -23,9 +23,9 @@ export const IS_NETWORK_PORT = 'isNetworkPort'
  *
  * #### Example
  * ```typescript
- * // Ensure the value is less than 9000.
+ * // Ensure the value is a valid network port (but not 0).
  * @IsNetworkPort({ allow_system_allocated: false })
- * remotePort: 8080
+ * remotePort: number
  * ```
  *
  * @category Number

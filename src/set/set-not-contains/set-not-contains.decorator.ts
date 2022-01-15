@@ -12,7 +12,7 @@ export const SET_NOT_CONTAINS = 'setNotContains'
  *
  * #### Example
  * ```typescript
- * // Ensure the set contains does not include the values 'foo' and 'bar'.
+ * // Ensure the set does not contain the values 'foo' and 'bar'.
  * @SetNotContains(['foo', 'bar'])
  * values: Set<string>
  * ```

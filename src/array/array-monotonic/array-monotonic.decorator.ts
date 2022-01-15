@@ -15,9 +15,9 @@ export const ARRAY_MONOTONIC = 'arrayMonotonic'
  * #### Example
  * ```typescript
  * // Ensure the array is sorted in reverse order of dates of birth.
- * @ArrayMonotonic({
+ * @ArrayMonotonic<User>({
  *     monotonicity: Monotonicity.WEAKLY_DECREASING,
- *     projection: (user: User) => user.dateOfBirth.getTime()
+ *     projection: user => user.dateOfBirth.getTime()
  * })
  * users: User[]
  * ```

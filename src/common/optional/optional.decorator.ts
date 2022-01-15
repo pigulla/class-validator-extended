@@ -4,7 +4,7 @@ import { ValidateIf } from 'class-validator'
 /**
  * Only validates the given value if it is not `undefined`.
  *
- * This is similar to the built-in `@IsOptional` except that it does not allow 'null'. Note that this validator does not
+ * This is similar to the built-in `@IsOptional` except that it does not allow `null`. Note that this validator does not
  * work as expected with `{ each: true }` (because it is based on `@ValidateIf` which does not either).
  *
  * #### Example

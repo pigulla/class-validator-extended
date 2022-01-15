@@ -12,7 +12,7 @@ export const MAP_NOT_CONTAINS = 'mapNotContains'
  *
  * #### Example
  * ```typescript
- * // Ensure the map contains does not include the values 'foo' and 'bar'.
+ * // Ensure the map does not contain the values 'foo' and 'bar'.
  * @MapNotContains(['foo', 'bar'])
  * values: Map<number, string>
  * ```

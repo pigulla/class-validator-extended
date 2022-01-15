@@ -8,7 +8,7 @@ export const MAP_MAX_SIZE = 'mapMaxSize'
 
 /**
  * Checks if the given value is a [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
- * with no more than `maximum` entries.
+ * with a size less than or equal to `maximum`..
  *
  * #### Example
  * ```typescript

@@ -8,7 +8,7 @@ export const MAP_MIN_SIZE = 'mapMinSize'
 
 /**
  * Checks if the given value is a [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
- * with no fewer than `minimum` entries.
+ * with a size greater than or equal to `minimum`.
  *
  * #### Example
  * ```typescript

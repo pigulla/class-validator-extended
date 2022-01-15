@@ -33,7 +33,8 @@ export const PAST_DAYJS = 'pastDayjs'
  *   - `inclusive: boolean = false`
  *     If true, allow the current date as well.
  *   - `granularity: string = 'milliseconds'`
- *     Defines the granularity, e.g. "day" to ignore hours, minutes, seconds and milliseconds.
+ *     Defines the [granularity](https://day.js.org/docs/en/manipulate/start-of#list-of-all-available-units), e.g. "day"
+ *     to ignore hours, minutes, seconds and milliseconds.
  */
 export function PastDayjs(
     options?: { allow_invalid?: boolean; inclusive?: boolean; granularity?: OpUnitType } & ValidationOptions

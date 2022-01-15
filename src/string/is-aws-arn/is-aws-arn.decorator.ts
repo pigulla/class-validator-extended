@@ -18,7 +18,7 @@ export const IS_AWS_ARN = 'isAwsArn'
  *  - `arn:aws:ec2::123456789012:instance/i-1234567890abcdef0`
  *    (EC2 requires a region which is omitted)
  *  - `arn:aws:ec2:us-east-42:123456789012:instance/i-1234567890abcdef0`
- *    (th region `us-east-42` does not exist)
+ *    (the region `us-east-42` does not exist)
  *
  * #### Example
  * ```typescript
