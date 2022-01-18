@@ -13,10 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+-   `IsDuration`: Added `allow_invalid` option.
 -   `IsNetworkPort`: Added new validator.
+-   `MaxDuration`: Added new validator.
+-   `MinDuration`: Added new validator.
 -   `Nullable`: Added new validator.
 -   `Optional`: Added new validator.
--   `IsDuration`: Added `allow_invalid` option.
 
 ## [0.0.5] - 2022-01-14
 
