@@ -13,7 +13,7 @@ describe('@MinDuration', () => {
 
     type Options = Parameters<typeof MinDuration>
     const matrix: Record<string, Options[]> = {
-        'property must be a valid Dayjs duration object not shorter than PT1H': [
+        'property must be a valid Dayjs duration not shorter than PT1H': [
             [minimum],
             [minimum, {}],
             [minimum, { each: undefined, inclusive: undefined }],
@@ -21,14 +21,14 @@ describe('@MinDuration', () => {
             [minimum, { each: false, inclusive: undefined }],
             [minimum, { each: false, inclusive: false }],
         ],
-        'each value in property must be a valid Dayjs duration object not shorter than PT1H': [
+        'each value in property must be a valid Dayjs duration not shorter than PT1H': [
             [minimum, { each: true, inclusive: undefined }],
             [minimum, { each: true, inclusive: false }],
         ],
-        'property must be a valid Dayjs duration object equal to or not shorter than PT1H': [
+        'property must be a valid Dayjs duration equal to or not shorter than PT1H': [
             [minimum, { each: undefined, inclusive: true }],
         ],
-        'each value in property must be a valid Dayjs duration object equal to or not shorter than PT1H': [
+        'each value in property must be a valid Dayjs duration equal to or not shorter than PT1H': [
             [minimum, { each: true, inclusive: true }],
         ],
     }

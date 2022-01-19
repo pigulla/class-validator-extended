@@ -13,7 +13,7 @@ describe('@MaxDuration', () => {
 
     type Options = Parameters<typeof MaxDuration>
     const matrix: Record<string, Options[]> = {
-        'property must be a valid Dayjs duration object not longer than PT1H': [
+        'property must be a valid Dayjs duration not longer than PT1H': [
             [maximum],
             [maximum, {}],
             [maximum, { each: undefined, inclusive: undefined }],
@@ -21,14 +21,14 @@ describe('@MaxDuration', () => {
             [maximum, { each: false, inclusive: undefined }],
             [maximum, { each: false, inclusive: false }],
         ],
-        'each value in property must be a valid Dayjs duration object not longer than PT1H': [
+        'each value in property must be a valid Dayjs duration not longer than PT1H': [
             [maximum, { each: true, inclusive: undefined }],
             [maximum, { each: true, inclusive: false }],
         ],
-        'property must be a valid Dayjs duration object equal to or not longer than PT1H': [
+        'property must be a valid Dayjs duration equal to or not longer than PT1H': [
             [maximum, { each: undefined, inclusive: true }],
         ],
-        'each value in property must be a valid Dayjs duration object equal to or not longer than PT1H': [
+        'each value in property must be a valid Dayjs duration equal to or not longer than PT1H': [
             [maximum, { each: true, inclusive: true }],
         ],
     }

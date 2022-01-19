@@ -11,16 +11,16 @@ import { minDuration } from './min-duration.predicate'
 export const MIN_DURATION = 'minDuration'
 
 function message(options?: { inclusive?: boolean }): string {
-    return `a valid Dayjs duration object ${
+    return `a valid Dayjs duration ${
         options?.inclusive ? 'equal to or not shorter than' : 'not shorter than'
     } $constraint1`
 }
 
 /**
- * Checks if the given value is a valid Dayjs duration object not longer than `minimum`.
+ * Checks if the given value is a valid Dayjs duration not longer than `minimum`.
  *
  * The minimum can be given as either:
- *   - a Dayjs duration object
+ *   - a Dayjs duration
  *   - an ISO 8601 string, e.g. `"PT1H"`
  *   - a units object, e.g. `{ hour: 1, minute: 30 }`
  *   - a time/unit tuple, e.g. `[1, 'hour]`
