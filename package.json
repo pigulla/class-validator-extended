@@ -2,15 +2,6 @@
     "name": "class-validator-extended",
     "version": "0.0.6",
     "description": "Additional decorator and non-decorator based validation for class-validator.",
-    "main": "dist/index.js",
-    "files": [
-        "package.json",
-        "package-lock.json",
-        "CHANGELOG.md",
-        "LICENSE",
-        "README.md",
-        "dist/"
-    ],
     "keywords": [
         "validator",
         "validation",
@@ -19,44 +10,53 @@
         "class-validator",
         "plugin"
     ],
+    "homepage": "https://github.com/pigulla/class-validator-extended#readme",
+    "bugs": {
+        "url": "https://github.com/pigulla/class-validator-extended/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pigulla/class-validator-extended.git"
+    },
+    "license": "MIT",
     "author": {
         "name": "Raphael Pigulla",
         "email": "pigulla@four66.com"
     },
-    "license": "MIT",
+    "main": "dist/index.js",
     "directories": {
-        "doc": "docs",
         "lib": "src",
+        "doc": "docs",
         "test": "test"
+    },
+    "files": [
+        "package.json",
+        "package-lock.json",
+        "CHANGELOG.md",
+        "LICENSE",
+        "README.md",
+        "dist/"
+    ],
+    "scripts": {
+        "build": "rm -rf dist && tsc --project tsconfig.build.json && npm run docs:generate",
+        "docs:generate": "typedoc",
+        "format": "prettier --write . && npx sort-package-json",
+        "jest": "npm run jest:unit && npm run jest:integration",
+        "jest:integration": "jest --config=jest.integration.config.js",
+        "jest:unit": "jest --config=jest.unit.config.js",
+        "lint": "npm run lint:tsc && npm run lint:eslint && npm run lint:prettier",
+        "lint:eslint": "eslint --max-warnings 0 --ext=ts .",
+        "lint:prettier": "prettier --check .",
+        "lint:tsc": "tsc --noEmit --project tsconfig.json && tsc --noEmit --project test/tsconfig.json",
+        "prepublishOnly": "npm run setup && npm test && npm run build",
+        "setup": "npm ci && rm -rf coverage dist docs",
+        "test": "npm run lint && npm run jest && npm audit --production"
     },
     "config": {
         "commitizen": {
             "path": "./node_modules/cz-conventional-changelog"
         }
     },
-    "scripts": {
-        "setup": "npm ci && rm -rf coverage dist docs",
-        "build": "rm -rf dist && tsc --project tsconfig.build.json && npm run docs:generate",
-        "test": "npm run lint && npm run jest && npm audit --production",
-        "format": "prettier --write .",
-        "jest": "npm run jest:unit && npm run jest:integration",
-        "jest:unit": "jest --config=jest.unit.config.js",
-        "jest:integration": "jest --config=jest.integration.config.js",
-        "lint": "npm run lint:tsc && npm run lint:eslint && npm run lint:prettier",
-        "lint:tsc": "tsc --noEmit --project tsconfig.json && tsc --noEmit --project test/tsconfig.json",
-        "lint:eslint": "eslint --max-warnings 0 --ext=ts .",
-        "lint:prettier": "prettier --check .",
-        "docs:generate": "typedoc",
-        "prepublishOnly": "npm run setup && npm test && npm run build"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/pigulla/class-validator-extended.git"
-    },
-    "bugs": {
-        "url": "https://github.com/pigulla/class-validator-extended/issues"
-    },
-    "homepage": "https://github.com/pigulla/class-validator-extended#readme",
     "devDependencies": {
         "@types/jest": "^27.4.0",
         "@types/validator": "^13.7.1",
