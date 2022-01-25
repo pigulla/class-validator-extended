@@ -10,8 +10,14 @@ describe('@IsDuration', () => {
 
     type Options = Parameters<typeof IsDuration>
     const matrix: Record<string, Options[]> = {
-        'property must be a Dayjs duration object': [[], [{}], [{ each: undefined }], [{ each: false }]],
-        'each value in property must be a Dayjs duration object': [[{ each: true }]],
+        'property must be a valid Dayjs duration': [[], [{}], [{ each: undefined }], [{ each: false }]],
+        'each value in property must be a valid Dayjs duration': [[{ each: true }]],
+        'property must be a Dayjs duration': [
+            [{ allow_invalid: true }],
+            [{ allow_invalid: true, each: undefined }],
+            [{ allow_invalid: true, each: false }],
+        ],
+        'each value in property must be a Dayjs duration': [[{ allow_invalid: true, each: true }]],
     }
 
     beforeEach(() => {

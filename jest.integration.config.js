@@ -3,7 +3,7 @@ const config = require('./jest.config')
 
 module.exports = {
     ...config,
+    collectCoverageFrom: ['src/**/*.decorator.ts'],
     coverageDirectory: 'coverage/integration',
-    coveragePathIgnorePatterns: [...config.coveragePathIgnorePatterns, '\\.predicate\\.ts$'],
     testRegex: ['/test/integration/.*.spec.ts$'],
 }

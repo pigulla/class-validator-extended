@@ -7,29 +7,38 @@ import { isDuration } from './is-duration.predicate'
 export const IS_DURATION = 'isDuration'
 
 /**
- * Checks if the given value is a Dayjs Duration object.
+ * Checks if the given value is a valid Dayjs duration.
  *
- * This requires the [Duration-plugin](https://day.js.org/docs/en/plugin/duration) to be loaded. If this is not the
+ * A duration is considered valid if and only if:
+ *   - it passes [dayjs.isDuration()](https://day.js.org/docs/en/durations/is-a-duration)
+ *   - its numeric value is a finite number (i.e., `duration.asMilliseconds()` is not `NaN`)
+ *   - its numeric value is non-negative
+ *
+ * This requires the [duration-plugin](https://day.js.org/docs/en/plugin/duration) to be loaded. If this is not the
  * case, an error will be thrown.
  *
  * #### Example
  * ```typescript
- * // Ensure the value is a Dayjs Duration object.
+ * // Ensure the value is a Dayjs duration.
  * @IsDuration()
  * value: Duration
  * ```
  *
  * @category Type
- * @param options Generic class-validator options.
+ * @param options
+ * Accepts the following options (in addition to generic class-validator options):
+ *   - `allow_invalid: boolean = false`
+ *     If true, allow the duration to be invalid.
  */
-export function IsDuration(options?: ValidationOptions) {
+export function IsDuration(options?: { allow_invalid?: boolean } & ValidationOptions) {
     return ValidateBy(
         {
             name: IS_DURATION,
             validator: {
-                validate: (value, _arguments): boolean => isDuration(value),
+                validate: (value, _arguments): boolean => isDuration(value, { allow_invalid: options?.allow_invalid }),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must be a Dayjs duration object`,
+                    eachPrefix =>
+                        `${eachPrefix}$property must be ${options?.allow_invalid ? 'a' : 'a valid'} Dayjs duration`,
                     options
                 ),
             },

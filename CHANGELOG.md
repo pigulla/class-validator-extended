@@ -7,9 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.6] - 2022-01-25
+
+### Changed
+
+-   `IsDuration`: The duration object is required to be valid by default.
+
 ### Added
 
+-   `IsDuration`: Added `allow_invalid` option.
 -   `IsNetworkPort`: Added new validator.
+-   `MaxDuration`: Added new validator.
+-   `MinDuration`: Added new validator.
 -   `Nullable`: Added new validator.
 -   `Optional`: Added new validator.
 
