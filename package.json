@@ -1,6 +1,6 @@
 {
     "name": "class-validator-extended",
-    "version": "0.0.6",
+    "version": "1.0.0",
     "description": "Additional decorator and non-decorator based validation for class-validator.",
     "keywords": [
         "validator",
