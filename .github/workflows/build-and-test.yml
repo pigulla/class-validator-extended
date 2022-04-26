@@ -6,27 +6,19 @@ jobs:
     build:
         runs-on: ubuntu-latest
 
-        strategy:
-            matrix:
-                node:
-                    - '14'
-                    - '16'
-                    - '17'
-
         steps:
             - uses: actions/checkout@v2
 
             - uses: actions/setup-node@v1
               with:
-                  node-version: ${{ matrix.node }}
+                  node-version: 18
 
-            - run: npm i -g npm@7 --registry=https://registry.npmjs.org
+            - run: npm i -g npm@8 --registry=https://registry.npmjs.org
             - run: npm run setup
             - run: npm test
             - run: npm run build
 
             - uses: codecov/codecov-action@v2
-              if: matrix.node == '16'
               with:
                   files: ./coverage/unit/lcov.info,./coverage/integration/lcov.info
                   fail_ci_if_error: true
