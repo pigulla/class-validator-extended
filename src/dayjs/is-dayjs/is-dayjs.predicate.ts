@@ -9,5 +9,5 @@ import { isDayjs as isDayjsNative } from 'dayjs'
 export function isDayjs(value: unknown, options?: { allow_invalid?: boolean }): value is Dayjs {
     const { allow_invalid } = { allow_invalid: false, ...options }
 
-    return isDayjsNative(value) && (allow_invalid || (value as Dayjs).isValid())
+    return isDayjsNative(value) && (allow_invalid || value.isValid())
 }

@@ -13,5 +13,5 @@ export function isDuration(value: unknown, options?: { allow_invalid?: boolean }
         throw new Error('The Dayjs "duration" plugin is not loaded.')
     }
 
-    return dayjs.isDuration(value) && (options?.allow_invalid || isValidDuration(value as Duration))
+    return dayjs.isDuration(value) && (options?.allow_invalid || isValidDuration(value))
 }

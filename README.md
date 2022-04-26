@@ -1,3 +1,4 @@
+![Typescript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-blue.svg?style=flat-square)
 [![npm](https://img.shields.io/npm/v/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://www.npmjs.com/package/class-validator-extended)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pigulla/class-validator-extended/Node.js%20CI?style=flat-square&cacheSeconds=3600)](https://github.com/pigulla/class-validator-extended/actions?query=branch%3Amain)
 [![GitHub Issues](https://img.shields.io/github/issues-raw/pigulla/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://github.com/pigulla/class-validator-extended/issues)
@@ -12,8 +13,8 @@
 
 #### Safe and simple to use
 
--   🕵️‍♀️ Thoroughly tested
--   🕮 Well documented
+-   🕵️‍♀️ [Thoroughly tested](https://app.codecov.io/gh/pigulla/class-validator-extended)
+-   🕮 [Well documented](https://pigulla.github.io/class-validator-extended/index.html)
 -   ✨ No additional dependencies ([Day.js](https://day.js.org/) is supported but optional)
 -   😊 Uses [Semantic Versioning](https://semver.org/) and keeps a [nice](https://keepachangelog.com/en/1.0.0/) [Changelog](https://github.com/pigulla/class-validator-extended/blob/main/CHANGELOG.md)
 

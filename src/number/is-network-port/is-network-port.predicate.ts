@@ -13,7 +13,6 @@ export function isNetworkPort(
         return false
     }
 
-    const port = value as number
     const { allow_system_allocated, allow_system_ports } = {
         allow_system_allocated: true,
         allow_system_ports: true,
@@ -21,8 +20,8 @@ export function isNetworkPort(
     }
 
     return (
-        port <= 65_535 &&
+        value <= 65_535 &&
         value >= (allow_system_allocated ? 0 : 1) &&
-        ((allow_system_allocated && port === 0) || allow_system_ports || port >= 1_024)
+        ((allow_system_allocated && value === 0) || allow_system_ports || value >= 1_024)
     )
 }
