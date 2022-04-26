@@ -1,7 +1,6 @@
 import 'jest-extended'
 
-import dayjs from 'dayjs'
-import { advanceTo, clear } from 'jest-date-mock'
+import { clear } from 'jest-date-mock'
 
 import { MAX_BIGINT, MaxBigInt, maxBigInt } from '~'
 import { expectValidationError } from '~test/util'
@@ -11,7 +10,6 @@ jest.mock('~/bigint/max-bigint/max-bigint.predicate')
 describe('@MaxBigInt', () => {
     const mockedMaxBigInt = maxBigInt as unknown as jest.Mock
     const max = BigInt(9_000)
-    const now = dayjs('2020-05-01T06:00:00.000Z')
 
     type Options = Parameters<typeof MaxBigInt>
     const matrix: Record<string, Options[]> = {
@@ -21,7 +19,6 @@ describe('@MaxBigInt', () => {
 
     beforeEach(() => {
         mockedMaxBigInt.mockReturnValue(false)
-        advanceTo(now.toDate())
     })
 
     afterEach(() => {

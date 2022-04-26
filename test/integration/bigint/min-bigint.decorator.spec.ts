@@ -1,7 +1,6 @@
 import 'jest-extended'
 
-import dayjs from 'dayjs'
-import { advanceTo, clear } from 'jest-date-mock'
+import { clear } from 'jest-date-mock'
 
 import { MIN_BIGINT, MinBigInt, minBigInt } from '~'
 import { expectValidationError } from '~test/util'
@@ -11,7 +10,6 @@ jest.mock('~/bigint/min-bigint/min-bigint.predicate')
 describe('@MinBigInt', () => {
     const mockedMinBigInt = minBigInt as unknown as jest.Mock
     const min = BigInt(9_000)
-    const now = dayjs('2020-05-01T06:00:00.000Z')
 
     type Options = Parameters<typeof MinBigInt>
     const matrix: Record<string, Options[]> = {
@@ -21,7 +19,6 @@ describe('@MinBigInt', () => {
 
     beforeEach(() => {
         mockedMinBigInt.mockReturnValue(false)
-        advanceTo(now.toDate())
     })
 
     afterEach(() => {
