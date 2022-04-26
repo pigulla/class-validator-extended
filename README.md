@@ -56,7 +56,7 @@ Please note that Dayjs is an [optional dependency](https://docs.npmjs.com/cli/v8
 For detailed information please read the [API docs](https://pigulla.github.io/class-validator-extended/modules.html).
 
 | Decorator                                  | Description                                                                                                 |                                           API                                            |
-| :----------------------------------------- | :---------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------: |
+|:-------------------------------------------|:------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------:|
 | **Type**                                   |                                                                                                             |                                                                                          |
 | `@IsBigInt(options?)`                      | Checks if the given value is a BigInt.                                                                      |      [🔗](https://pigulla.github.io/class-validator-extended/modules.html#IsBigInt)      |
 | `@IsDayjs(options?)`                       | Checks if the given value is a valid Dayjs object.                                                          |      [🔗](https://pigulla.github.io/class-validator-extended/modules.html#IsDayjs)       |
