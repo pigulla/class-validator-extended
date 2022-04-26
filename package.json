@@ -30,7 +30,11 @@
         "test": "test"
     },
     "files": [
+        "package.json",
+        "package-lock.json",
         "CHANGELOG.md",
+        "LICENSE",
+        "README.md",
         "dist/"
     ],
     "scripts": {
