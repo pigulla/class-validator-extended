@@ -1,7 +1,6 @@
 import 'jest-extended'
 
-import dayjs from 'dayjs'
-import { advanceTo, clear } from 'jest-date-mock'
+import { clear } from 'jest-date-mock'
 
 import { NEGATIVE_BIGINT, NegativeBigInt, negativeBigInt } from '~'
 import { expectValidationError } from '~test/util'
@@ -10,7 +9,6 @@ jest.mock('~/bigint/negative-bigint/negative-bigint.predicate')
 
 describe('@NegativeBigInt', () => {
     const mockedNegativeBigInt = negativeBigInt as unknown as jest.Mock
-    const now = dayjs('2020-05-01T06:00:00.000Z')
 
     type Options = Parameters<typeof NegativeBigInt>
     const matrix: Record<string, Options[]> = {
@@ -20,7 +18,6 @@ describe('@NegativeBigInt', () => {
 
     beforeEach(() => {
         mockedNegativeBigInt.mockReturnValue(false)
-        advanceTo(now.toDate())
     })
 
     afterEach(() => {
