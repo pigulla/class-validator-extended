@@ -21,6 +21,7 @@ import { ValidateIf } from 'class-validator'
 export function Nullable(options?: ValidationOptions): PropertyDecorator {
     // eslint-disable-next-line @typescript-eslint/ban-types
     return function nullableDecorator(prototype: Object, propertyKey: string | symbol): void {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         ValidateIf(object => object[propertyKey] !== null, options)(prototype, propertyKey)
     }
 }
