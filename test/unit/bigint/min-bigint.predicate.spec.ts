@@ -10,7 +10,7 @@ describe('minBigInt', () => {
         }
     )
 
-    it.each<[unknown, number | BigInt]>([
+    it.each<[unknown, number | bigint]>([
         [BigInt(1), 1],
         [BigInt(1), BigInt(1)],
         [BigInt('-10000'), -100_000],
@@ -19,7 +19,7 @@ describe('minBigInt', () => {
         expect(minBigInt(value, minimum)).toBeTrue()
     })
 
-    it.each<[unknown, number | BigInt]>([
+    it.each<[unknown, number | bigint]>([
         [undefined, 0],
         [null, BigInt(0)],
         [BigInt(-1), 0],

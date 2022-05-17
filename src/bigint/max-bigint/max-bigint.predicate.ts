@@ -5,7 +5,7 @@ import { isBigInt } from '../../bigint/is-bigint'
  * @param value The value to validate.
  * @param maximum The maximum allowed value.
  */
-export function maxBigInt(value: unknown, maximum: number | BigInt): value is BigInt {
+export function maxBigInt(value: unknown, maximum: number | bigint): value is bigint {
     if (!(typeof maximum === 'bigint' || (typeof maximum === 'number' && Number.isFinite(maximum)))) {
         throw new TypeError('Parameter "maximum" must be a finite number')
     }

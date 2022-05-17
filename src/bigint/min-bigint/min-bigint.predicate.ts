@@ -5,7 +5,7 @@ import { isBigInt } from '../../bigint/is-bigint'
  * @param value The value to validate.
  * @param minimum The minimum allowed value.
  */
-export function minBigInt(value: unknown, minimum: number | BigInt): value is BigInt {
+export function minBigInt(value: unknown, minimum: number | bigint): value is bigint {
     if (!(typeof minimum === 'bigint' || (typeof minimum === 'number' && Number.isFinite(minimum)))) {
         throw new TypeError('Parameter "minimum" must be a finite number')
     }
