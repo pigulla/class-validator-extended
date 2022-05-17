@@ -21,7 +21,7 @@ export const MAX_BIGINT = 'maxBigInt'
  * @param maximum The maximum allowed value.
  * @param options Generic class-validator options.
  */
-export function MaxBigInt(maximum: number | BigInt, options?: ValidationOptions): PropertyDecorator {
+export function MaxBigInt(maximum: number | bigint, options?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {
             name: MAX_BIGINT,

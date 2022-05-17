@@ -21,7 +21,7 @@ export const MIN_BIGINT = 'minBigInt'
  * @param minimum The minimum allowed value.
  * @param options Generic class-validator options.
  */
-export function MinBigInt(minimum: number | BigInt, options?: ValidationOptions): PropertyDecorator {
+export function MinBigInt(minimum: number | bigint, options?: ValidationOptions): PropertyDecorator {
     return ValidateBy(
         {
             name: MIN_BIGINT,
