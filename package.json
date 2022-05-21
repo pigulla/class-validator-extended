@@ -1,6 +1,6 @@
 {
     "name": "class-validator-extended",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Additional decorator and non-decorator based validation for class-validator.",
     "keywords": [
         "validator",
@@ -47,7 +47,7 @@
         "lint:tsc": "tsc --noEmit --project tsconfig.json && tsc --noEmit --project test/tsconfig.json",
         "prepublishOnly": "npm run setup && npm test && npm run build",
         "setup": "npm ci && rm -rf coverage dist docs",
-        "test": "npm run lint && npm run jest && npm audit --production"
+        "test": "npm run lint && npm run jest && npm audit --omit=dev"
     },
     "config": {
         "commitizen": {
