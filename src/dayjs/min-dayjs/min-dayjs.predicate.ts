@@ -7,7 +7,7 @@ import { isDayjs } from '../../dayjs/is-dayjs'
  * @category Predicates
  * @param value The value to validate.
  * @param minimum The minimum allowed value.
- * @param options Additional options (see {@link MinDays}).
+ * @param options Additional options (see {@link MinDayjs}).
  */
 export function minDayjs(
     value: unknown,
