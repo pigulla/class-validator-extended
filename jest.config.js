@@ -12,11 +12,6 @@ module.exports = {
             statements: 100,
         },
     },
-    globals: {
-        'ts-jest': {
-            tsconfig: '<rootDir>/test/tsconfig.json',
-        },
-    },
     moduleNameMapper: {
         '^~$': '<rootDir>/src/index.ts',
         '^~/(.+)': '<rootDir>/src/$1',
@@ -28,6 +23,11 @@ module.exports = {
     setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/test/setup.ts'],
     testEnvironment: 'node',
     transform: {
-        '^.+\\.ts$': 'ts-jest',
+        '^.+\\.ts$': [
+            'ts-jest',
+            {
+                tsconfig: '<rootDir>/test/tsconfig.json',
+            },
+        ],
     },
 }

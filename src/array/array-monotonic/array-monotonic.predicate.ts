@@ -3,17 +3,22 @@ import { Monotonicity } from './array-monotonic.options'
 
 function checkMonotonicity(value: number, monotonicity: Monotonicity): boolean {
     switch (monotonicity) {
-        case Monotonicity.WEAKLY_INCREASING:
+        case Monotonicity.WEAKLY_INCREASING: {
             return value >= 0
-        case Monotonicity.STRICTLY_INCREASING:
+        }
+        case Monotonicity.STRICTLY_INCREASING: {
             return value > 0
-        case Monotonicity.WEAKLY_DECREASING:
+        }
+        case Monotonicity.WEAKLY_DECREASING: {
             return value <= 0
-        case Monotonicity.STRICTLY_DECREASING:
+        }
+        case Monotonicity.STRICTLY_DECREASING: {
             return value < 0
+        }
         /* istanbul ignore next */
-        default:
+        default: {
             throw new TypeError('Unexpected monotonicity value')
+        }
     }
 }
 
