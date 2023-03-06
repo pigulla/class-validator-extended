@@ -12,7 +12,6 @@ export const IS_DURATION = 'isDuration'
  * A duration is considered valid if and only if:
  *   - it passes [dayjs.isDuration()](https://day.js.org/docs/en/durations/is-a-duration)
  *   - its numeric value is a finite number (i.e., `duration.asMilliseconds()` is not `NaN`)
- *   - its numeric value is non-negative
  *
  * This requires the [duration-plugin](https://day.js.org/docs/en/plugin/duration) to be loaded. If this is not the
  * case, an error will be thrown.
