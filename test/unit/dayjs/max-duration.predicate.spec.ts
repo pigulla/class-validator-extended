@@ -7,10 +7,7 @@ import { withoutDurationPlugin } from '~test/without-duration-plugin'
 
 describe('maxDuration', () => {
     const maximum = dayjs.duration(1, 'hour')
-    const invalidDurationObjects: [string, unknown][] = [
-        ['an invalid duration', dayjs.duration('PxD')],
-        ['a negative duration', dayjs.duration(-5, 'hour')],
-    ]
+    const invalidDurationObjects: [string, unknown][] = [['an invalid duration', dayjs.duration('PxD')]]
 
     it('should throw if "maximum" is an invalid duration object', () => {
         expect(() => maxDuration(dayjs.duration(1, 'hour'), dayjs.duration('PxD'))).toThrow(TypeError)

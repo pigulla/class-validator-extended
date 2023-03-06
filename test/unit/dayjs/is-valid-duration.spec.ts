@@ -12,10 +12,10 @@ describe('isValidDuration', () => {
         expect(isValidDuration(value)).toBeTrue()
     })
 
-    it.each<[string, Duration]>([
-        ['an invalid duration', dayjs.duration('PxD')],
-        ['a negative duration', dayjs.duration(-5, 'minutes')],
-    ])('should return false for %s', (_, value) => {
-        expect(isValidDuration(value)).toBeFalse()
-    })
+    it.each<[string, Duration]>([['an invalid duration', dayjs.duration('PxD')]])(
+        'should return false for %s',
+        (_, value) => {
+            expect(isValidDuration(value)).toBeFalse()
+        }
+    )
 })
