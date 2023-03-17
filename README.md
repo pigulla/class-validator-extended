@@ -1,6 +1,6 @@
 ![Typescript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-blue.svg?style=flat-square)
 [![npm](https://img.shields.io/npm/v/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://www.npmjs.com/package/class-validator-extended)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pigulla/class-validator-extended/Node.js%20CI?style=flat-square&cacheSeconds=3600)](https://github.com/pigulla/class-validator-extended/actions?query=branch%3Amain)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/pigulla/class-validator-extended/build-and-test.yml?style=flat-square)
 [![GitHub Issues](https://img.shields.io/github/issues-raw/pigulla/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://github.com/pigulla/class-validator-extended/issues)
 [![libraries.io](https://img.shields.io/librariesio/release/npm/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://libraries.io/npm/class-validator-extended)
 [![Codecov](https://img.shields.io/codecov/c/github/pigulla/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://app.codecov.io/gh/pigulla/class-validator-extended)
