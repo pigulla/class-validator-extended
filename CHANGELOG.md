@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+-   `IsTimezone`: Removed because this was added to `class-validator` in [0.14.0](https://github.com/typestack/class-validator/blob/develop/CHANGELOG.md#0140-2022-12-09).
+
 ## [2.0.0] - 2023-03-06
 
 ### Changed
