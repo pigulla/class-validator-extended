@@ -4,7 +4,7 @@ module.exports = {
         tsconfigRootDir: __dirname,
         project: ['./tsconfig.json'],
     },
-    plugins: ['unicorn', 'prettier', '@typescript-eslint', '@typescript-eslint/eslint-plugin'],
+    plugins: ['unicorn', 'prettier', '@typescript-eslint', '@typescript-eslint/eslint-plugin', 'jest'],
     extends: [
         'eslint:recommended',
         'plugin:unicorn/recommended',
@@ -13,6 +13,8 @@ module.exports = {
         'plugin:import/typescript',
         'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
+        'plugin:jest/recommended',
+        'plugin:jest/style',
         'prettier',
     ],
     settings: {

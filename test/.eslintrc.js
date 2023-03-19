@@ -22,5 +22,9 @@ module.exports = {
     rules: {
         ...config.rules,
         'unicorn/consistent-function-scoping': 'off',
+        'jest/expect-expect': [
+            'warn',
+            { assertFunctionNames: ['expect', 'expectValidationError', 'expectNoValidationErrors'] },
+        ],
     },
 }
