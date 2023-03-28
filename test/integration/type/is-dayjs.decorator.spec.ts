@@ -3,7 +3,7 @@ import 'jest-extended'
 import { IS_DAYJS, IsDayjs, isDayjs } from '~'
 import { expectValidationError } from '~test/util'
 
-jest.mock('~/dayjs/is-dayjs/is-dayjs.predicate')
+jest.mock('~/type/is-dayjs/is-dayjs.predicate')
 
 describe('@IsDayjs', () => {
     const mockedIsDayjs = isDayjs as unknown as jest.Mock

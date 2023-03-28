@@ -3,7 +3,7 @@ import 'jest-extended'
 import { IS_BIGINT, IsBigInt, isBigInt } from '~'
 import { expectValidationError } from '~test/util'
 
-jest.mock('~/bigint/is-bigint/is-bigint.predicate')
+jest.mock('~/type/is-bigint/is-bigint.predicate')
 
 describe('@IsBigInt', () => {
     const mockedIsBigInt = isBigInt as unknown as jest.Mock

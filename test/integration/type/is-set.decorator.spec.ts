@@ -3,7 +3,7 @@ import 'jest-extended'
 import { IS_SET, IsSet, isSet } from '~'
 import { expectValidationError } from '~test/util'
 
-jest.mock('~/set/is-set/is-set.predicate')
+jest.mock('~/type/is-set/is-set.predicate')
 
 describe('@IsSet', () => {
     const mockedIsSet = isSet as unknown as jest.Mock

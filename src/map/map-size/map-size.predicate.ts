@@ -1,4 +1,4 @@
-import { isMap } from '../../map/is-map'
+import { isMap } from '../../type/is-map'
 
 /**
  * @category Predicates

@@ -1,5 +1,3 @@
-export * from './is-duration'
-export * from './is-dayjs'
 export * from './future-dayjs'
 export * from './max-dayjs'
 export * from './max-duration'
