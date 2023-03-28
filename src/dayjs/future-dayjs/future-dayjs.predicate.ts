@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import type { Dayjs, OpUnitType } from 'dayjs'
 
-import { isDayjs } from '../../dayjs/is-dayjs'
+import { isDayjs } from '../../type/is-dayjs'
 
 /**
  * @category Predicates

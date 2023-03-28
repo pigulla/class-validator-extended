@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import type { Duration } from 'dayjs/plugin/duration'
 
-import { isValidDuration } from '../is-valid-duration'
+import { isValidDuration } from '../../dayjs/is-valid-duration'
 
 /**
  * @category Predicates

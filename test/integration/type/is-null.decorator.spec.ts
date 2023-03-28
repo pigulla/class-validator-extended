@@ -1,34 +1,34 @@
 import 'jest-extended'
 
-import { IS_MAP, IsMap, isMap } from '~'
+import { IS_NULL, IsNull, isNull } from '~'
 import { expectValidationError } from '~test/util'
 
-jest.mock('~/map/is-map/is-map.predicate')
+jest.mock('~/type/is-null/is-null.predicate')
 
-describe('@IsMap', () => {
-    const mockedIsMap = isMap as unknown as jest.Mock
+describe('@IsNull', () => {
+    const mockedIsNull = isNull as unknown as jest.Mock
 
-    type Options = Parameters<typeof IsMap>
+    type Options = Parameters<typeof IsNull>
     const matrix: Record<string, Options[]> = {
-        'property must be an instance of Map': [[], [{}], [{ each: undefined }], [{ each: false }]],
-        'each value in property must be an instance of Map': [[{ each: true }]],
+        'property must be null': [[], [{}], [{ each: undefined }], [{ each: false }]],
+        'each value in property must be null': [[{ each: true }]],
     }
 
     beforeEach(() => {
-        mockedIsMap.mockReturnValue(false)
+        mockedIsNull.mockReturnValue(false)
     })
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @IsMap(...options)
+                    @IsNull(...options)
                     property: unknown
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: IS_MAP,
+                    constraint: IS_NULL,
                     message,
                 })
             })

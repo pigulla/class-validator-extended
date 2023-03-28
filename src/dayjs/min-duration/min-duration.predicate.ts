@@ -1,6 +1,6 @@
 import type { Duration, DurationUnitsObjectType, DurationUnitType } from 'dayjs/plugin/duration'
 
-import { isDuration } from '../../dayjs/is-duration'
+import { isDuration } from '../../type/is-duration'
 import { createDuration } from '../create-duration'
 import { isValidDuration } from '../is-valid-duration'
 

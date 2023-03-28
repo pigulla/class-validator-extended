@@ -7,9 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2023-03-28
+
 ### Removed
 
 -   `IsTimezone`: Removed because this was added to `class-validator` in [0.14.0](https://github.com/typestack/class-validator/blob/develop/CHANGELOG.md#0140-2022-12-09).
+
+### Added
+
+-   `IsNull`: Added new validator.
+
+### Changed
+
+-   `IsSet`, `IsMap`, `IsBigInt`, `IsDayjs`, `IsDuration`: Moved from `set`, `map`, `bigint` and `dayjs` to `type` directory, respectively. This is a non-breaking change for clients using the default exports.
 
 ## [2.0.0] - 2023-03-06
 
