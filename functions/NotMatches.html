@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>SetMaxSize | class-validator-extended - v3.1.0</title><meta name="description" content="Documentation for class-validator-extended - v3.1.0"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script async src="../assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>NotMatches | class-validator-extended - v3.1.0</title><meta name="description" content="Documentation for class-validator-extended - v3.1.0"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script async src="../assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container">
 <div class="table-cell" id="tsd-search" data-base="..">
 <div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
@@ -13,35 +13,44 @@
 <div class="tsd-page-title">
 <ul class="tsd-breadcrumb">
 <li><a href="../modules.html">class-validator-extended - v3.1.0</a></li>
-<li><a href="SetMaxSize.html">SetMaxSize</a></li></ul>
-<h1>Function SetMaxSize</h1></div>
+<li><a href="NotMatches.html">NotMatches</a></li></ul>
+<h1>Function NotMatches</h1></div>
 <section class="tsd-panel">
 <ul class="tsd-signatures tsd-kind-function">
-<li class="tsd-signature tsd-anchor-link" id="SetMaxSize">Set<wbr/>Max<wbr/>Size<span class="tsd-signature-symbol">(</span>maximum<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ValidationOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyDecorator</span><a href="#SetMaxSize" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="NotMatches">Not<wbr/>Matches<span class="tsd-signature-symbol">(</span>pattern<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RegExp</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ValidationOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyDecorator</span><a href="#NotMatches" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Checks if the given value is a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>
-with a size less than or equal to <code>maximum</code>.</p>
+<div class="tsd-comment tsd-typography"><p>Checks if the given value is a string that does not match the given regular expression.</p>
 
 <a href="#example" id="example" style="color: inherit; text-decoration: none;">
   <h4>Example</h4>
 </a>
-<pre><code class="language-typescript"><span class="hl-8">// Ensure the set has at most 5 entries.</span><br/><span class="hl-0">@</span><span class="hl-6">SetMaxSize</span><span class="hl-0">(</span><span class="hl-7">5</span><span class="hl-0">)</span><br/><span class="hl-10">values</span><span class="hl-0">: </span><span class="hl-3">Set</span><span class="hl-0">&lt;</span><span class="hl-3">string</span><span class="hl-0">&gt;</span>
+<pre><code class="language-typescript"><span class="hl-8">// Ensure the value does not start with &quot;foo&quot;.</span><br/><span class="hl-0">@</span><span class="hl-6">NotMatches</span><span class="hl-0">(</span><span class="hl-11">/</span><span class="hl-12">^</span><span class="hl-11">foo/</span><span class="hl-0">)</span><br/><span class="hl-10">value</span><span class="hl-0">: </span><span class="hl-3">string</span><span class="hl-0"> = </span><span class="hl-1">&#39;bar&#39;</span><br/><br/><span class="hl-8">// Ensure the value does not include &quot;foo&quot;, ignoring case.</span><br/><span class="hl-0">@</span><span class="hl-6">NotMatches</span><span class="hl-0">(</span><span class="hl-1">&#39;foo&#39;</span><span class="hl-0">, </span><span class="hl-1">&#39;i&#39;</span><span class="hl-0">)</span><br/><span class="hl-10">value</span><span class="hl-0">: </span><span class="hl-3">string</span><span class="hl-0"> = </span><span class="hl-1">&#39;bar&#39;</span>
 </code></pre>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5>maximum: <span class="tsd-signature-type">number</span></h5>
-<div class="tsd-comment tsd-typography"><p>The maximum allowed size of the set.</p>
-</div></li>
+<h5>pattern: <span class="tsd-signature-type">RegExp</span></h5></li>
 <li>
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> options: <span class="tsd-signature-type">ValidationOptions</span></h5>
-<div class="tsd-comment tsd-typography"><p>Generic class-validator options.</p>
-</div></li></ul></div>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> options: <span class="tsd-signature-type">ValidationOptions</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">PropertyDecorator</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pigulla/class-validator-extended/blob/7691f3f/src/set/set-max-size/set-max-size.decorator.ts#L24">src/set/set-max-size/set-max-size.decorator.ts:24</a></li></ul></aside></li></ul></section></div>
+<li>Defined in <a href="https://github.com/pigulla/class-validator-extended/blob/7691f3f/src/string/not-matches/not-matches.decorator.ts#L38">src/string/not-matches/not-matches.decorator.ts:38</a></li></ul></aside></li>
+<li class="tsd-signature tsd-anchor-link" id="NotMatches-1">Not<wbr/>Matches<span class="tsd-signature-symbol">(</span>pattern<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, modifiers<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ValidationOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyDecorator</span><a href="#NotMatches-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>pattern: <span class="tsd-signature-type">string</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> modifiers: <span class="tsd-signature-type">string</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> options: <span class="tsd-signature-type">ValidationOptions</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">PropertyDecorator</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/pigulla/class-validator-extended/blob/7691f3f/src/string/not-matches/not-matches.decorator.ts#L39">src/string/not-matches/not-matches.decorator.ts:39</a></li></ul></aside></li></ul></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -97,14 +106,14 @@ with a size less than or equal to <code>maximum</code>.</p>
 <li class="tsd-kind-function"><a href="MinDuration.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>Min<wbr/>Duration</a></li>
 <li class="tsd-kind-enum"><a href="../enums/Monotonicity.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-enum)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-8-path"></rect><path d="M9.45 16V7.24H14.49V8.224H10.518V10.936H14.07V11.908H10.518V15.016H14.49V16H9.45Z" fill="var(--color-text)" id="icon-8-text"></path></svg>Monotonicity</a></li>
 <li class="tsd-kind-function"><a href="NegativeBigInt.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>Negative<wbr/>Big<wbr/>Int</a></li>
-<li class="tsd-kind-function"><a href="NotMatches.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>Not<wbr/>Matches</a></li>
+<li class="current tsd-kind-function"><a href="NotMatches.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>Not<wbr/>Matches</a></li>
 <li class="tsd-kind-function"><a href="Nullable.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>Nullable</a></li>
 <li class="tsd-kind-function"><a href="Optional.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>Optional</a></li>
 <li class="tsd-kind-function"><a href="PastDate.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>Past<wbr/>Date</a></li>
 <li class="tsd-kind-function"><a href="PastDayjs.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>Past<wbr/>Dayjs</a></li>
 <li class="tsd-kind-function"><a href="PositiveBigInt.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>Positive<wbr/>Big<wbr/>Int</a></li>
 <li class="tsd-kind-function"><a href="SetContains.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>Set<wbr/>Contains</a></li>
-<li class="current tsd-kind-function"><a href="SetMaxSize.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>Set<wbr/>Max<wbr/>Size</a></li>
+<li class="tsd-kind-function"><a href="SetMaxSize.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>Set<wbr/>Max<wbr/>Size</a></li>
 <li class="tsd-kind-function"><a href="SetMinSize.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>Set<wbr/>Min<wbr/>Size</a></li>
 <li class="tsd-kind-function"><a href="SetNotContains.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>Set<wbr/>Not<wbr/>Contains</a></li>
 <li class="tsd-kind-function"><a href="SetNotEmpty.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>Set<wbr/>Not<wbr/>Empty</a></li>
