@@ -9,7 +9,7 @@
 
 # class-validator-extended
 
-> Additional decorator and non-decorator based validation for [class-validator](https://github.com/typestack/class-validator).
+> Additional validators for [class-validator](https://github.com/typestack/class-validator).
 
 #### Safe and simple to use
 
