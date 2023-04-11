@@ -72,7 +72,7 @@
         "jest-extended": "^3.0.1",
         "prettier": "^2.3.0",
         "ts-jest": "^29.0.3",
-        "typedoc": "^0.23.28",
+        "typedoc": "^0.24.1",
         "typescript": "^5.0.2"
     },
     "peerDependencies": {
