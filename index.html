@@ -20,27 +20,27 @@
 <a href="https://app.codecov.io/gh/pigulla/class-validator-extended"><img src="https://img.shields.io/codecov/c/github/pigulla/class-validator-extended?style=flat-square&cacheSeconds=3600" alt="Codecov"></a>
 <a href="https://bundlephobia.com/package/class-validator-extended"><img src="https://img.shields.io/bundlephobia/min/class-validator-extended?style=flat-square&cacheSeconds=3600" alt="npm bundle size"></a>
 <a href="https://snyk.io/advisor/npm-package/class-validator-extended"><img src="https://img.shields.io/snyk/vulnerabilities/npm/class-validator-extended?style=flat-square&cacheSeconds=3600" alt="Snyk Vulnerabilities for npm package"></a></p>
-<a id="md:class-validator-extended" class="tsd-anchor"></a><h1><a href="#$class-validator-extended" style="color:inherit;text-decoration:none">class-validator-extended</a></h1><blockquote>
+<a id="md:class-validator-extended" class="tsd-anchor"></a><h1><a href="#md:class-validator-extended">class-validator-extended</a></h1><blockquote>
 <p>Additional validators for <a href="https://github.com/typestack/class-validator">class-validator</a>.</p>
 </blockquote>
-<a id="md:safe-and-simple-to-use" class="tsd-anchor"></a><h4><a href="#$safe-and-simple-to-use" style="color:inherit;text-decoration:none">Safe and simple to use</a></h4><ul>
+<a id="md:safe-and-simple-to-use" class="tsd-anchor"></a><h4><a href="#md:safe-and-simple-to-use">Safe and simple to use</a></h4><ul>
 <li>🕵️‍♀️ <a href="https://app.codecov.io/gh/pigulla/class-validator-extended">Thoroughly tested</a></li>
 <li>📝 <a href="https://pigulla.github.io/class-validator-extended/index.html">Well documented</a></li>
 <li>✨ No additional dependencies (<a href="https://day.js.org/">Day.js</a> is supported but optional)</li>
 <li>😊 Uses <a href="https://semver.org/">Semantic Versioning</a> and keeps a <a href="https://keepachangelog.com/en/1.0.0/">nice</a> <a href="https://github.com/pigulla/class-validator-extended/blob/main/CHANGELOG.md">Changelog</a></li>
 </ul>
-<a id="md:installation" class="tsd-anchor"></a><h2><a href="#$installation" style="color:inherit;text-decoration:none">Installation</a></h2><p>Use your favorite package manager to install:</p>
+<a id="md:installation" class="tsd-anchor"></a><h2><a href="#md:installation">Installation</a></h2><p>Use your favorite package manager to install:</p>
 <pre><code class="language-bash"><span class="hl-0">npm </span><span class="hl-1">install</span><span class="hl-0"> </span><span class="hl-1">class-validator-extended</span>
-</code></pre>
+</code><button>Copy</button></pre>
 <p>For obvious reasons, <a href="https://github.com/typestack/class-validator">class-validator</a> needs to be installed.</p>
-<a id="md:usage" class="tsd-anchor"></a><h2><a href="#$usage" style="color:inherit;text-decoration:none">Usage</a></h2><p>Just use the decorators like any of the built-in ones:</p>
+<a id="md:usage" class="tsd-anchor"></a><h2><a href="#md:usage">Usage</a></h2><p>Just use the decorators like any of the built-in ones:</p>
 <pre><code class="language-typescript"><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">ArrayMinSize</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-1">&#39;class-validator&#39;</span><br/><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">ArrayMonotonic</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-1">&#39;class-validator-extended&#39;</span><br/><br/><span class="hl-4">class</span><span class="hl-0"> </span><span class="hl-5">Foo</span><span class="hl-0"> {</span><br/><span class="hl-0">    @</span><span class="hl-6">ArrayMinSize</span><span class="hl-0">(</span><span class="hl-7">2</span><span class="hl-0">)</span><br/><span class="hl-0">    @</span><span class="hl-6">ArrayMonotonic</span><span class="hl-0">()</span><br/><span class="hl-0">    </span><span class="hl-3">values</span><span class="hl-0">: [</span><span class="hl-7">1</span><span class="hl-0">, </span><span class="hl-7">13</span><span class="hl-0">, </span><span class="hl-7">42</span><span class="hl-0">]</span><br/><span class="hl-0">}</span>
-</code></pre>
+</code><button>Copy</button></pre>
 <p>If you don&#39;t have <a href="https://day.js.org/">Dayjs</a> installed you need to use the <code>minimal</code> export:</p>
 <pre><code class="language-typescript"><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">MaxBigInt</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-1">&#39;class-validator-extended/dist/minimal&#39;</span>
-</code></pre>
+</code><button>Copy</button></pre>
 <p>Please note that Dayjs is an <a href="https://docs.npmjs.com/cli/v8/configuring-npm/package-json#optionaldependencies">optional dependency</a> and will by default be installed by npm and yarn. To avoid this use <code>npm install --omit optional</code> or <code>yarn install --ignore-optional</code>, respectively.</p>
-<a id="md:validation-decorators" class="tsd-anchor"></a><h2><a href="#$validation-decorators" style="color:inherit;text-decoration:none">Validation decorators</a></h2><p>For detailed information please read the <a href="https://pigulla.github.io/class-validator-extended/modules.html">API docs</a>.</p>
+<a id="md:validation-decorators" class="tsd-anchor"></a><h2><a href="#md:validation-decorators">Validation decorators</a></h2><p>For detailed information please read the <a href="https://pigulla.github.io/class-validator-extended/modules.html">API docs</a>.</p>
 <table>
 <thead>
 <tr>
