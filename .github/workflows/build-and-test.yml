@@ -13,7 +13,7 @@ jobs:
               with:
                   node-version: 20
 
-            - run: npm i -g npm@8 --registry=https://registry.npmjs.org
+            - run: npm i -g npm@9 --registry=https://registry.npmjs.org
             - run: npm run setup
             - run: npm test
             - run: npm run build
