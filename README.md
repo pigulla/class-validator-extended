@@ -5,7 +5,6 @@
 [![libraries.io](https://img.shields.io/librariesio/release/npm/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://libraries.io/npm/class-validator-extended)
 [![Codecov](https://img.shields.io/codecov/c/github/pigulla/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://app.codecov.io/gh/pigulla/class-validator-extended)
 [![npm bundle size](https://img.shields.io/bundlephobia/min/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://bundlephobia.com/package/class-validator-extended)
-[![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/class-validator-extended?style=flat-square&cacheSeconds=3600)](https://snyk.io/advisor/npm-package/class-validator-extended)
 
 # class-validator-extended
 
