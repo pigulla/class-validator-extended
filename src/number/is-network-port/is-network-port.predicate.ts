@@ -1,4 +1,4 @@
-const integerRegex = /^0|[1-9]\d$/
+const integerRegex = /^0|([1-9]\d*)$/
 
 /**
  * @category Predicates

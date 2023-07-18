@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.1] - 2023-07-18
+
+### Fixed
+
+-   `IsNetworkPort`: Fixed issue where some valid values were rejected.
+
 ## [3.1.0] - 2023-04-11
 
 ### Added
