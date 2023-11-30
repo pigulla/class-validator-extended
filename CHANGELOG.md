@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.0] - 2023-11-30
+
 ### Changed
 
+-   All dependencies are now pinned.
 -   Don't fail build when uploading the coverage to Codecov fails.
 -   Added linting for `package.json` and `package-lock.json`.
 
