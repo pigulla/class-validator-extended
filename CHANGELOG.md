@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 -   Don't fail build when uploading the coverage to Codecov fails.
+-   Added linting for `package.json` and `package-lock.json`.
 
 ## [3.1.2] - 2023-08-15
 

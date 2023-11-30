@@ -1,0 +1,10 @@
+{
+    "path": "package-lock.json",
+    "format": "plain",
+    "type": "npm",
+    "validate-https": true,
+    "allowed-hosts": "npm",
+    "empty-hostname": false,
+    "validate-package-names": true,
+    "validate-integrity": true
+}
