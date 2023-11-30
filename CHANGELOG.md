@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   Don't fail build when uploading the coverage to Codecov fails.
+
 ## [3.1.2] - 2023-08-15
 
 ### Chore
