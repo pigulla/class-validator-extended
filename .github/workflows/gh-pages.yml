@@ -20,6 +20,7 @@ jobs:
 
             - run: npm i -g npm@7 --registry=https://registry.npmjs.org
             - run: npm run setup
+            - run: npm i --no-save class-validator
             - run: npm run docs:generate
 
             - name: Deploy
