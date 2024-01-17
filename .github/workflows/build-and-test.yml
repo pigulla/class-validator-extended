@@ -15,6 +15,7 @@ jobs:
 
             - run: npm i -g npm@9 --registry=https://registry.npmjs.org
             - run: npm run setup
+            - run: npm i --no-save class-validator
             - run: npm test
             - run: npm run build
 
