@@ -78,7 +78,7 @@
         "jest-extended": "4.0.2",
         "lockfile-lint": "4.12.1",
         "prettier": "3.2.4",
-        "sort-package-json": "2.6.0",
+        "sort-package-json": "2.7.0",
         "ts-jest": "29.1.2",
         "typedoc": "0.25.4",
         "typescript": "5.3.3"
