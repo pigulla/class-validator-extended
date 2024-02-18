@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   `class-validator` must be at least at version 0.14.1
+
 ## [3.2.0] - 2023-11-30
 
 ### Changed
