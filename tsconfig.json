@@ -10,7 +10,7 @@
         "removeComments": false,
         "rootDir": "src",
         "sourceMap": true,
-        "target": "ES6",
+        "target": "ES2018",
 
         // Module resolution
         "allowSyntheticDefaultImports": true,
