@@ -81,7 +81,7 @@
         "sort-package-json": "2.10.0",
         "ts-jest": "29.1.5",
         "typedoc": "0.25.13",
-        "typescript": "5.4.5"
+        "typescript": "5.5.2"
     },
     "peerDependencies": {
         "class-validator": "^0.14.1",
