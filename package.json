@@ -80,7 +80,7 @@
         "prettier": "3.3.2",
         "sort-package-json": "2.10.0",
         "ts-jest": "29.2.2",
-        "typedoc": "0.26.3",
+        "typedoc": "0.26.4",
         "typescript": "5.5.3"
     },
     "peerDependencies": {
