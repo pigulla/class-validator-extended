@@ -77,7 +77,7 @@
         "jest-date-mock": "1.0.10",
         "jest-extended": "4.0.2",
         "lockfile-lint": "4.14.0",
-        "prettier": "3.3.2",
+        "prettier": "3.3.3",
         "sort-package-json": "2.10.0",
         "ts-jest": "29.2.2",
         "typedoc": "0.26.4",
