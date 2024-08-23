@@ -79,7 +79,7 @@
         "lockfile-lint": "4.14.0",
         "prettier": "3.3.3",
         "sort-package-json": "2.10.0",
-        "ts-jest": "29.2.4",
+        "ts-jest": "29.2.5",
         "typedoc": "0.26.6",
         "typescript": "5.5.4"
     },
