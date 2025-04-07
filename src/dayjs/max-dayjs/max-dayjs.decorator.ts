@@ -45,7 +45,12 @@ export function MaxDayjs(
             name: MAX_DAYJS,
             constraints: [dayjs(maximum).toISOString()],
             validator: {
-                validate: (value, _arguments): boolean => maxDayjs(value, maximum, options),
+                validate: (value, _arguments): boolean =>
+                    maxDayjs(value, maximum, {
+                        allow_invalid: options?.allow_invalid,
+                        inclusive: options?.inclusive,
+                        granularity: options?.granularity,
+                    }),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be ${message(options)}`,
                     options

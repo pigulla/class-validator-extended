@@ -54,16 +54,23 @@ describe('@FutureDayjs', () => {
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
+            const value = Symbol('value')
+
             it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
                     @FutureDayjs(...options)
-                    property: unknown
+                    property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
                     constraint: FUTURE_DAYJS,
                     message,
+                })
+                expect(mockedFutureDayjs).toHaveBeenCalledWith(value, {
+                    allow_invalid: options[0]?.allow_invalid,
+                    inclusive: options[0]?.inclusive,
+                    granularity: options[0]?.granularity,
                 })
             })
         })

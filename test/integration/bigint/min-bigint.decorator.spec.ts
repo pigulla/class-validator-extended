@@ -27,10 +27,12 @@ describe('@MinBigInt', () => {
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
+            const value = Symbol('value')
+
             it.each<[Options]>(optionsList.map(item => [item]))('when called with options %o', options => {
                 class TestClass {
                     @MinBigInt(...options)
-                    property: unknown
+                    property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
@@ -38,6 +40,7 @@ describe('@MinBigInt', () => {
                     constraint: MIN_BIGINT,
                     message,
                 })
+                expect(mockedMinBigInt).toHaveBeenCalledWith(value, options[0])
             })
         })
     }

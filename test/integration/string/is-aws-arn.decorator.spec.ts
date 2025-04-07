@@ -20,10 +20,12 @@ describe('@IsAwsARN', () => {
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
+            const value = Symbol('value')
+
             it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
                     @IsAwsARN(...options)
-                    property: unknown
+                    property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
@@ -31,6 +33,7 @@ describe('@IsAwsARN', () => {
                     constraint: IS_AWS_ARN,
                     message,
                 })
+                expect(mockedIsAwsARN).toHaveBeenCalledWith(value)
             })
         })
     }

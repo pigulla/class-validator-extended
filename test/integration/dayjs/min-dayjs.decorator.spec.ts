@@ -13,7 +13,7 @@ describe('@MinDayjs', () => {
     type Options = Parameters<typeof MinDayjs>
     const matrix: Record<string, Options[]> = {
         'property must be a valid Dayjs object not before 2021-01-01T00:00:00.000Z': [
-            [minimum],
+            [minimum, undefined],
             [minimum, {}],
             [minimum, { each: undefined, allow_invalid: undefined, inclusive: undefined, granularity: undefined }],
             [minimum, { each: undefined, allow_invalid: false, inclusive: undefined, granularity: 'minutes' }],
@@ -56,16 +56,23 @@ describe('@MinDayjs', () => {
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
+            const value = Symbol('value')
+
             it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
                     @MinDayjs(...options)
-                    property: unknown
+                    property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
                     constraint: MIN_DAYJS,
                     message,
+                })
+                expect(mockedMinDayjs).toHaveBeenCalledWith(value, options[0], {
+                    allow_invalid: options[1]?.allow_invalid,
+                    inclusive: options[1]?.inclusive,
+                    granularity: options[1]?.granularity,
                 })
             })
         })

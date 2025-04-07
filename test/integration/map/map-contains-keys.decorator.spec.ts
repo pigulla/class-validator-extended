@@ -26,10 +26,12 @@ describe('@MapContainsKeys', () => {
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
+            const value = Symbol('value')
+
             it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
                     @MapContainsKeys(...options)
-                    property: unknown
+                    property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
@@ -37,6 +39,7 @@ describe('@MapContainsKeys', () => {
                     constraint: MAP_CONTAINS_KEYS,
                     message,
                 })
+                expect(mockedMapContainsKeys).toHaveBeenCalledWith(value, options[0])
             })
         })
     }

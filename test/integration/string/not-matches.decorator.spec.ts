@@ -24,13 +24,15 @@ describe('@NotMatches', () => {
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
+            const value = Symbol('value')
+
             it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore
                     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
                     @NotMatches(...options)
-                    property: unknown
+                    property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
@@ -38,6 +40,11 @@ describe('@NotMatches', () => {
                     constraint: NOT_MATCHES,
                     message,
                 })
+                expect(mockedNotMatches).toHaveBeenCalledWith(
+                    value,
+                    options[0],
+                    typeof options[1] === 'string' ? options[1] : undefined
+                )
             })
         })
     }

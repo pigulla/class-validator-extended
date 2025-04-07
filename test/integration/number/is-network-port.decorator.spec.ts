@@ -30,16 +30,22 @@ describe('@IsNetworkPort', () => {
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
+            const value = Symbol('value')
+
             it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
                     @IsNetworkPort(...options)
-                    property: unknown
+                    property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
                     constraint: IS_NETWORK_PORT,
                     message,
+                })
+                expect(mockedIsNetworkPort).toHaveBeenCalledWith(value, {
+                    allow_system_allocated: options[0]?.allow_system_allocated ?? true,
+                    allow_system_ports: options[0]?.allow_system_ports ?? true,
                 })
             })
         })

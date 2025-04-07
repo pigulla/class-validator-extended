@@ -31,7 +31,7 @@ function message(options?: { allow_invalid?: boolean; inclusive?: boolean }): st
  *   - `allow_invalid: boolean = false`
  *     If true, allow the Dayjs object to be invalid (see [isValid()](https://day.js.org/docs/en/parse/is-valid)).
  *   - `inclusive: boolean = false`
- *     If true, allow the `maximum` date as well.
+ *     If true, allow the `minimum` date as well.
  *  - `granularity: string = 'milliseconds'`
  *     Defines the [granularity](https://day.js.org/docs/en/manipulate/start-of#list-of-all-available-units), e.g. "day"
  *     to ignore hours, minutes, seconds and milliseconds.
@@ -45,7 +45,12 @@ export function MinDayjs(
             name: MIN_DAYJS,
             constraints: [dayjs(minimum).toISOString()],
             validator: {
-                validate: (value, _arguments): boolean => minDayjs(value, minimum),
+                validate: (value, _arguments): boolean =>
+                    minDayjs(value, minimum, {
+                        allow_invalid: options?.allow_invalid,
+                        inclusive: options?.inclusive,
+                        granularity: options?.granularity,
+                    }),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be ${message(options)}`,
                     options

@@ -39,10 +39,12 @@ describe('@MinDuration', () => {
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
+            const value = Symbol('value')
+
             it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
                     @MinDuration(...options)
-                    property: unknown
+                    property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
@@ -50,6 +52,7 @@ describe('@MinDuration', () => {
                     constraint: MIN_DURATION,
                     message,
                 })
+                expect(mockedMinDuration).toHaveBeenCalledWith(value, options[0], { inclusive: options[1]?.inclusive })
             })
         })
     }

@@ -26,10 +26,12 @@ describe('@MapMinSize', () => {
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
+            const value = Symbol('value')
+
             it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
                     @MapMinSize(...options)
-                    property: unknown
+                    property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
@@ -37,6 +39,7 @@ describe('@MapMinSize', () => {
                     constraint: MAP_MIN_SIZE,
                     message,
                 })
+                expect(mockedMapMinSize).toHaveBeenCalledWith(value, options[0])
             })
         })
     }
