@@ -35,10 +35,12 @@ describe('@IsDayjs', () => {
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
+            const value = Symbol('value')
+
             it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
                     @IsDayjs(...options)
-                    property: unknown
+                    property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
@@ -46,6 +48,7 @@ describe('@IsDayjs', () => {
                     constraint: IS_DAYJS,
                     message,
                 })
+                expect(mockedIsDayjs).toHaveBeenCalledWith(value, { allow_invalid: options[0]?.allow_invalid })
             })
         })
     }

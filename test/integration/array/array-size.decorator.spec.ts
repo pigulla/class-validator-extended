@@ -26,10 +26,12 @@ describe('@ArraySize', () => {
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
+            const value = Symbol('value')
+
             it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
                     @ArraySize(...options)
-                    property: unknown
+                    property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
@@ -37,6 +39,7 @@ describe('@ArraySize', () => {
                     constraint: ARRAY_SIZE,
                     message,
                 })
+                expect(mockedArraySize).toHaveBeenCalledWith(value, options[0])
             })
         })
     }

@@ -13,7 +13,7 @@ describe('@MaxDayjs', () => {
     type Options = Parameters<typeof MaxDayjs>
     const matrix: Record<string, Options[]> = {
         'property must be a valid Dayjs object not after 2021-01-01T00:00:00.000Z': [
-            [maximum],
+            [maximum, undefined],
             [maximum, {}],
             [maximum, { each: undefined, allow_invalid: undefined, inclusive: undefined, granularity: undefined }],
             [maximum, { each: undefined, allow_invalid: false, inclusive: undefined, granularity: 'minutes' }],
@@ -56,16 +56,23 @@ describe('@MaxDayjs', () => {
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
+            const value = Symbol('value')
+
             it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
                     @MaxDayjs(...options)
-                    property: unknown
+                    property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
                     constraint: MAX_DAYJS,
                     message,
+                })
+                expect(mockedMaxDayjs).toHaveBeenCalledWith(value, options[0], {
+                    allow_invalid: options[1]?.allow_invalid,
+                    inclusive: options[1]?.inclusive,
+                    granularity: options[1]?.granularity,
                 })
             })
         })

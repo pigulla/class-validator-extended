@@ -62,7 +62,8 @@ export function ArrayMonotonic<T = unknown>(options: ArrayMonotonicOptions<T> & 
             name: ARRAY_MONOTONIC,
             constraints: [options.monotonicity],
             validator: {
-                validate: (value, _arguments): boolean => arrayMonotonic<T>(value, options),
+                validate: (value, _arguments): boolean =>
+                    arrayMonotonic<T>(value, { monotonicity: options.monotonicity }),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be a $constraint1 array`,
                     options

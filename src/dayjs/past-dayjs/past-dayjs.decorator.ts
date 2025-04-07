@@ -43,7 +43,12 @@ export function PastDayjs(
         {
             name: PAST_DAYJS,
             validator: {
-                validate: (value, _arguments): boolean => pastDayjs(value),
+                validate: (value, _arguments): boolean =>
+                    pastDayjs(value, {
+                        allow_invalid: options?.allow_invalid,
+                        inclusive: options?.inclusive,
+                        granularity: options?.granularity,
+                    }),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be ${message(options)}`,
                     options

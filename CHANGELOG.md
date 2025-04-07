@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.1.0] - 2025-04-07
+
+### Changed
+
+- Fixed multiple bugs that caused decorator options not being passed through to the underlying predicate function.
+
+### Chore
+
+- Update dependencies.
+
+## [4.0.3] - 2025-01-06
+
+### Chore
+
+- Update dependencies to fix a potential security issue.
+
 ## [4.0.2] - 2025-01-06
 
 ### Chore
