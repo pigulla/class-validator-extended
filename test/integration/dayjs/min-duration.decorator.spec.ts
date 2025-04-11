@@ -1,17 +1,16 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach, beforeEach, it } from 'node:test'
+
 import dayjs from 'dayjs'
 
-import { MIN_DURATION, MinDuration, minDuration } from '~'
-import { expectValidationError } from '~test/util'
-import { withoutDurationPlugin } from '~test/without-duration-plugin'
-
-jest.mock('~/dayjs/min-duration/min-duration.predicate')
+import type { MIN_DURATION, MinDuration } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
+import { withoutDurationPlugin } from '../../without-duration-plugin'
 
 describe('@MinDuration', () => {
-    const mockedMinDuration = minDuration as unknown as jest.Mock
-    const minimum = dayjs.duration(1, 'hour')
-
     type Options = Parameters<typeof MinDuration>
+
+    const minimum = dayjs.duration(1, 'hour')
     const matrix: Record<string, Options[]> = {
         'property must be a valid Dayjs duration not shorter than PT1H': [
             [minimum],
@@ -33,32 +32,48 @@ describe('@MinDuration', () => {
         ],
     }
 
-    beforeEach(() => {
-        mockedMinDuration.mockReturnValue(false)
+    const mockedMinDuration = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/dayjs/min-duration/min-duration.predicate.ts', {
+        namedExports: {
+            minDuration: mockedMinDuration,
+        },
     })
+    const { MinDuration: Decorator, MIN_DURATION: SYMBOL } =
+        require('../../../src/dayjs/min-duration/min-duration.decorator') as {
+            MinDuration: typeof MinDuration
+            MIN_DURATION: typeof MIN_DURATION
+        }
+
+    afterEach(() => mockedMinDuration.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @MinDuration(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: MIN_DURATION,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedMinDuration).toHaveBeenCalledWith(value, options[0], { inclusive: options[1]?.inclusive })
+                assert.equal(mockedMinDuration.mock.callCount(), 1)
+                assert.deepEqual(mockedMinDuration.mock.calls[0].arguments, [
+                    value,
+                    options[0],
+                    { inclusive: options[1]?.inclusive },
+                ])
             })
         })
     }
 
     it('should throw if "minimum" is not a valid duration', () => {
-        expect(() => MinDuration('PxD')).toThrow(TypeError)
+        assert.throws(() => Decorator('PxD'), TypeError)
     })
 
     describe('when run without the duration plugin', () => {
@@ -68,7 +83,7 @@ describe('@MinDuration', () => {
         afterEach(restore)
 
         it('should throw', () => {
-            expect(() => MinDuration('PT1H')).toThrow('The Dayjs "duration" plugin is not loaded.')
+            assert.throws(() => Decorator('PT1H'), /The Dayjs "duration" plugin is not loaded/)
         })
     })
 })

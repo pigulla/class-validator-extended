@@ -1,15 +1,13 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
 
-import { MAP_NOT_CONTAINS, MapNotContains, mapNotContains } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/map/map-not-contains/map-not-contains.predicate')
+import { MAP_NOT_CONTAINS, MapNotContains } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@MapNotContains', () => {
-    const mockedMapNotContains = mapNotContains as unknown as jest.Mock
-    const forbidden = [1, 2, 3]
-
     type Options = Parameters<typeof MapNotContains>
+
+    const forbidden = [1, 2, 3]
     const matrix: Record<string, Options[]> = {
         'property must not contain any of the following values: 1, 2, 3': [
             [forbidden],
@@ -20,26 +18,38 @@ describe('@MapNotContains', () => {
         'each value in property must not contain any of the following values: 1, 2, 3': [[forbidden, { each: true }]],
     }
 
-    beforeEach(() => {
-        mockedMapNotContains.mockReturnValue(false)
+    const mockedMapNotContains = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/map/map-not-contains/map-not-contains.predicate.ts', {
+        namedExports: {
+            mapNotContains: mockedMapNotContains,
+        },
     })
+    const { MapNotContains: Decorator, MAP_NOT_CONTAINS: SYMBOL } =
+        require('../../../src/map/map-not-contains/map-not-contains.decorator') as {
+            MapNotContains: typeof MapNotContains
+            MAP_NOT_CONTAINS: typeof MAP_NOT_CONTAINS
+        }
+
+    afterEach(() => mockedMapNotContains.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @MapNotContains(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: MAP_NOT_CONTAINS,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedMapNotContains).toHaveBeenCalledWith(value, options[0])
+                assert.equal(mockedMapNotContains.mock.callCount(), 1)
+                assert.deepEqual(mockedMapNotContains.mock.calls[0].arguments, [value, options[0]])
             })
         })
     }

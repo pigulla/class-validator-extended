@@ -1,29 +1,31 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
 
-import { setMaxSize } from '~'
+import { setMaxSize } from '../../../src'
+import { itEach } from '../../util'
 
 describe('setMaxSize', () => {
-    it.each<[unknown]>([[Number.POSITIVE_INFINITY], [Number.NaN], [null], [''], [BigInt(4)]])(
-        'should throw for %p as a max',
+    itEach<[unknown]>([[Number.POSITIVE_INFINITY], [Number.NaN], [null], [''], [BigInt(4)]])(
+        'should throw for %s as a max',
         max => {
-            expect(() => setMaxSize(0, max as number)).toThrow(TypeError)
+            assert.throws(() => setMaxSize(0, max as number), TypeError)
         }
     )
 
-    it.each<[unknown, number]>([
+    itEach<[unknown, number]>([
         [new Set([0]), 1],
         [new Set([1, 2, 3]), 5],
         [new Set([]), 0],
         [new Set([]), 1],
-    ])('should be true for %p', (value, max) => {
-        expect(setMaxSize(value, max)).toBeTrue()
+    ])('should be true for %j', (value, max) => {
+        assert.equal(setMaxSize(value, max), true)
     })
 
-    it.each<[unknown, number]>([
+    itEach<[unknown, number]>([
         [42, 0],
         [new Set([null]), 0],
         [new Set([1, 2, 3]), 2],
-    ])('should be false for %p', (value, max) => {
-        expect(setMaxSize(value, max)).toBeFalse()
+    ])('should be false for %j', (value, max) => {
+        assert.equal(setMaxSize(value, max), false)
     })
 })

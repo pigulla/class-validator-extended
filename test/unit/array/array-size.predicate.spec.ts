@@ -1,28 +1,30 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
 
-import { arraySize } from '~'
+import { arraySize } from '../../../src'
+import { itEach } from '../../util'
 
 describe('arraySize', () => {
-    it.each<[unknown]>([[Number.POSITIVE_INFINITY], [Number.NaN], [null], [''], [BigInt(4)]])(
-        `should throw for %p as the 'size' parameter`,
+    itEach<[unknown]>([[Number.POSITIVE_INFINITY], [Number.NaN], [null], [''], [BigInt(4)]])(
+        `should throw for %s as the 'size' parameter`,
         size => {
-            expect(() => arraySize(0, size as number)).toThrow(TypeError)
+            assert.throws(() => arraySize(0, size as number), TypeError)
         }
     )
 
-    it.each<[unknown, number]>([
+    itEach<[unknown, number]>([
         [[0], 1],
         [[1, 2, 3], 3],
         [[], 0],
-    ])('should be true for %p', (value, size) => {
-        expect(arraySize(value, size)).toBeTrue()
+    ])('should be true for %s', (value, size) => {
+        assert.equal(arraySize(value, size), true)
     })
 
-    it.each<[unknown, number]>([
+    itEach<[unknown, number]>([
         [42, 0],
         [[null], 0],
         [[1, 2, 3], 2],
-    ])('should be false for %p', (value, size) => {
-        expect(arraySize(value, size)).toBeFalse()
+    ])('should be false for %s', (value, size) => {
+        assert.equal(arraySize(value, size), false)
     })
 })

@@ -1,14 +1,12 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
 
-import { IS_DURATION, IsDuration, isDuration } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/type/is-duration/is-duration.predicate')
+import type { IsDuration, IS_DURATION } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@IsDuration', () => {
-    const mockedIsDuration = isDuration as unknown as jest.Mock
-
     type Options = Parameters<typeof IsDuration>
+
     const matrix: Record<string, Options[]> = {
         'property must be a valid Dayjs duration': [[], [{}], [{ each: undefined }], [{ each: false }]],
         'each value in property must be a valid Dayjs duration': [[{ each: true }]],
@@ -20,26 +18,41 @@ describe('@IsDuration', () => {
         'each value in property must be a Dayjs duration': [[{ allow_invalid: true, each: true }]],
     }
 
-    beforeEach(() => {
-        mockedIsDuration.mockReturnValue(false)
+    const mockedIsDuration = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/type/is-duration/is-duration.predicate.ts', {
+        namedExports: {
+            isDuration: mockedIsDuration,
+        },
     })
+    const { IsDuration: Decorator, IS_DURATION: SYMBOL } =
+        require('../../../src/type/is-duration/is-duration.decorator') as {
+            IsDuration: typeof IsDuration
+            IS_DURATION: typeof IS_DURATION
+        }
+
+    afterEach(() => mockedIsDuration.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @IsDuration(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: IS_DURATION,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedIsDuration).toHaveBeenCalledWith(value, { allow_invalid: options[0]?.allow_invalid })
+                assert.equal(mockedIsDuration.mock.callCount(), 1)
+                assert.deepEqual(mockedIsDuration.mock.calls[0].arguments, [
+                    value,
+                    { allow_invalid: options[0]?.allow_invalid },
+                ])
             })
         })
     }

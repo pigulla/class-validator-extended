@@ -1,16 +1,15 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
+
 import dayjs from 'dayjs'
 
-import { MAX_DAYJS, MaxDayjs, maxDayjs } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/dayjs/max-dayjs/max-dayjs.predicate')
+import type { MAX_DAYJS, MaxDayjs } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@MaxDayjs', () => {
-    const mockedMaxDayjs = maxDayjs as unknown as jest.Mock
-    const maximum = dayjs('2021-01-01T00:00:00.000Z')
-
     type Options = Parameters<typeof MaxDayjs>
+
+    const maximum = dayjs('2021-01-01T00:00:00.000Z')
     const matrix: Record<string, Options[]> = {
         'property must be a valid Dayjs object not after 2021-01-01T00:00:00.000Z': [
             [maximum, undefined],
@@ -50,30 +49,45 @@ describe('@MaxDayjs', () => {
         ],
     }
 
-    beforeEach(() => {
-        mockedMaxDayjs.mockReturnValue(false)
+    const mockedMaxDayjs = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/dayjs/max-dayjs/max-dayjs.predicate.ts', {
+        namedExports: {
+            maxDayjs: mockedMaxDayjs,
+        },
     })
+    const { MaxDayjs: Decorator, MAX_DAYJS: SYMBOL } = require('../../../src/dayjs/max-dayjs/max-dayjs.decorator') as {
+        MaxDayjs: typeof MaxDayjs
+        MAX_DAYJS: typeof MAX_DAYJS
+    }
+
+    afterEach(() => mockedMaxDayjs.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @MaxDayjs(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: MAX_DAYJS,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedMaxDayjs).toHaveBeenCalledWith(value, options[0], {
-                    allow_invalid: options[1]?.allow_invalid,
-                    inclusive: options[1]?.inclusive,
-                    granularity: options[1]?.granularity,
-                })
+                assert.equal(mockedMaxDayjs.mock.callCount(), 1)
+                assert.deepEqual(mockedMaxDayjs.mock.calls[0].arguments, [
+                    value,
+                    options[0],
+                    {
+                        allow_invalid: options[1]?.allow_invalid,
+                        inclusive: options[1]?.inclusive,
+                        granularity: options[1]?.granularity,
+                    },
+                ])
             })
         })
     }

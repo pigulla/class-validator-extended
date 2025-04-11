@@ -1,18 +1,20 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
 
-import { mapContains } from '~'
+import { mapContains } from '../../../src'
+import { itEach } from '../../util'
 
 describe('mapContains', () => {
-    it.each<[unknown, Iterable<unknown>]>([
+    itEach<[unknown, Iterable<unknown>]>([
         [undefined, []],
         [null, new Set()],
         [new Map([['a', 1]]), new Set(['a'])],
         [new Map([['c', 1]]), new Set(['a', 'b', 'c'])],
-    ])('should be false for %p', (map, values) => {
-        expect(mapContains(map, values)).toBeFalse()
+    ])('should be false for %j', (map, values) => {
+        assert.equal(mapContains(map, values), false)
     })
 
-    it.each<[Map<unknown, unknown>, Iterable<unknown>]>([
+    itEach<[Map<unknown, unknown>, Iterable<unknown>]>([
         [new Map(), []],
         [new Map(), new Set()],
         [
@@ -44,7 +46,7 @@ describe('mapContains', () => {
             ]),
             ['a', 'b'],
         ],
-    ])('should be true for %p', (map, values) => {
-        expect(mapContains(map, values)).toBeTrue()
+    ])('should be true for %j', (map, values) => {
+        assert.equal(mapContains(map, values), true)
     })
 })

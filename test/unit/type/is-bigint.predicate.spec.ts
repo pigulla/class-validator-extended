@@ -1,16 +1,18 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
 
-import { isBigInt } from '~'
+import { isBigInt } from '../../../src/'
+import { itEach } from '../../util'
 
 describe('isBigInt', () => {
-    it.each<[unknown]>([[BigInt(1)], [BigInt('100000000')]])('should be true for %p', (value: unknown) => {
-        expect(isBigInt(value)).toBeTrue()
+    itEach<[unknown]>([[BigInt(1)], [BigInt('100000000')]])('should be true for %s', (value: unknown) => {
+        assert.equal(isBigInt(value), true)
     })
 
-    it.each<[unknown]>([[undefined], [null], [0], ['0'], [Number.POSITIVE_INFINITY], [Number.NaN], ['1000000000000']])(
-        'should be false for %p',
+    itEach<[unknown]>([[undefined], [null], [0], ['0'], [Number.POSITIVE_INFINITY], [Number.NaN], ['1000000000000']])(
+        'should be false for %s',
         (value: unknown) => {
-            expect(isBigInt(value)).toBeFalse()
+            assert.equal(isBigInt(value), false)
         }
     )
 })

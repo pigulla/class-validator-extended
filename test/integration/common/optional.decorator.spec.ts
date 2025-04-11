@@ -1,9 +1,9 @@
-import 'jest-extended'
+import { describe, it } from 'node:test'
 
 import { IsString, IS_STRING } from 'class-validator'
 
-import { Optional } from '~'
-import { expectNoValidationErrors, expectValidationError } from '~test/util'
+import { Optional } from '../../../src'
+import { expectNoValidationErrors, expectValidationError } from '../../util'
 
 describe('@Optional', () => {
     it('should allow undefined', () => {

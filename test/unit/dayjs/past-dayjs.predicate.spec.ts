@@ -1,9 +1,10 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe, before, after, mock } from 'node:test'
 
 import dayjs from 'dayjs'
-import { advanceTo, clear } from 'jest-date-mock'
 
-import { pastDayjs } from '~'
+import { pastDayjs } from '../../../src'
+import { itEach } from '../../util'
 
 describe('pastDayjs', () => {
     const now = dayjs('2020-05-01T06:30:00.000Z')
@@ -15,100 +16,100 @@ describe('pastDayjs', () => {
     ]
     const invalidDayjsObjects: [string, unknown][] = [['an invalid Dayjs object', dayjs('2020-05-01T00:99:00.000Z')]]
 
-    beforeAll(() => {
-        advanceTo(now.toDate())
+    before(() => {
+        mock.timers.enable({ apis: ['Date'], now: now.toDate() })
     })
 
-    afterAll(() => {
-        clear()
+    after(() => {
+        mock.timers.reset()
     })
 
     describe('with default options', () => {
-        it.each<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects, ['the current date', now]])(
+        itEach<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects, ['the current date', now]])(
             'should be false for %s',
             (_, value) => {
-                expect(pastDayjs(value)).toBeFalse()
+                assert.equal(pastDayjs(value), false)
             }
         )
 
-        it.each<[string, unknown]>([
+        itEach<[string, unknown]>([
             ['the previous millisecond', now.subtract(1, 'millisecond')],
             ['the previous day', now.subtract(1, 'day')],
             ['the previous year', now.subtract(1, 'year')],
         ])('should be true for %s', (_, value) => {
-            expect(pastDayjs(value)).toBeTrue()
+            assert.equal(pastDayjs(value), true)
         })
 
         describe('and allow_invalid set to true', () => {
-            it.each<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects, ['the current date', now]])(
+            itEach<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects, ['the current date', now]])(
                 'should be false for %s',
                 (_, value) => {
-                    expect(pastDayjs(value)).toBeFalse()
+                    assert.equal(pastDayjs(value), false)
                 }
             )
 
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ['the previous millisecond', now.subtract(1, 'millisecond')],
                 ['the previous day', now.subtract(1, 'day')],
                 ['the previous year', now.subtract(1, 'year')],
             ])('should be true for %s', (_, value) => {
-                expect(pastDayjs(value)).toBeTrue()
+                assert.equal(pastDayjs(value), true)
             })
         })
 
         describe('and inclusive set to true', () => {
-            it.each<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects])(
+            itEach<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects])(
                 'should be false for %s',
                 (_, value) => {
-                    expect(pastDayjs(value, { inclusive: true })).toBeFalse()
+                    assert.equal(pastDayjs(value, { inclusive: true }), false)
                 }
             )
 
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ['the current date', now],
                 ['the previous millisecond', now.subtract(1, 'millisecond')],
                 ['the previous day', now.subtract(1, 'day')],
                 ['the previous year', now.subtract(1, 'year')],
             ])('should be true for %s', (_, value) => {
-                expect(pastDayjs(value, { inclusive: true })).toBeTrue()
+                assert.equal(pastDayjs(value, { inclusive: true }), true)
             })
         })
 
         describe('with a granularity of "hour"', () => {
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ...notDayjsObjects,
                 ...invalidDayjsObjects,
                 ['the current date', now],
                 ['the previous millisecond', now.subtract(1, 'millisecond')],
             ])('should be false for %s', (_, value) => {
-                expect(pastDayjs(value, { granularity: 'hour' })).toBeFalse()
+                assert.equal(pastDayjs(value, { granularity: 'hour' }), false)
             })
 
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ['the previous hour', now.subtract(1, 'hour')],
                 ['the previous day', now.subtract(1, 'day')],
                 ['the previous year', now.subtract(1, 'year')],
             ])('should be true for %s', (_, value) => {
-                expect(pastDayjs(value, { granularity: 'hour' })).toBeTrue()
+                assert.equal(pastDayjs(value, { granularity: 'hour' }), true)
             })
         })
 
         describe('and inclusive set to true with a granularity of "hour"', () => {
-            it.each<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects])(
+            itEach<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects])(
                 'should be false for %s',
                 (_, value) => {
-                    expect(pastDayjs(value, { inclusive: true, granularity: 'hour' })).toBeFalse()
+                    assert.equal(pastDayjs(value, { inclusive: true, granularity: 'hour' }), false)
                 }
             )
 
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ['the current date', now],
                 ['the previous millisecond', now.subtract(1, 'millisecond')],
                 ['the previous hour', now.subtract(1, 'hour')],
                 ['the previous day', now.subtract(1, 'day')],
                 ['the previous year', now.subtract(1, 'year')],
             ])('should be true for %s', (_, value) => {
-                expect(pastDayjs(value, { inclusive: true, granularity: 'hour' })).toBeTrue()
+                assert.equal(pastDayjs(value, { inclusive: true, granularity: 'hour' }), true)
             })
         })
     })

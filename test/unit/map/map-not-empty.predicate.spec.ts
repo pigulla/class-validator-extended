@@ -1,9 +1,11 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
 
-import { mapNotEmpty } from '~'
+import { mapNotEmpty } from '../../../src'
+import { itEach } from '../../util'
 
 describe('mapNotEmpty', () => {
-    it.each([
+    itEach([
         [new Map([[42, 'foo']])],
         [
             new Map<unknown, unknown>([
@@ -11,14 +13,14 @@ describe('mapNotEmpty', () => {
                 [42, 13],
             ]),
         ],
-    ])('should be true for %p', value => {
-        expect(mapNotEmpty(value)).toBeTrue()
+    ])('should be true for %j', value => {
+        assert.equal(mapNotEmpty(value), true)
     })
 
-    it.each<[unknown]>([[undefined], [null], [0], ['0'], [new Date('2020-07-20T08:12:58.536Z')], ['foo'], [new Map()]])(
-        'should be false for %p',
+    itEach<[unknown]>([[undefined], [null], [0], ['0'], [new Date('2020-07-20T08:12:58.536Z')], ['foo'], [new Map()]])(
+        'should be false for %j',
         value => {
-            expect(mapNotEmpty(value)).toBeFalse()
+            assert.equal(mapNotEmpty(value), false)
         }
     )
 })

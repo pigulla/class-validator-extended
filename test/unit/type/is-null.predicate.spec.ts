@@ -1,13 +1,15 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
 
-import { isNull } from '~'
+import { isNull } from '../../../src'
+import { itEach } from '../../util'
 
 describe('isNull', () => {
-    it.each<[unknown]>([[null]])('should be true for %p', (value: unknown) => {
-        expect(isNull(value)).toBeTrue()
+    itEach<[unknown]>([[null]])('should be true for %j', (value: unknown) => {
+        assert.equal(isNull(value), true)
     })
 
-    it.each<[unknown]>([[undefined], [{}], [[]], [0], [''], [false]])('should be false for %p', (value: unknown) => {
-        expect(isNull(value)).toBeFalse()
+    itEach<[unknown]>([[undefined], [{}], [[]], [0], [''], [false]])('should be false for %j', (value: unknown) => {
+        assert.equal(isNull(value), false)
     })
 })

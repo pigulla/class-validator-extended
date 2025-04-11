@@ -1,15 +1,13 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
 
-import { MAP_CONTAINS_KEYS, MapContainsKeys, mapContainsKeys } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/map/map-contains-keys/map-contains-keys.predicate')
+import { MAP_CONTAINS_KEYS, MapContainsKeys } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@MapContainsKeys', () => {
-    const mockedMapContainsKeys = mapContainsKeys as unknown as jest.Mock
-    const required = [1, 2, 3]
-
     type Options = Parameters<typeof MapContainsKeys>
+
+    const required = [1, 2, 3]
     const matrix: Record<string, Options[]> = {
         'property must contain all of the following keys: 1, 2, 3': [
             [required],
@@ -20,26 +18,38 @@ describe('@MapContainsKeys', () => {
         'each value in property must contain all of the following keys: 1, 2, 3': [[required, { each: true }]],
     }
 
-    beforeEach(() => {
-        mockedMapContainsKeys.mockReturnValue(false)
+    const mockedMapContainsKeys = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/map/map-contains-keys/map-contains-keys.predicate.ts', {
+        namedExports: {
+            mapContainsKeys: mockedMapContainsKeys,
+        },
     })
+    const { MapContainsKeys: Decorator, MAP_CONTAINS_KEYS: SYMBOL } =
+        require('../../../src/map/map-contains-keys/map-contains-keys.decorator') as {
+            MapContainsKeys: typeof MapContainsKeys
+            MAP_CONTAINS_KEYS: typeof MAP_CONTAINS_KEYS
+        }
+
+    afterEach(() => mockedMapContainsKeys.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @MapContainsKeys(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: MAP_CONTAINS_KEYS,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedMapContainsKeys).toHaveBeenCalledWith(value, options[0])
+                assert.equal(mockedMapContainsKeys.mock.callCount(), 1)
+                assert.deepEqual(mockedMapContainsKeys.mock.calls[0].arguments, [value, options[0]])
             })
         })
     }

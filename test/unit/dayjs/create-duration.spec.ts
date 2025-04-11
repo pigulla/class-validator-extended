@@ -1,16 +1,20 @@
+import assert from 'node:assert/strict'
+import { describe, beforeEach, afterEach, it } from 'node:test'
+
 import dayjs from 'dayjs'
 
-import { createDuration } from '~/dayjs/create-duration'
-import { withoutDurationPlugin } from '~test/without-duration-plugin'
+import { createDuration } from '../../../src/dayjs/create-duration'
+import { itEach } from '../../util'
+import { withoutDurationPlugin } from '../../without-duration-plugin'
 
 describe('createDuration', () => {
-    it.each<[string, ...Parameters<typeof createDuration>]>([
+    itEach<[string, ...Parameters<typeof createDuration>]>([
         ['a Duration object', dayjs.duration(1, 'hour')],
         ['an ISO 8601 string', 'PT1H'],
         ['a units object', { hours: 1 }],
         ['a time/unit tuple', [60, 'minute']],
     ])('should return a duration object for %s', (_, value) => {
-        expect(createDuration(value).asMilliseconds()).toBe(60 * 60 * 1_000)
+        assert.equal(createDuration(value).asMilliseconds(), 60 * 60 * 1_000)
     })
 
     describe('when run without the duration plugin', () => {
@@ -20,7 +24,7 @@ describe('createDuration', () => {
         afterEach(restore)
 
         it('should throw', () => {
-            expect(() => createDuration('PT1H')).toThrow('The Dayjs "duration" plugin is not loaded.')
+            assert.throws(() => createDuration('PT1H'), /The Dayjs "duration" plugin is not loaded/)
         })
     })
 })

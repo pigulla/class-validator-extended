@@ -1,16 +1,15 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
+
 import dayjs from 'dayjs'
 
-import { MIN_DAYJS, MinDayjs, minDayjs } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/dayjs/min-dayjs/min-dayjs.predicate')
+import type { MIN_DAYJS, MinDayjs } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@MinDayjs', () => {
-    const mockedMinDayjs = minDayjs as unknown as jest.Mock
-    const minimum = dayjs('2021-01-01T00:00:00.000Z')
-
     type Options = Parameters<typeof MinDayjs>
+
+    const minimum = dayjs('2021-01-01T00:00:00.000Z')
     const matrix: Record<string, Options[]> = {
         'property must be a valid Dayjs object not before 2021-01-01T00:00:00.000Z': [
             [minimum, undefined],
@@ -50,30 +49,45 @@ describe('@MinDayjs', () => {
         ],
     }
 
-    beforeEach(() => {
-        mockedMinDayjs.mockReturnValue(false)
+    const mockedMinDayjs = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/dayjs/min-dayjs/min-dayjs.predicate.ts', {
+        namedExports: {
+            minDayjs: mockedMinDayjs,
+        },
     })
+    const { MinDayjs: Decorator, MIN_DAYJS: SYMBOL } = require('../../../src/dayjs/min-dayjs/min-dayjs.decorator') as {
+        MinDayjs: typeof MinDayjs
+        MIN_DAYJS: typeof MIN_DAYJS
+    }
+
+    afterEach(() => mockedMinDayjs.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @MinDayjs(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: MIN_DAYJS,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedMinDayjs).toHaveBeenCalledWith(value, options[0], {
-                    allow_invalid: options[1]?.allow_invalid,
-                    inclusive: options[1]?.inclusive,
-                    granularity: options[1]?.granularity,
-                })
+                assert.equal(mockedMinDayjs.mock.callCount(), 1)
+                assert.deepEqual(mockedMinDayjs.mock.calls[0].arguments, [
+                    value,
+                    options[0],
+                    {
+                        allow_invalid: options[1]?.allow_invalid,
+                        inclusive: options[1]?.inclusive,
+                        granularity: options[1]?.granularity,
+                    },
+                ])
             })
         })
     }

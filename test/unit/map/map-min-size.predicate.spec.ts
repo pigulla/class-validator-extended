@@ -1,16 +1,18 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
 
-import { mapMinSize } from '~'
+import { mapMinSize } from '../../../src'
+import { itEach } from '../../util'
 
 describe('mapMinSize', () => {
-    it.each<[unknown]>([[Number.POSITIVE_INFINITY], [Number.NaN], [null], [''], [BigInt(4)]])(
-        'should throw for %p as a min',
+    itEach<[unknown]>([[Number.POSITIVE_INFINITY], [Number.NaN], [null], [''], [BigInt(4)]])(
+        'should throw for %s as a min',
         min => {
-            expect(() => mapMinSize(0, min as number)).toThrow(TypeError)
+            assert.throws(() => mapMinSize(0, min as number), TypeError)
         }
     )
 
-    it.each<[unknown, number]>([
+    itEach<[unknown, number]>([
         [new Map([]), 0],
         [new Map([[0, 'a']]), 0],
         [
@@ -31,11 +33,11 @@ describe('mapMinSize', () => {
             ]),
             3,
         ],
-    ])('should be true for %p', (value, min) => {
-        expect(mapMinSize(value, min)).toBeTrue()
+    ])('should be true for %j', (value, min) => {
+        assert.equal(mapMinSize(value, min), true)
     })
 
-    it.each<[unknown, number]>([
+    itEach<[unknown, number]>([
         [42, 0],
         [new Map([]), 1],
         [
@@ -46,7 +48,7 @@ describe('mapMinSize', () => {
             ]),
             5,
         ],
-    ])('should be false for %p', (value, min) => {
-        expect(mapMinSize(value, min)).toBeFalse()
+    ])('should be false for %j', (value, min) => {
+        assert.equal(mapMinSize(value, min), false)
     })
 })

@@ -1,6 +1,8 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe, beforeEach } from 'node:test'
 
-import { setNotContains } from '~'
+import { setNotContains } from '../../../src'
+import { itEach } from '../../util'
 
 describe('setNotContains', () => {
     let set: Set<unknown>
@@ -9,14 +11,14 @@ describe('setNotContains', () => {
         set = new Set(['foo', 42, null])
     })
 
-    it.each<[Iterable<unknown>]>([[new Set([0])], [[undefined]], [['42']]])('should be true for %p', values => {
-        expect(setNotContains(set, values)).toBeTrue()
+    itEach<[Iterable<unknown>]>([[new Set([0])], [[undefined]], [['42']]])('should be true for %j', values => {
+        assert.equal(setNotContains(set, values), true)
     })
 
-    it.each<Iterable<unknown>>([[[42]], [new Set([null])], [new Set(['bam', 'baz', 'foo'])]])(
-        'should be false for %p',
+    itEach<[Iterable<unknown>]>([[[42]], [new Set([null])], [new Set(['bam', 'baz', 'foo'])]])(
+        'should be false for %j',
         value => {
-            expect(setNotContains(set, value)).toBeFalse()
+            assert.equal(setNotContains(set, value), false)
         }
     )
 })

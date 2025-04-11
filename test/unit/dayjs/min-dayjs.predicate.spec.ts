@@ -1,10 +1,11 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe, before, after, mock } from 'node:test'
 
 import dayjs from 'dayjs'
 import type { ConfigType } from 'dayjs'
-import { advanceTo, clear } from 'jest-date-mock'
 
-import { minDayjs } from '~'
+import { minDayjs } from '../../../src'
+import { itEach } from '../../util'
 
 describe('minDayjs', () => {
     const minimum = dayjs('2020-05-01T06:30:00.000Z')
@@ -16,107 +17,107 @@ describe('minDayjs', () => {
     ]
     const invalidDayjsObjects: [string, unknown][] = [['an invalid Dayjs object', dayjs('2020-05-01T00:99:00.000Z')]]
 
-    beforeAll(() => {
-        advanceTo(minimum.toDate())
+    before(() => {
+        mock.timers.enable({ apis: ['Date'], now: minimum.toDate() })
     })
 
-    afterAll(() => {
-        clear()
+    after(() => {
+        mock.timers.reset()
     })
 
-    it.each<[string, unknown]>([
+    itEach<[string, unknown]>([
         ['null', null],
         ['an invalid ISO string', '2020-05-01T00:99:00.000Z'],
-    ])('should throw if the "minimum" parameter is %p', (_, value) => {
-        expect(() => minDayjs(minimum, value as ConfigType)).toThrow(TypeError)
+    ])('should throw if the "minimum" parameter is %j', (_, value) => {
+        assert.throws(() => minDayjs(minimum, value as ConfigType), TypeError)
     })
 
     describe('with default options', () => {
-        it.each<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects, ['the current date', minimum]])(
+        itEach<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects, ['the current date', minimum]])(
             'should be false for %s',
             (_, value) => {
-                expect(minDayjs(value, minimum)).toBeFalse()
+                assert.equal(minDayjs(value, minimum), false)
             }
         )
 
-        it.each<[string, unknown]>([
+        itEach<[string, unknown]>([
             ['the previous millisecond', minimum.add(1, 'millisecond')],
             ['the previous day', minimum.add(1, 'day')],
             ['the previous year', minimum.add(1, 'year')],
         ])('should be true for %s', (_, value) => {
-            expect(minDayjs(value, minimum)).toBeTrue()
+            assert.equal(minDayjs(value, minimum), true)
         })
 
         describe('and allow_invalid set to true', () => {
-            it.each<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects, ['the current date', minimum]])(
+            itEach<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects, ['the current date', minimum]])(
                 'should be false for %s',
                 (_, value) => {
-                    expect(minDayjs(value, minimum)).toBeFalse()
+                    assert.equal(minDayjs(value, minimum), false)
                 }
             )
 
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ['the previous millisecond', minimum.add(1, 'millisecond')],
                 ['the previous day', minimum.add(1, 'day')],
                 ['the previous year', minimum.add(1, 'year')],
             ])('should be true for %s', (_, value) => {
-                expect(minDayjs(value, minimum)).toBeTrue()
+                assert.equal(minDayjs(value, minimum), true)
             })
         })
 
         describe('and inclusive set to true', () => {
-            it.each<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects])(
+            itEach<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects])(
                 'should be false for %s',
                 (_, value) => {
-                    expect(minDayjs(value, minimum, { inclusive: true })).toBeFalse()
+                    assert.equal(minDayjs(value, minimum, { inclusive: true }), false)
                 }
             )
 
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ['the current date', minimum],
                 ['the previous millisecond', minimum.add(1, 'millisecond')],
                 ['the previous day', minimum.add(1, 'day')],
                 ['the previous year', minimum.add(1, 'year')],
             ])('should be true for %s', (_, value) => {
-                expect(minDayjs(value, minimum, { inclusive: true })).toBeTrue()
+                assert.equal(minDayjs(value, minimum, { inclusive: true }), true)
             })
         })
 
         describe('with a granularity of "hour"', () => {
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ...notDayjsObjects,
                 ...invalidDayjsObjects,
                 ['the current date', minimum],
                 ['the previous millisecond', minimum.add(1, 'millisecond')],
             ])('should be false for %s', (_, value) => {
-                expect(minDayjs(value, minimum, { granularity: 'hour' })).toBeFalse()
+                assert.equal(minDayjs(value, minimum, { granularity: 'hour' }), false)
             })
 
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ['the previous hour', minimum.add(1, 'hour')],
                 ['the previous day', minimum.add(1, 'day')],
                 ['the previous year', minimum.add(1, 'year')],
             ])('should be true for %s', (_, value) => {
-                expect(minDayjs(value, minimum, { granularity: 'hour' })).toBeTrue()
+                assert.equal(minDayjs(value, minimum, { granularity: 'hour' }), true)
             })
         })
 
         describe('and inclusive set to true with a granularity of "hour"', () => {
-            it.each<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects])(
+            itEach<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects])(
                 'should be false for %s',
                 (_, value) => {
-                    expect(minDayjs(value, minimum, { inclusive: true, granularity: 'hour' })).toBeFalse()
+                    assert.equal(minDayjs(value, minimum, { inclusive: true, granularity: 'hour' }), false)
                 }
             )
 
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ['the current date', minimum],
                 ['the previous millisecond', minimum.add(1, 'millisecond')],
                 ['the previous hour', minimum.add(1, 'hour')],
                 ['the previous day', minimum.add(1, 'day')],
                 ['the previous year', minimum.add(1, 'year')],
             ])('should be true for %s', (_, value) => {
-                expect(minDayjs(value, minimum, { inclusive: true, granularity: 'hour' })).toBeTrue()
+                assert.equal(minDayjs(value, minimum, { inclusive: true, granularity: 'hour' }), true)
             })
         })
     })

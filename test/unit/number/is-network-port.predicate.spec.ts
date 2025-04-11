@@ -1,9 +1,11 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
 
-import { isNetworkPort } from '~'
+import { isNetworkPort } from '../../../src'
+import { itEach } from '../../util'
 
 describe('isNetworkPort', () => {
-    it.each<[unknown]>([
+    itEach<[unknown]>([
         [undefined],
         [null],
         [false],
@@ -16,53 +18,53 @@ describe('isNetworkPort', () => {
         [100_000],
         [BigInt(42)],
         [BigInt(8_080)],
-    ])('should be false for %p', (value: unknown) => {
-        expect(isNetworkPort(value)).toBeFalse()
+    ])('should be false for %s', (value: unknown) => {
+        assert.equal(isNetworkPort(value), false)
     })
 
     describe('with default options', () => {
-        it.each<[number]>([[0], [80], [3_000], [8_080], [65_535]])('should be true for %p', (value: unknown) => {
-            expect(isNetworkPort(value)).toBeTrue()
+        itEach<[number]>([[0], [80], [3_000], [8_080], [65_535]])('should be true for %j', (value: unknown) => {
+            assert.equal(isNetworkPort(value), true)
         })
 
-        it.each<[number]>([[-1]])('should be false for %p', (value: unknown) => {
-            expect(isNetworkPort(value)).toBeFalse()
+        itEach<[number]>([[-1]])('should be false for %s', (value: unknown) => {
+            assert.equal(isNetworkPort(value), false)
         })
     })
 
     describe('with allow_system_allocated set to false', () => {
         const options = { allow_system_allocated: false }
 
-        it.each<[number]>([[-1], [0]])('should be false for %p', (value: unknown) => {
-            expect(isNetworkPort(value, options)).toBeFalse()
+        itEach<[number]>([[-1], [0]])('should be false for %s', (value: unknown) => {
+            assert.equal(isNetworkPort(value, options), false)
         })
 
-        it.each<[number]>([[80], [3_000], [8_080], [65_535]])('should be true for %p', (value: unknown) => {
-            expect(isNetworkPort(value, options)).toBeTrue()
+        itEach<[number]>([[80], [3_000], [8_080], [65_535]])('should be true for %s', (value: unknown) => {
+            assert.equal(isNetworkPort(value, options), true)
         })
     })
 
     describe('with allow_system_ports set to false', () => {
         const options = { allow_system_ports: false }
 
-        it.each<[number]>([[-1], [80]])('should be false for %p', (value: unknown) => {
-            expect(isNetworkPort(value, options)).toBeFalse()
+        itEach<[number]>([[-1], [80]])('should be false for %s', (value: unknown) => {
+            assert.equal(isNetworkPort(value, options), false)
         })
 
-        it.each<[number]>([[0], [3_000], [8_080], [65_535]])('should be true for %p', (value: unknown) => {
-            expect(isNetworkPort(value, options)).toBeTrue()
+        itEach<[number]>([[0], [3_000], [8_080], [65_535]])('should be true for %s', (value: unknown) => {
+            assert.equal(isNetworkPort(value, options), true)
         })
     })
 
     describe('with allow_system_allocated and allow_system_ports set to false', () => {
         const options = { allow_system_allocated: false, allow_system_ports: false }
 
-        it.each<[number]>([[-1], [0], [80]])('should be false for %p', (value: unknown) => {
-            expect(isNetworkPort(value, options)).toBeFalse()
+        itEach<[number]>([[-1], [0], [80]])('should be false for %s', (value: unknown) => {
+            assert.equal(isNetworkPort(value, options), false)
         })
 
-        it.each<[number]>([[3_000], [8_080], [65_535]])('should be true for %p', (value: unknown) => {
-            expect(isNetworkPort(value, options)).toBeTrue()
+        itEach<[number]>([[3_000], [8_080], [65_535]])('should be true for %s', (value: unknown) => {
+            assert.equal(isNetworkPort(value, options), true)
         })
     })
 })

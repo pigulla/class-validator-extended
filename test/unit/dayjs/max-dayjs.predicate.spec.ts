@@ -1,10 +1,11 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe, before, after, mock } from 'node:test'
 
 import dayjs from 'dayjs'
 import type { ConfigType } from 'dayjs'
-import { advanceTo, clear } from 'jest-date-mock'
 
-import { maxDayjs } from '~'
+import { maxDayjs } from '../../../src'
+import { itEach } from '../../util'
 
 describe('maxDayjs', () => {
     const maximum = dayjs('2020-05-01T06:30:00.000Z')
@@ -16,107 +17,107 @@ describe('maxDayjs', () => {
     ]
     const invalidDayjsObjects: [string, unknown][] = [['an invalid Dayjs object', dayjs('2020-05-01T00:99:00.000Z')]]
 
-    beforeAll(() => {
-        advanceTo(maximum.toDate())
+    before(() => {
+        mock.timers.enable({ apis: ['Date'], now: maximum.toDate() })
     })
 
-    afterAll(() => {
-        clear()
+    after(() => {
+        mock.timers.reset()
     })
 
-    it.each<[string, unknown]>([
+    itEach<[string, unknown]>([
         ['null', null],
         ['an invalid ISO string', '2020-05-01T00:99:00.000Z'],
-    ])('should throw if the "maximum" parameter is %p', (_, value) => {
-        expect(() => maxDayjs(maximum, value as ConfigType)).toThrow(TypeError)
+    ])('should throw if the "maximum" parameter is %j', (_, value) => {
+        assert.throws(() => maxDayjs(maximum, value as ConfigType), TypeError)
     })
 
     describe('with default options', () => {
-        it.each<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects, ['the current date', maximum]])(
+        itEach<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects, ['the current date', maximum]])(
             'should be false for %s',
             (_, value) => {
-                expect(maxDayjs(value, maximum)).toBeFalse()
+                assert.equal(maxDayjs(value, maximum), false)
             }
         )
 
-        it.each<[string, unknown]>([
+        itEach<[string, unknown]>([
             ['the next millisecond', maximum.subtract(1, 'millisecond')],
             ['the next day', maximum.subtract(1, 'day')],
             ['the next year', maximum.subtract(1, 'year')],
         ])('should be true for %s', (_, value) => {
-            expect(maxDayjs(value, maximum)).toBeTrue()
+            assert.equal(maxDayjs(value, maximum), true)
         })
 
         describe('and allow_invalid set to true', () => {
-            it.each<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects, ['the current date', maximum]])(
+            itEach<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects, ['the current date', maximum]])(
                 'should be false for %s',
                 (_, value) => {
-                    expect(maxDayjs(value, maximum)).toBeFalse()
+                    assert.equal(maxDayjs(value, maximum), false)
                 }
             )
 
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ['the next millisecond', maximum.subtract(1, 'millisecond')],
                 ['the next day', maximum.subtract(1, 'day')],
                 ['the next year', maximum.subtract(1, 'year')],
             ])('should be true for %s', (_, value) => {
-                expect(maxDayjs(value, maximum)).toBeTrue()
+                assert.equal(maxDayjs(value, maximum), true)
             })
         })
 
         describe('and inclusive set to true', () => {
-            it.each<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects])(
+            itEach<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects])(
                 'should be false for %s',
                 (_, value) => {
-                    expect(maxDayjs(value, maximum, { inclusive: true })).toBeFalse()
+                    assert.equal(maxDayjs(value, maximum, { inclusive: true }), false)
                 }
             )
 
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ['the current date', maximum],
                 ['the next millisecond', maximum.subtract(1, 'millisecond')],
                 ['the next day', maximum.subtract(1, 'day')],
                 ['the next year', maximum.subtract(1, 'year')],
             ])('should be true for %s', (_, value) => {
-                expect(maxDayjs(value, maximum, { inclusive: true })).toBeTrue()
+                assert.equal(maxDayjs(value, maximum, { inclusive: true }), true)
             })
         })
 
         describe('with a granularity of "hour"', () => {
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ...notDayjsObjects,
                 ...invalidDayjsObjects,
                 ['the current date', maximum],
                 ['the next millisecond', maximum.subtract(1, 'millisecond')],
             ])('should be false for %s', (_, value) => {
-                expect(maxDayjs(value, maximum, { granularity: 'hour' })).toBeFalse()
+                assert.equal(maxDayjs(value, maximum, { granularity: 'hour' }), false)
             })
 
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ['the next hour', maximum.subtract(1, 'hour')],
                 ['the next day', maximum.subtract(1, 'day')],
                 ['the next year', maximum.subtract(1, 'year')],
             ])('should be true for %s', (_, value) => {
-                expect(maxDayjs(value, maximum, { granularity: 'hour' })).toBeTrue()
+                assert.equal(maxDayjs(value, maximum, { granularity: 'hour' }), true)
             })
         })
 
         describe('and inclusive set to true with a granularity of "hour"', () => {
-            it.each<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects])(
+            itEach<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects])(
                 'should be false for %s',
                 (_, value) => {
-                    expect(maxDayjs(value, maximum, { inclusive: true, granularity: 'hour' })).toBeFalse()
+                    assert.equal(maxDayjs(value, maximum, { inclusive: true, granularity: 'hour' }), false)
                 }
             )
 
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ['the current date', maximum],
                 ['the next millisecond', maximum.subtract(1, 'millisecond')],
                 ['the next hour', maximum.subtract(1, 'hour')],
                 ['the next day', maximum.subtract(1, 'day')],
                 ['the next year', maximum.subtract(1, 'year')],
             ])('should be true for %s', (_, value) => {
-                expect(maxDayjs(value, maximum, { inclusive: true, granularity: 'hour' })).toBeTrue()
+                assert.equal(maxDayjs(value, maximum, { inclusive: true, granularity: 'hour' }), true)
             })
         })
     })

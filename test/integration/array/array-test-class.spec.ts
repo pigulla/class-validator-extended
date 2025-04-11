@@ -1,6 +1,6 @@
-import 'jest-extended'
+import { it } from 'node:test'
 
-import { expectNoValidationErrors } from '~test/util'
+import { expectNoValidationErrors } from '../../util'
 
 import { ArrayTestClass } from './array-test-class'
 

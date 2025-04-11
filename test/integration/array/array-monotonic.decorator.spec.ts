@@ -1,14 +1,13 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
 
-import { ARRAY_MONOTONIC, ArrayMonotonic, arrayMonotonic, Monotonicity } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/array/array-monotonic/array-monotonic.predicate')
+import type { ArrayMonotonic, ARRAY_MONOTONIC } from '../../../src'
+import { Monotonicity } from '../../../src/array/array-monotonic/array-monotonic.options'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@ArrayMonotonic', () => {
-    const mockedArrayMonotonic = arrayMonotonic as unknown as jest.Mock
-
     type Options = Parameters<typeof ArrayMonotonic>
+
     const matrix: Record<string, Options[]> = {
         'property must be a weakly decreasing array': [
             [{ monotonicity: Monotonicity.WEAKLY_DECREASING }],
@@ -20,26 +19,41 @@ describe('@ArrayMonotonic', () => {
         ],
     }
 
-    beforeEach(() => {
-        mockedArrayMonotonic.mockReturnValue(false)
+    const mockedArrayMonotonic = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/array/array-monotonic/array-monotonic.predicate.ts', {
+        namedExports: {
+            arrayMonotonic: mockedArrayMonotonic,
+        },
     })
+    const { ArrayMonotonic: Decorator, ARRAY_MONOTONIC: SYMBOL } =
+        require('../../../src/array/array-monotonic/array-monotonic.decorator') as {
+            ArrayMonotonic: typeof ArrayMonotonic
+            ARRAY_MONOTONIC: typeof ARRAY_MONOTONIC
+        }
+
+    afterEach(() => mockedArrayMonotonic.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @ArrayMonotonic(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: ARRAY_MONOTONIC,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedArrayMonotonic).toHaveBeenCalledWith(value, { monotonicity: options[0].monotonicity })
+                assert.equal(mockedArrayMonotonic.mock.callCount(), 1)
+                assert.deepEqual(mockedArrayMonotonic.mock.calls[0].arguments, [
+                    value,
+                    { monotonicity: options[0].monotonicity },
+                ])
             })
         })
     }

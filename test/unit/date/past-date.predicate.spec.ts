@@ -1,32 +1,33 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe, before, after, mock } from 'node:test'
 
 import dayjs from 'dayjs'
-import { advanceTo, clear } from 'jest-date-mock'
 
-import { pastDate } from '~'
+import { pastDate } from '../../../src'
+import { itEach } from '../../util'
 
 describe('pastDate', () => {
     const now = dayjs('2020-05-01T06:00:00.000Z')
 
-    beforeAll(() => {
-        advanceTo(now.toDate())
+    before(() => {
+        mock.timers.enable({ apis: ['Date'], now: now.toDate() })
     })
 
-    afterAll(() => {
-        clear()
+    after(() => {
+        mock.timers.reset()
     })
 
-    it.each<[unknown]>([[now.subtract(1, 'millisecond').toDate()], [now.subtract(7, 'days').toDate()]])(
-        'should be true for %p',
+    itEach<[unknown]>([[now.subtract(1, 'millisecond').toDate()], [now.subtract(7, 'days').toDate()]])(
+        'should be true for %j',
         value => {
-            expect(pastDate(value)).toBeTrue()
+            assert.equal(pastDate(value), true)
         }
     )
 
-    it.each<[unknown]>([[undefined], [null], [now], [now.add(1, 'millisecond').toDate()]])(
-        'should be false for %p',
+    itEach<[unknown]>([[undefined], [null], [now], [now.add(1, 'millisecond').toDate()]])(
+        'should be false for %j',
         value => {
-            expect(pastDate(value)).toBeFalse()
+            assert.equal(pastDate(value), false)
         }
     )
 })

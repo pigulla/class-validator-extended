@@ -1,39 +1,48 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
 
-import { IS_MAP, IsMap, isMap } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/type/is-map/is-map.predicate')
+import type { IsMap, IS_MAP } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@IsMap', () => {
-    const mockedIsMap = isMap as unknown as jest.Mock
-
     type Options = Parameters<typeof IsMap>
+
     const matrix: Record<string, Options[]> = {
         'property must be an instance of Map': [[], [{}], [{ each: undefined }], [{ each: false }]],
         'each value in property must be an instance of Map': [[{ each: true }]],
     }
 
-    beforeEach(() => {
-        mockedIsMap.mockReturnValue(false)
+    const mockedIsMap = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/type/is-map/is-map.predicate.ts', {
+        namedExports: {
+            isMap: mockedIsMap,
+        },
     })
+    const { IsMap: Decorator, IS_MAP: SYMBOL } = require('../../../src/type/is-map/is-map.decorator') as {
+        IsMap: typeof IsMap
+        IS_MAP: typeof IS_MAP
+    }
+
+    afterEach(() => mockedIsMap.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @IsMap(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: IS_MAP,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedIsMap).toHaveBeenCalledWith(value)
+                assert.equal(mockedIsMap.mock.callCount(), 1)
+                assert.deepEqual(mockedIsMap.mock.calls[0].arguments, [value])
             })
         })
     }

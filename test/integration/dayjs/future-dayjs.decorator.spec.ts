@@ -1,14 +1,12 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
 
-import { FUTURE_DAYJS, FutureDayjs, futureDayjs } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/dayjs/future-dayjs/future-dayjs.predicate')
+import type { FUTURE_DAYJS, FutureDayjs } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@FutureDayjs', () => {
-    const mockedFutureDayjs = futureDayjs as unknown as jest.Mock
-
     type Options = Parameters<typeof FutureDayjs>
+
     const matrix: Record<string, Options[]> = {
         'property must be a valid Dayjs object in the future': [
             [],
@@ -48,30 +46,45 @@ describe('@FutureDayjs', () => {
         ],
     }
 
-    beforeEach(() => {
-        mockedFutureDayjs.mockReturnValue(false)
+    const mockedFutureDayjs = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/dayjs/future-dayjs/future-dayjs.predicate.ts', {
+        namedExports: {
+            futureDayjs: mockedFutureDayjs,
+        },
     })
+    const { FutureDayjs: Decorator, FUTURE_DAYJS: SYMBOL } =
+        require('../../../src/dayjs/future-dayjs/future-dayjs.decorator') as {
+            FutureDayjs: typeof FutureDayjs
+            FUTURE_DAYJS: typeof FUTURE_DAYJS
+        }
+
+    afterEach(() => mockedFutureDayjs.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @FutureDayjs(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: FUTURE_DAYJS,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedFutureDayjs).toHaveBeenCalledWith(value, {
-                    allow_invalid: options[0]?.allow_invalid,
-                    inclusive: options[0]?.inclusive,
-                    granularity: options[0]?.granularity,
-                })
+                assert.equal(mockedFutureDayjs.mock.callCount(), 1)
+                assert.deepEqual(mockedFutureDayjs.mock.calls[0].arguments, [
+                    value,
+                    {
+                        allow_invalid: options[0]?.allow_invalid,
+                        inclusive: options[0]?.inclusive,
+                        granularity: options[0]?.granularity,
+                    },
+                ])
             })
         })
     }

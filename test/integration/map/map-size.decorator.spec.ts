@@ -1,15 +1,13 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
 
-import { MAP_SIZE, MapSize, mapSize } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/map/map-size/map-size.predicate')
+import { MAP_SIZE, MapSize } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@MapSize', () => {
-    const mockedMapSize = mapSize as unknown as jest.Mock
-    const size = 13
-
     type Options = Parameters<typeof MapSize>
+
+    const size = 13
     const matrix: Record<string, Options[]> = {
         'property must contain exactly 13 element(s)': [
             [size],
@@ -20,26 +18,37 @@ describe('@MapSize', () => {
         'each value in property must contain exactly 13 element(s)': [[size, { each: true }]],
     }
 
-    beforeEach(() => {
-        mockedMapSize.mockReturnValue(false)
+    const mockedMapSize = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/map/map-size/map-size.predicate.ts', {
+        namedExports: {
+            mapSize: mockedMapSize,
+        },
     })
+    const { MapSize: Decorator, MAP_SIZE: SYMBOL } = require('../../../src/map/map-size/map-size.decorator') as {
+        MapSize: typeof MapSize
+        MAP_SIZE: typeof MAP_SIZE
+    }
+
+    afterEach(() => mockedMapSize.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @MapSize(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: MAP_SIZE,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedMapSize).toHaveBeenCalledWith(value, options[0])
+                assert.equal(mockedMapSize.mock.callCount(), 1)
+                assert.deepEqual(mockedMapSize.mock.calls[0].arguments, [value, options[0]])
             })
         })
     }

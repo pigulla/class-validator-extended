@@ -1,9 +1,11 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe, it, beforeEach, afterEach } from 'node:test'
 
 import dayjs from 'dayjs'
 
-import { minDuration } from '~'
-import { withoutDurationPlugin } from '~test/without-duration-plugin'
+import { minDuration } from '../../../src'
+import { itEach } from '../../util'
+import { withoutDurationPlugin } from '../../without-duration-plugin'
 
 describe('minDuration', () => {
     const minimum = dayjs.duration(1, 'hour')
@@ -13,38 +15,38 @@ describe('minDuration', () => {
     ]
 
     it('should throw if "minimum" is an invalid duration object', () => {
-        expect(() => minDuration(dayjs.duration(1, 'hour'), dayjs.duration('PxD'))).toThrow(TypeError)
+        assert.throws(() => minDuration(dayjs.duration(1, 'hour'), dayjs.duration('PxD')), TypeError)
     })
 
     describe('with default options', () => {
-        it.each<[string, unknown]>([
+        itEach<[string, unknown]>([
             ...invalidDurationObjects,
             ['a shorter duration', minimum.subtract(5, 'minutes')],
             ['the minimum value itself', minimum],
         ])('should be false for %s', (_, value) => {
-            expect(minDuration(value, minimum)).toBeFalse()
+            assert.equal(minDuration(value, minimum), false)
         })
 
-        it.each<[string, unknown]>([['a longer duration', minimum.add(5, 'minutes')]])(
+        itEach<[string, unknown]>([['a longer duration', minimum.add(5, 'minutes')]])(
             'should be true for %s',
             (_, value) => {
-                expect(minDuration(value, minimum)).toBeTrue()
+                assert.equal(minDuration(value, minimum), true)
             }
         )
 
         describe('and "inclusive" set to true', () => {
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ...invalidDurationObjects,
                 ['a shorter duration', minimum.subtract(5, 'minutes')],
             ])('should be false for %s', (_, value) => {
-                expect(minDuration(value, minimum, { inclusive: true })).toBeFalse()
+                assert.equal(minDuration(value, minimum, { inclusive: true }), false)
             })
 
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ['the minimum value itself', minimum],
                 ['a longer duration', minimum.add(5, 'minutes')],
             ])('should be true for %s', (_, value) => {
-                expect(minDuration(value, minimum, { inclusive: true })).toBeTrue()
+                assert.equal(minDuration(value, minimum, { inclusive: true }), true)
             })
         })
     })
@@ -56,7 +58,7 @@ describe('minDuration', () => {
         afterEach(restore)
 
         it('should throw', () => {
-            expect(() => minDuration(42, minimum)).toThrow('The Dayjs "duration" plugin is not loaded.')
+            assert.throws(() => minDuration(42, minimum), /The Dayjs "duration" plugin is not loaded/)
         })
     })
 })

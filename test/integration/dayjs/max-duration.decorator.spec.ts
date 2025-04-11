@@ -1,17 +1,16 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, beforeEach, afterEach, it } from 'node:test'
+
 import dayjs from 'dayjs'
 
-import { MAX_DURATION, MaxDuration, maxDuration } from '~'
-import { expectValidationError } from '~test/util'
-import { withoutDurationPlugin } from '~test/without-duration-plugin'
-
-jest.mock('~/dayjs/max-duration/max-duration.predicate')
+import type { MAX_DURATION, MaxDuration } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
+import { withoutDurationPlugin } from '../../without-duration-plugin'
 
 describe('@MaxDuration', () => {
-    const mockedMaxDuration = maxDuration as unknown as jest.Mock
-    const maximum = dayjs.duration(1, 'hour')
-
     type Options = Parameters<typeof MaxDuration>
+
+    const maximum = dayjs.duration(1, 'hour')
     const matrix: Record<string, Options[]> = {
         'property must be a valid Dayjs duration not longer than PT1H': [
             [maximum],
@@ -33,32 +32,48 @@ describe('@MaxDuration', () => {
         ],
     }
 
-    beforeEach(() => {
-        mockedMaxDuration.mockReturnValue(false)
+    const mockedMaxDuration = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/dayjs/max-duration/max-duration.predicate.ts', {
+        namedExports: {
+            maxDuration: mockedMaxDuration,
+        },
     })
+    const { MaxDuration: Decorator, MAX_DURATION: SYMBOL } =
+        require('../../../src/dayjs/max-duration/max-duration.decorator') as {
+            MaxDuration: typeof MaxDuration
+            MAX_DURATION: typeof MAX_DURATION
+        }
+
+    afterEach(() => mockedMaxDuration.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @MaxDuration(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: MAX_DURATION,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedMaxDuration).toHaveBeenCalledWith(value, options[0], { inclusive: options[1]?.inclusive })
+                assert.equal(mockedMaxDuration.mock.callCount(), 1)
+                assert.deepEqual(mockedMaxDuration.mock.calls[0].arguments, [
+                    value,
+                    options[0],
+                    { inclusive: options[1]?.inclusive },
+                ])
             })
         })
     }
 
     it('should throw if "maximum" is not a valid duration', () => {
-        expect(() => MaxDuration('PxD')).toThrow(TypeError)
+        assert.throws(() => Decorator('PxD'), TypeError)
     })
 
     describe('when run without the duration plugin', () => {
@@ -68,7 +83,7 @@ describe('@MaxDuration', () => {
         afterEach(restore)
 
         it('should throw', () => {
-            expect(() => MaxDuration('PT1H')).toThrow('The Dayjs "duration" plugin is not loaded.')
+            assert.throws(() => Decorator('PT1H'), /The Dayjs "duration" plugin is not loaded/)
         })
     })
 })
