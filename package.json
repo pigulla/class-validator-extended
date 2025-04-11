@@ -71,7 +71,7 @@
         "eslint-import-resolver-typescript": "4.3.2",
         "eslint-plugin-import": "2.31.0",
         "eslint-plugin-prettier": "5.2.6",
-        "eslint-plugin-unicorn": "56.0.1",
+        "eslint-plugin-unicorn": "58.0.0",
         "lockfile-lint": "4.14.0",
         "prettier": "3.5.3",
         "sort-package-json": "3.0.0",
