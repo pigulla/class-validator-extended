@@ -20,6 +20,7 @@ export const IS_AWS_REGION = 'isAwsRegion'
  * ```
  *
  * @category String
+ * @deprecated
  * @param options Generic class-validator options.
  */
 export function IsAwsRegion(options?: ValidationOptions): PropertyDecorator {

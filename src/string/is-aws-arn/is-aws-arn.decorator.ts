@@ -28,6 +28,7 @@ export const IS_AWS_ARN = 'isAwsArn'
  * ```
  *
  * @category String
+ * @deprecated
  * @param options Generic class-validator options.
  */
 export function IsAwsARN(options?: ValidationOptions): PropertyDecorator {
