@@ -7,6 +7,7 @@ const regExp =
 
 /**
  * @category Predicates
+ * @deprecated
  * @param value The value to validate.
  */
 export function isAwsARN(value: unknown): value is string {
