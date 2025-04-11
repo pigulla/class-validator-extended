@@ -5,7 +5,6 @@ const config = require('../.eslintrc')
 
 module.exports = {
     ...config,
-    env: { ...config.env, jest: true },
     parserOptions: {
         project: ['./test/tsconfig.json'],
     },
@@ -21,10 +20,9 @@ module.exports = {
     },
     rules: {
         ...config.rules,
+        '@typescript-eslint/no-floating-promises': 'off',
+        '@typescript-eslint/no-require-imports': 'off',
         'unicorn/consistent-function-scoping': 'off',
-        'jest/expect-expect': [
-            'warn',
-            { assertFunctionNames: ['expect', 'expectValidationError', 'expectNoValidationErrors'] },
-        ],
+        'unicorn/prefer-module': 'off',
     },
 }

@@ -1,16 +1,18 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
 
-import { mapMaxSize } from '~'
+import { mapMaxSize } from '../../../src'
+import { itEach } from '../../util'
 
 describe('mapMaxSize', () => {
-    it.each<[unknown]>([[Number.POSITIVE_INFINITY], [Number.NaN], [null], [''], [BigInt(4)]])(
-        'should throw for %p as a max',
+    itEach<[unknown]>([[Number.POSITIVE_INFINITY], [Number.NaN], [null], [''], [BigInt(4)]])(
+        'should throw for %s as a max',
         max => {
-            expect(() => mapMaxSize(0, max as number)).toThrow(TypeError)
+            assert.throws(() => mapMaxSize(0, max as number), TypeError)
         }
     )
 
-    it.each<[unknown, number]>([
+    itEach<[unknown, number]>([
         [new Map([[0, 'a']]), 1],
         [
             new Map([
@@ -22,11 +24,11 @@ describe('mapMaxSize', () => {
         ],
         [new Map([]), 0],
         [new Map([]), 1],
-    ])('should be true for %p', (value, max) => {
-        expect(mapMaxSize(value, max)).toBeTrue()
+    ])('should be true for %j', (value, max) => {
+        assert.equal(mapMaxSize(value, max), true)
     })
 
-    it.each<[unknown, number]>([
+    itEach<[unknown, number]>([
         [42, 0],
         [new Map([[null, false]]), 0],
         [
@@ -37,7 +39,7 @@ describe('mapMaxSize', () => {
             ]),
             2,
         ],
-    ])('should be false for %p', (value, max) => {
-        expect(mapMaxSize(value, max)).toBeFalse()
+    ])('should be false for %j', (value, max) => {
+        assert.equal(mapMaxSize(value, max), false)
     })
 })

@@ -1,15 +1,13 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
 
-import { SET_SIZE, SetSize, setSize } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/set/set-size/set-size.predicate')
+import { SET_SIZE, SetSize } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@SetSize', () => {
-    const mockedSetSize = setSize as unknown as jest.Mock
-    const size = 13
-
     type Options = Parameters<typeof SetSize>
+
+    const size = 13
     const matrix: Record<string, Options[]> = {
         'property must contain exactly 13 element(s)': [
             [size],
@@ -20,26 +18,37 @@ describe('@SetSize', () => {
         'each value in property must contain exactly 13 element(s)': [[size, { each: true }]],
     }
 
-    beforeEach(() => {
-        mockedSetSize.mockReturnValue(false)
+    const mockedSetSize = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/set/set-size/set-size.predicate.ts', {
+        namedExports: {
+            setSize: mockedSetSize,
+        },
     })
+    const { SetSize: Decorator, SET_SIZE: SYMBOL } = require('../../../src/set/set-size/set-size.decorator') as {
+        SetSize: typeof SetSize
+        SET_SIZE: typeof SET_SIZE
+    }
+
+    afterEach(() => mockedSetSize.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @SetSize(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: SET_SIZE,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedSetSize).toHaveBeenCalledWith(value, options[0])
+                assert.equal(mockedSetSize.mock.callCount(), 1)
+                assert.deepEqual(mockedSetSize.mock.calls[0].arguments, [value, options[0]])
             })
         })
     }

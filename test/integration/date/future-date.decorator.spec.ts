@@ -1,48 +1,49 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
 
-import dayjs from 'dayjs'
-import { advanceTo, clear } from 'jest-date-mock'
-
-import { FUTURE_DATE, FutureDate, futureDate } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/date/future-date/future-date.predicate')
+import type { FUTURE_DATE, FutureDate } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@FutureDate', () => {
-    const mockedFutureDate = futureDate as unknown as jest.Mock
-    const now = dayjs('2020-05-01T06:00:00.000Z')
-
     type Options = Parameters<typeof FutureDate>
+
     const matrix: Record<string, Options[]> = {
         'property must be a Date instance in the future': [[], [{}], [{ each: undefined }], [{ each: false }]],
         'each value in property must be a Date instance in the future': [[{ each: true }]],
     }
 
-    beforeEach(() => {
-        mockedFutureDate.mockReturnValue(false)
-        advanceTo(now.toDate())
+    const mockedFutureDate = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/date/future-date/future-date.predicate.ts', {
+        namedExports: {
+            futureDate: mockedFutureDate,
+        },
     })
+    const { FutureDate: Decorator, FUTURE_DATE: SYMBOL } =
+        require('../../../src/date/future-date/future-date.decorator') as {
+            FutureDate: typeof FutureDate
+            FUTURE_DATE: typeof FUTURE_DATE
+        }
 
-    afterEach(() => {
-        clear()
-    })
+    afterEach(() => mockedFutureDate.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @FutureDate(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: FUTURE_DATE,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedFutureDate).toHaveBeenCalledWith(value)
+                assert.equal(mockedFutureDate.mock.callCount(), 1)
+                assert.deepEqual(mockedFutureDate.mock.calls[0].arguments, [value])
             })
         })
     }

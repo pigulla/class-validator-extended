@@ -1,9 +1,11 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
 
-import { isAwsRegion } from '~'
+import { isAwsRegion } from '../../../src'
+import { itEach } from '../../util'
 
 describe('isAwsRegion', () => {
-    it.each([
+    itEach([
         ['us-east-2'],
         ['us-east-1'],
         ['us-west-1'],
@@ -28,14 +30,14 @@ describe('isAwsRegion', () => {
         ['eu-north-1'],
         ['me-south-1'],
         ['sa-east-1'],
-    ])('should be true for %p', value => {
-        expect(isAwsRegion(value)).toBeTrue()
+    ])('should be true for %j', value => {
+        assert.equal(isAwsRegion(value), true)
     })
 
-    it.each([[null], [undefined], [''], ['default'], ['eu-central-0'], ['north-1']])(
-        'should be false for %p',
+    itEach<[unknown]>([[null], [undefined], [''], ['default'], ['eu-central-0'], ['north-1']])(
+        'should be false for %j',
         value => {
-            expect(isAwsRegion(value)).toBeFalse()
+            assert.equal(isAwsRegion(value), false)
         }
     )
 })

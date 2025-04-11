@@ -1,9 +1,11 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
 
-import { isMap } from '~'
+import { isMap } from '../../../src'
+import { itEach } from '../../util'
 
 describe('isMap', () => {
-    it.each<[unknown]>([
+    itEach<[unknown]>([
         [new Map()],
         [
             new Map([
@@ -11,14 +13,14 @@ describe('isMap', () => {
                 [13, 'thirteen'],
             ]),
         ],
-    ])('should be true for %p', (value: unknown) => {
-        expect(isMap(value)).toBeTrue()
+    ])('should be true for %j', (value: unknown) => {
+        assert.equal(isMap(value), true)
     })
 
-    it.each<[unknown]>([[undefined], [null], [{}], [[]], [new Set()], [new WeakMap()]])(
-        'should be false for %p',
+    itEach<[unknown]>([[undefined], [null], [{}], [[]], [new Set()], [new WeakMap()]])(
+        'should be false for %j',
         (value: unknown) => {
-            expect(isMap(value)).toBeFalse()
+            assert.equal(isMap(value), false)
         }
     )
 })

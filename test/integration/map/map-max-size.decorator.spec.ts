@@ -1,15 +1,13 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
 
-import { MAP_MAX_SIZE, MapMaxSize, mapMaxSize } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/map/map-max-size/map-max-size.predicate')
+import { MAP_MAX_SIZE, MapMaxSize } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@MapMaxSize', () => {
-    const mockedMapMaxSize = mapMaxSize as unknown as jest.Mock
-    const maximum = 13
-
     type Options = Parameters<typeof MapMaxSize>
+
+    const maximum = 13
     const matrix: Record<string, Options[]> = {
         'property must contain not more than 13 elements': [
             [maximum],
@@ -20,26 +18,38 @@ describe('@MapMaxSize', () => {
         'each value in property must contain not more than 13 elements': [[maximum, { each: true }]],
     }
 
-    beforeEach(() => {
-        mockedMapMaxSize.mockReturnValue(false)
+    const mockedMapMaxSize = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/map/map-max-size/map-max-size.predicate.ts', {
+        namedExports: {
+            mapMaxSize: mockedMapMaxSize,
+        },
     })
+    const { MapMaxSize: Decorator, MAP_MAX_SIZE: SYMBOL } =
+        require('../../../src/map/map-max-size/map-max-size.decorator') as {
+            MapMaxSize: typeof MapMaxSize
+            MAP_MAX_SIZE: typeof MAP_MAX_SIZE
+        }
+
+    afterEach(() => mockedMapMaxSize.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @MapMaxSize(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: MAP_MAX_SIZE,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedMapMaxSize).toHaveBeenCalledWith(value, options[0])
+                assert.equal(mockedMapMaxSize.mock.callCount(), 1)
+                assert.deepEqual(mockedMapMaxSize.mock.calls[0].arguments, [value, options[0]])
             })
         })
     }

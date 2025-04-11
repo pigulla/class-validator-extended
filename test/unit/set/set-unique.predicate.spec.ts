@@ -1,21 +1,23 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
 
-import { setUnique } from '~'
+import { setUnique } from '../../../src'
+import { itEach } from '../../util'
 
 describe('setUnique', () => {
     function projection(n: number): number {
         return n % 4
     }
 
-    it.each<[unknown]>([[undefined], [null], ['']])('should throw for %p as the projection', value => {
-        expect(() => setUnique(0, value as (value: number) => number)).toThrow(TypeError)
+    itEach<[unknown]>([[undefined], [null], ['']])('should throw for %j as the projection', value => {
+        assert.throws(() => setUnique(0, value as (value: number) => number), TypeError)
     })
 
-    it.each<[Set<unknown>]>([[new Set()], [new Set([1])], [new Set([1, 2, 3, 4])]])('should be true for %p', set => {
-        expect(setUnique(set, projection)).toBeTrue()
+    itEach<[Set<unknown>]>([[new Set()], [new Set([1])], [new Set([1, 2, 3, 4])]])('should be true for %j', set => {
+        assert.equal(setUnique(set, projection), true)
     })
 
-    it.each<[unknown]>([[null], [undefined], [new Set([1, 2, 5])]])('should be false for %p', set => {
-        expect(setUnique(set, projection)).toBeFalse()
+    itEach<[unknown]>([[null], [undefined], [new Set([1, 2, 5])]])('should be false for %j', set => {
+        assert.equal(setUnique(set, projection), false)
     })
 })

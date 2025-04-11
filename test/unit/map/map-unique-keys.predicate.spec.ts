@@ -1,17 +1,19 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
 
-import { mapUniqueKeys } from '~'
+import { mapUniqueKeys } from '../../../src'
+import { itEach } from '../../util'
 
 describe('mapUniqueKeys', () => {
     function projection(n: number): number {
         return n % 4
     }
 
-    it.each<[unknown]>([[undefined], [null], ['']])('should throw for %p as the projection', value => {
-        expect(() => mapUniqueKeys(0, value as (value: number) => number)).toThrow(TypeError)
+    itEach<[unknown]>([[undefined], [null], ['']])('should throw for %s as the projection', value => {
+        assert.throws(() => mapUniqueKeys(0, value as (value: number) => number), TypeError)
     })
 
-    it.each<[Map<unknown, unknown>]>([
+    itEach<[Map<unknown, unknown>]>([
         [new Map()],
         [new Map([['a', 1]])],
         [
@@ -22,11 +24,11 @@ describe('mapUniqueKeys', () => {
                 [4, 'd'],
             ]),
         ],
-    ])('should be true for %p', set => {
-        expect(mapUniqueKeys(set, projection)).toBeTrue()
+    ])('should be true for %j', set => {
+        assert.equal(mapUniqueKeys(set, projection), true)
     })
 
-    it.each<[unknown]>([
+    itEach<[unknown]>([
         [null],
         [undefined],
         [
@@ -37,7 +39,7 @@ describe('mapUniqueKeys', () => {
                 [5, 'e'],
             ]),
         ],
-    ])('should be false for %p', set => {
-        expect(mapUniqueKeys(set, projection)).toBeFalse()
+    ])('should be false for %j', set => {
+        assert.equal(mapUniqueKeys(set, projection), false)
     })
 })

@@ -1,55 +1,57 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
 
-import { notMatches } from '~'
+import { notMatches } from '../../../src'
+import { itEach } from '../../util'
 
 describe('notMatches', () => {
     describe('with two parameters', () => {
-        it.each<[string, RegExp]>([
+        itEach<[string, RegExp]>([
             ['foo', /foo/],
             ['fOO', /foo/i],
-        ])('should be false for %p', (value, regex) => {
-            expect(notMatches(value, regex)).toBeFalse()
+        ])('should be false for %j', (value, regex) => {
+            assert.equal(notMatches(value, regex), false)
         })
 
-        it.each<[string, RegExp]>([
+        itEach<[string, RegExp]>([
             ['foo', /bar/],
             ['', /.+/],
-        ])('should be true for %p', (value, regex) => {
-            expect(notMatches(value, regex)).toBeTrue()
+        ])('should be true for %j', (value, regex) => {
+            assert.equal(notMatches(value, regex), true)
         })
 
-        it.each<[unknown, RegExp]>([
+        itEach<[unknown, RegExp]>([
             [undefined, /.*/],
             [null, /.*/],
             [0, /.*/],
             [{}, /.*/],
-        ])('should be false for %p', (value, regex) => {
-            expect(notMatches(value, regex)).toBeFalse()
+        ])('should be false for %j', (value, regex) => {
+            assert.equal(notMatches(value, regex), false)
         })
     })
 
     describe('with three parameters', () => {
-        it.each<[string, string, string?]>([
+        itEach<[string, string, string?]>([
             ['foo', 'foo', undefined],
             ['fOO', 'foo', 'i'],
-        ])('should be false for %p', (value, pattern, modifiers) => {
-            expect(notMatches(value, pattern, modifiers)).toBeFalse()
+        ])('should be false for %j', (value, pattern, modifiers) => {
+            assert.equal(notMatches(value, pattern, modifiers), false)
         })
 
-        it.each<[string, string, string?]>([
+        itEach<[string, string, string?]>([
             ['foo', 'bar', undefined],
             ['foo', 'bar', 'i'],
-        ])('should be true for %p', (value, pattern, modifiers) => {
-            expect(notMatches(value, pattern, modifiers)).toBeTrue()
+        ])('should be true for %j', (value, pattern, modifiers) => {
+            assert.equal(notMatches(value, pattern, modifiers), true)
         })
 
-        it.each<[unknown, string, string?]>([
+        itEach<[unknown, string, string?]>([
             [undefined, '.*', undefined],
             [null, '.*', undefined],
             [0, '.*', undefined],
             [{}, '.*', 'i'],
-        ])('should be false for %p', (value, pattern, modifiers) => {
-            expect(notMatches(value, pattern, modifiers)).toBeFalse()
+        ])('should be false for %j', (value, pattern, modifiers) => {
+            assert.equal(notMatches(value, pattern, modifiers), false)
         })
     })
 })

@@ -1,4 +1,5 @@
-import { extend } from 'dayjs'
-import duration from 'dayjs/plugin/duration'
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration.js'
 
-extend(duration)
+// eslint-disable-next-line import/no-named-as-default-member
+dayjs.extend(duration)

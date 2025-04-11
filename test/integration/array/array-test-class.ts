@@ -1,4 +1,4 @@
-import { ArrayMonotonic, Monotonicity } from '~'
+import { ArrayMonotonic, Monotonicity } from '../../../src'
 
 export class ArrayTestClass {
     @ArrayMonotonic<number>({ projection: n => n, monotonicity: Monotonicity.STRICTLY_INCREASING })

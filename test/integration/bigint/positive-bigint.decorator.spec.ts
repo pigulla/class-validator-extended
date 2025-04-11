@@ -1,45 +1,49 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
 
-import { clear } from 'jest-date-mock'
-
-import { POSITIVE_BIGINT, PositiveBigInt, positiveBigInt } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/bigint/positive-bigint/positive-bigint.predicate')
+import { PositiveBigInt, POSITIVE_BIGINT } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@PositiveBigInt', () => {
-    const mockedPositiveBigInt = positiveBigInt as unknown as jest.Mock
-
     type Options = Parameters<typeof PositiveBigInt>
+
     const matrix: Record<string, Options[]> = {
         'property must be a positive BigInt': [[], [{}], [{ each: undefined }], [{ each: false }]],
         'each value in property must be a positive BigInt': [[{ each: true }]],
     }
 
-    beforeEach(() => {
-        mockedPositiveBigInt.mockReturnValue(false)
+    const mockedPositiveBigInt = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/bigint/positive-bigint/positive-bigint.predicate.ts', {
+        namedExports: {
+            positiveBigInt: mockedPositiveBigInt,
+        },
     })
+    const { PositiveBigInt: Decorator, POSITIVE_BIGINT: SYMBOL } =
+        require('../../../src/bigint/positive-bigint/positive-bigint.decorator') as {
+            PositiveBigInt: typeof PositiveBigInt
+            POSITIVE_BIGINT: typeof POSITIVE_BIGINT
+        }
 
-    afterEach(() => {
-        clear()
-    })
+    afterEach(() => mockedPositiveBigInt.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @PositiveBigInt(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: POSITIVE_BIGINT,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedPositiveBigInt).toHaveBeenCalledWith(value)
+                assert.equal(mockedPositiveBigInt.mock.callCount(), 1)
+                assert.deepEqual(mockedPositiveBigInt.mock.calls[0].arguments, [value])
             })
         })
     }

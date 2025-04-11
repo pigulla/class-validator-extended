@@ -1,15 +1,13 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
 
-import { MAP_UNIQUE, MapUnique, mapUnique } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/map/map-unique/map-unique.predicate')
+import { MAP_UNIQUE, MapUnique } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@MapUnique', () => {
-    const mockedMapUnique = mapUnique as unknown as jest.Mock
-    const projection = jest.fn()
-
     type Options = Parameters<typeof MapUnique>
+
+    const projection = mock.fn()
     const matrix: Record<string, Options[]> = {
         'property must have unique values': [
             [projection],
@@ -20,26 +18,38 @@ describe('@MapUnique', () => {
         'each value in property must have unique values': [[projection, { each: true }]],
     }
 
-    beforeEach(() => {
-        mockedMapUnique.mockReturnValue(false)
+    const mockedMapUnique = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/map/map-unique/map-unique.predicate.ts', {
+        namedExports: {
+            mapUnique: mockedMapUnique,
+        },
     })
+    const { MapUnique: Decorator, MAP_UNIQUE: SYMBOL } =
+        require('../../../src/map/map-unique/map-unique.decorator') as {
+            MapUnique: typeof MapUnique
+            MAP_UNIQUE: typeof MAP_UNIQUE
+        }
+
+    afterEach(() => mockedMapUnique.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @MapUnique(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: MAP_UNIQUE,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedMapUnique).toHaveBeenCalledWith(value, options[0])
+                assert.equal(mockedMapUnique.mock.callCount(), 1)
+                assert.deepEqual(mockedMapUnique.mock.calls[0].arguments, [value, options[0]])
             })
         })
     }

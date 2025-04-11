@@ -1,12 +1,15 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
+
 import type { ConfigType } from 'dayjs'
 import dayjs from 'dayjs'
 
-import { isDayjs } from '~'
+import { isDayjs } from '../../../src'
+import { itEach } from '../../util'
 
 describe('isDayjs', () => {
     describe('with default options', () => {
-        it.each<[unknown]>([
+        itEach<[unknown]>([
             [undefined],
             [null],
             [0],
@@ -14,21 +17,21 @@ describe('isDayjs', () => {
             [new Date('2020-07-20T08:12:58.536Z')],
             [dayjs.duration(42, 'minutes')],
             ['foo'],
-        ])('should be false for %p', (value: unknown) => {
-            expect(isDayjs(value)).toBeFalse()
+        ])('should be false for %j', (value: unknown) => {
+            assert.equal(isDayjs(value), false)
         })
 
-        it.each<[boolean, ConfigType]>([
+        itEach<[boolean, ConfigType]>([
             [true, '2020-07-20T08:12:58.536Z'],
             [false, '2020-07-20T00:99:00.00Z'],
-        ])('should be %p for %p', (expected, value) => {
+        ])('should be %j for %j', (expected, value) => {
             const instance = dayjs(value)
-            expect(isDayjs(instance)).toBe(expected)
+            assert.equal(isDayjs(instance), expected)
         })
     })
 
     describe('with allow_invalid set to true', () => {
-        it.each<[unknown]>([
+        itEach<[unknown]>([
             [undefined],
             [null],
             [0],
@@ -36,21 +39,21 @@ describe('isDayjs', () => {
             [new Date('2020-07-20T08:12:58.536Z')],
             [dayjs.duration(42, 'minutes')],
             ['foo'],
-        ])('should be false for %p', (value: unknown) => {
-            expect(isDayjs(value, { allow_invalid: false })).toBeFalse()
+        ])('should be false for %j', (value: unknown) => {
+            assert.equal(isDayjs(value, { allow_invalid: false }), false)
         })
 
-        it.each<[boolean, ConfigType]>([
+        itEach<[boolean, ConfigType]>([
             [true, '2020-07-20T08:12:58.536Z'],
             [true, '2020-07-20T00:99:00.00Z'],
-        ])('should be %p true for %p', (expected, value) => {
+        ])('should be %j true for %j', (expected, value) => {
             const instance = dayjs(value)
-            expect(isDayjs(instance, { allow_invalid: true })).toBe(expected)
+            assert.equal(isDayjs(instance, { allow_invalid: true }), expected)
         })
     })
 
     describe('with allow_invalid set to false', () => {
-        it.each<[unknown]>([
+        itEach<[unknown]>([
             [undefined],
             [null],
             [0],
@@ -58,16 +61,16 @@ describe('isDayjs', () => {
             [new Date('2020-07-20T08:12:58.536Z')],
             [dayjs.duration(42, 'minutes')],
             ['foo'],
-        ])('should be false for %p', (value: unknown) => {
-            expect(isDayjs(value, { allow_invalid: true })).toBeFalse()
+        ])('should be false for %j', (value: unknown) => {
+            assert.equal(isDayjs(value, { allow_invalid: true }), false)
         })
 
-        it.each<[boolean, ConfigType]>([
+        itEach<[boolean, ConfigType]>([
             [true, '2020-07-20T08:12:58.536Z'],
             [false, '2020-07-20T00:99:00.00Z'],
-        ])('should be %p for %p', (expected, value) => {
+        ])('should be %j for %j', (expected, value) => {
             const instance = dayjs(value)
-            expect(isDayjs(instance, { allow_invalid: false })).toBe(expected)
+            assert.equal(isDayjs(instance, { allow_invalid: false }), expected)
         })
     })
 })

@@ -1,10 +1,12 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe, before, after, it } from 'node:test'
 
 import dayjs from 'dayjs'
 import type { Duration } from 'dayjs/plugin/duration'
 
-import { isDuration } from '~'
-import { withoutDurationPlugin } from '~test/without-duration-plugin'
+import { isDuration } from '../../../src/type'
+import { itEach } from '../../util'
+import { withoutDurationPlugin } from '../../without-duration-plugin'
 
 describe('isDuration', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -12,7 +14,7 @@ describe('isDuration', () => {
     const invalidDuration = dayjs.duration('fourtytwo', 'minutes')
 
     describe('with default options', () => {
-        it.each<[unknown]>([
+        itEach<[unknown]>([
             [undefined],
             [null],
             [0],
@@ -21,22 +23,22 @@ describe('isDuration', () => {
             [dayjs('2020-07-20T08:12:58.536Z')],
             ['foo'],
             [invalidDuration],
-        ])('should be false for %p', (value: unknown) => {
-            expect(isDuration(value)).toBeFalse()
+        ])('should be false for %s', (value: unknown) => {
+            assert.equal(isDuration(value), false)
         })
 
-        it.each<[Duration]>([
+        itEach<[Duration]>([
             [dayjs.duration(42, 'minutes')],
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             [dayjs.duration()],
-        ])('should be %p true for %p', value => {
-            expect(isDuration(value)).toBeTrue()
+        ])('should be true for %s', value => {
+            assert.equal(isDuration(value), true)
         })
     })
 
     describe('with allow_invalid set to false', () => {
-        it.each<[unknown]>([
+        itEach<[unknown]>([
             [undefined],
             [null],
             [0],
@@ -45,22 +47,22 @@ describe('isDuration', () => {
             [dayjs('2020-07-20T08:12:58.536Z')],
             ['foo'],
             [invalidDuration],
-        ])('should be false for %p', (value: unknown) => {
-            expect(isDuration(value, { allow_invalid: false })).toBeFalse()
+        ])('should be false for %s', (value: unknown) => {
+            assert.equal(isDuration(value, { allow_invalid: false }), false)
         })
 
-        it.each<[Duration]>([
+        itEach<[Duration]>([
             [dayjs.duration(42, 'minutes')],
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             [dayjs.duration()],
-        ])('should be %p true for %p', value => {
-            expect(isDuration(value, { allow_invalid: false })).toBeTrue()
+        ])('should be true for %s', value => {
+            assert.equal(isDuration(value, { allow_invalid: false }), true)
         })
     })
 
     describe('with allow_invalid set to true', () => {
-        it.each<[unknown]>([
+        itEach<[unknown]>([
             [undefined],
             [null],
             [0],
@@ -68,29 +70,29 @@ describe('isDuration', () => {
             [new Date('2020-07-20T08:12:58.536Z')],
             [dayjs('2020-07-20T08:12:58.536Z')],
             ['foo'],
-        ])('should be false for %p', (value: unknown) => {
-            expect(isDuration(value, { allow_invalid: true })).toBeFalse()
+        ])('should be false for %s', (value: unknown) => {
+            assert.equal(isDuration(value, { allow_invalid: true }), false)
         })
 
-        it.each<[Duration]>([
+        itEach<[Duration]>([
             [dayjs.duration(42, 'minutes')],
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             [dayjs.duration()],
             [invalidDuration],
-        ])('should be %p true for %p', value => {
-            expect(isDuration(value, { allow_invalid: true })).toBeTrue()
+        ])('should be true for %s', value => {
+            assert.equal(isDuration(value, { allow_invalid: true }), true)
         })
     })
 
     describe('when run without the duration plugin', () => {
         const { setup, restore } = withoutDurationPlugin()
 
-        beforeEach(setup)
-        afterEach(restore)
+        before(setup)
+        after(restore)
 
         it('should throw', () => {
-            expect(() => isDuration(42)).toThrow('The Dayjs "duration" plugin is not loaded.')
+            assert.throws(() => isDuration(42), /The Dayjs "duration" plugin is not loaded/)
         })
     })
 })

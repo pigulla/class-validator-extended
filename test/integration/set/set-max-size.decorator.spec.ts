@@ -1,15 +1,13 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
 
-import { SET_MAX_SIZE, SetMaxSize, setMaxSize } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/set/set-max-size/set-max-size.predicate')
+import { SET_MAX_SIZE, SetMaxSize } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@SetMaxSize', () => {
-    const mockedSetMaxSize = setMaxSize as unknown as jest.Mock
-    const maximum = 13
-
     type Options = Parameters<typeof SetMaxSize>
+
+    const maximum = 13
     const matrix: Record<string, Options[]> = {
         'property must contain not more than 13 elements': [
             [maximum],
@@ -20,26 +18,38 @@ describe('@SetMaxSize', () => {
         'each value in property must contain not more than 13 elements': [[maximum, { each: true }]],
     }
 
-    beforeEach(() => {
-        mockedSetMaxSize.mockReturnValue(false)
+    const mockedSetMaxSize = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/set/set-max-size/set-max-size.predicate.ts', {
+        namedExports: {
+            setMaxSize: mockedSetMaxSize,
+        },
     })
+    const { SetMaxSize: Decorator, SET_MAX_SIZE: SYMBOL } =
+        require('../../../src/set/set-max-size/set-max-size.decorator') as {
+            SetMaxSize: typeof SetMaxSize
+            SET_MAX_SIZE: typeof SET_MAX_SIZE
+        }
+
+    afterEach(() => mockedSetMaxSize.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @SetMaxSize(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: SET_MAX_SIZE,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedSetMaxSize).toHaveBeenCalledWith(value, options[0])
+                assert.equal(mockedSetMaxSize.mock.callCount(), 1)
+                assert.deepEqual(mockedSetMaxSize.mock.calls[0].arguments, [value, options[0]])
             })
         })
     }

@@ -1,15 +1,13 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
 
-import { SET_MIN_SIZE, SetMinSize, setMinSize } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/set/set-min-size/set-min-size.predicate')
+import { SET_MIN_SIZE, SetMinSize } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@SetMinSize', () => {
-    const mockedSetMinSize = setMinSize as unknown as jest.Mock
-    const maximum = 13
-
     type Options = Parameters<typeof SetMinSize>
+
+    const maximum = 13
     const matrix: Record<string, Options[]> = {
         'property must contain at least 13 elements': [
             [maximum],
@@ -20,26 +18,38 @@ describe('@SetMinSize', () => {
         'each value in property must contain at least 13 elements': [[maximum, { each: true }]],
     }
 
-    beforeEach(() => {
-        mockedSetMinSize.mockReturnValue(false)
+    const mockedSetMinSize = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/set/set-min-size/set-min-size.predicate.ts', {
+        namedExports: {
+            setMinSize: mockedSetMinSize,
+        },
     })
+    const { SetMinSize: Decorator, SET_MIN_SIZE: SYMBOL } =
+        require('../../../src/set/set-min-size/set-min-size.decorator') as {
+            SetMinSize: typeof SetMinSize
+            SET_MIN_SIZE: typeof SET_MIN_SIZE
+        }
+
+    afterEach(() => mockedSetMinSize.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @SetMinSize(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: SET_MIN_SIZE,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedSetMinSize).toHaveBeenCalledWith(value, options[0])
+                assert.equal(mockedSetMinSize.mock.callCount(), 1)
+                assert.deepEqual(mockedSetMinSize.mock.calls[0].arguments, [value, options[0]])
             })
         })
     }

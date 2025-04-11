@@ -1,47 +1,49 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe, beforeEach, afterEach, it } from 'node:test'
 
 import dayjs from 'dayjs'
 
-import { maxDuration } from '~'
-import { withoutDurationPlugin } from '~test/without-duration-plugin'
+import { maxDuration } from '../../../src'
+import { itEach } from '../../util'
+import { withoutDurationPlugin } from '../../without-duration-plugin'
 
 describe('maxDuration', () => {
     const maximum = dayjs.duration(1, 'hour')
     const invalidDurationObjects: [string, unknown][] = [['an invalid duration', dayjs.duration('PxD')]]
 
     it('should throw if "maximum" is an invalid duration object', () => {
-        expect(() => maxDuration(dayjs.duration(1, 'hour'), dayjs.duration('PxD'))).toThrow(TypeError)
+        assert.throws(() => maxDuration(dayjs.duration(1, 'hour'), dayjs.duration('PxD')), TypeError)
     })
 
     describe('with default options', () => {
-        it.each<[string, unknown]>([
+        itEach<[string, unknown]>([
             ...invalidDurationObjects,
             ['a longer duration', maximum.add(5, 'minutes')],
             ['the maximum value itself', maximum],
         ])('should be false for %s', (_, value) => {
-            expect(maxDuration(value, maximum)).toBeFalse()
+            assert.equal(maxDuration(value, maximum), false)
         })
 
-        it.each<[string, unknown]>([['a shorter duration', maximum.subtract(5, 'minutes')]])(
+        itEach<[string, unknown]>([['a shorter duration', maximum.subtract(5, 'minutes')]])(
             'should be true for %s',
             (_, value) => {
-                expect(maxDuration(value, maximum)).toBeTrue()
+                assert.equal(maxDuration(value, maximum), true)
             }
         )
 
         describe('and "inclusive" set to true', () => {
-            it.each<[string, unknown]>([...invalidDurationObjects, ['a longer duration', maximum.add(5, 'minutes')]])(
+            itEach<[string, unknown]>([...invalidDurationObjects, ['a longer duration', maximum.add(5, 'minutes')]])(
                 'should be false for %s',
                 (_, value) => {
-                    expect(maxDuration(value, maximum, { inclusive: true })).toBeFalse()
+                    assert.equal(maxDuration(value, maximum, { inclusive: true }), false)
                 }
             )
 
-            it.each<[string, unknown]>([
+            itEach<[string, unknown]>([
                 ['the maximum value itself', maximum],
                 ['a shorter duration', maximum.subtract(5, 'minutes')],
             ])('should be true for %s', (_, value) => {
-                expect(maxDuration(value, maximum, { inclusive: true })).toBeTrue()
+                assert.equal(maxDuration(value, maximum, { inclusive: true }), true)
             })
         })
     })
@@ -53,7 +55,7 @@ describe('maxDuration', () => {
         afterEach(restore)
 
         it('should throw', () => {
-            expect(() => maxDuration(42, maximum)).toThrow('The Dayjs "duration" plugin is not loaded.')
+            assert.throws(() => maxDuration(42, maximum), /The Dayjs "duration" plugin is not loaded/)
         })
     })
 })

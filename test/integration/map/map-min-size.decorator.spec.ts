@@ -1,15 +1,13 @@
-import 'jest-extended'
+import assert from 'node:assert'
+import { describe, after, mock, afterEach } from 'node:test'
 
-import { MAP_MIN_SIZE, MapMinSize, mapMinSize } from '~'
-import { expectValidationError } from '~test/util'
-
-jest.mock('~/map/map-min-size/map-min-size.predicate')
+import { MAP_MIN_SIZE, MapMinSize } from '../../../src'
+import { expectValidationError, itEach } from '../../util'
 
 describe('@MapMinSize', () => {
-    const mockedMapMinSize = mapMinSize as unknown as jest.Mock
-    const minimum = 13
-
     type Options = Parameters<typeof MapMinSize>
+
+    const minimum = 13
     const matrix: Record<string, Options[]> = {
         'property must contain at least 13 elements': [
             [minimum],
@@ -20,26 +18,38 @@ describe('@MapMinSize', () => {
         'each value in property must contain at least 13 elements': [[minimum, { each: true }]],
     }
 
-    beforeEach(() => {
-        mockedMapMinSize.mockReturnValue(false)
+    const mockedMapMinSize = mock.fn(() => false)
+    const mockedModule = mock.module('../../../src/map/map-min-size/map-min-size.predicate.ts', {
+        namedExports: {
+            mapMinSize: mockedMapMinSize,
+        },
     })
+    const { MapMinSize: Decorator, MAP_MIN_SIZE: SYMBOL } =
+        require('../../../src/map/map-min-size/map-min-size.decorator') as {
+            MapMinSize: typeof MapMinSize
+            MAP_MIN_SIZE: typeof MAP_MIN_SIZE
+        }
+
+    afterEach(() => mockedMapMinSize.mock.resetCalls())
+    after(() => mockedModule.restore())
 
     for (const [message, optionsList] of Object.entries(matrix)) {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            it.each<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
+            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
                 class TestClass {
-                    @MapMinSize(...options)
+                    @Decorator(...options)
                     property: unknown = value
                 }
 
                 expectValidationError(new TestClass(), {
                     property: 'property',
-                    constraint: MAP_MIN_SIZE,
+                    constraint: SYMBOL,
                     message,
                 })
-                expect(mockedMapMinSize).toHaveBeenCalledWith(value, options[0])
+                assert.equal(mockedMapMinSize.mock.callCount(), 1)
+                assert.deepEqual(mockedMapMinSize.mock.calls[0].arguments, [value, options[0]])
             })
         })
     }

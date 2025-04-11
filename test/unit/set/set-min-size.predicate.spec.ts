@@ -1,29 +1,31 @@
-import 'jest-extended'
+import assert from 'node:assert/strict'
+import { describe } from 'node:test'
 
-import { setMinSize } from '~'
+import { setMinSize } from '../../../src'
+import { itEach } from '../../util'
 
 describe('setMinSize', () => {
-    it.each<[unknown]>([[Number.POSITIVE_INFINITY], [Number.NaN], [null], [''], [BigInt(4)]])(
-        'should throw for %p as a min',
+    itEach<[unknown]>([[Number.POSITIVE_INFINITY], [Number.NaN], [null], [''], [BigInt(4)]])(
+        'should throw for %s as a min',
         min => {
-            expect(() => setMinSize(0, min as number)).toThrow(TypeError)
+            assert.throws(() => setMinSize(0, min as number), TypeError)
         }
     )
 
-    it.each<[unknown, number]>([
+    itEach<[unknown, number]>([
         [new Set([]), 0],
         [new Set([0]), 0],
         [new Set([1, 2, 3]), 3],
         [new Set([1, 2, 3, 4, 5]), 3],
-    ])('should be true for %p', (value, min) => {
-        expect(setMinSize(value, min)).toBeTrue()
+    ])('should be true for %s', (value, min) => {
+        assert.equal(setMinSize(value, min), true)
     })
 
-    it.each<[unknown, number]>([
+    itEach<[unknown, number]>([
         [42, 0],
         [new Set([]), 1],
         [new Set([1, 2, 3]), 5],
-    ])('should be false for %p', (value, min) => {
-        expect(setMinSize(value, min)).toBeFalse()
+    ])('should be false for %s', (value, min) => {
+        assert.equal(setMinSize(value, min), false)
     })
 })
