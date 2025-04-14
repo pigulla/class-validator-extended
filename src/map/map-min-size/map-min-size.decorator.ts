@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { mapMinSize } from './map-min-size.predicate'
 
@@ -29,11 +29,12 @@ export function MapMinSize(minimum: number, options?: ValidationOptions): Proper
             validator: {
                 validate: (value, _arguments): boolean => mapMinSize(value, minimum),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must contain at least $constraint1 elements`,
-                    options
+                    eachPrefix =>
+                        `${eachPrefix}$property must contain at least $constraint1 elements`,
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

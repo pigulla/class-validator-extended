@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { futureDate } from './future-date.predicate'
 
@@ -30,10 +30,10 @@ export function FutureDate(options?: ValidationOptions): PropertyDecorator {
                 validate: (value, _arguments): boolean => futureDate(value),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be a Date instance in the future`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

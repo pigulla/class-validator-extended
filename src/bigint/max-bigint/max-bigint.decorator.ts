@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { maxBigInt } from './max-bigint.predicate'
 
@@ -21,7 +21,10 @@ export const MAX_BIGINT = 'maxBigInt'
  * @param maximum The maximum allowed value.
  * @param options Generic class-validator options.
  */
-export function MaxBigInt(maximum: number | bigint, options?: ValidationOptions): PropertyDecorator {
+export function MaxBigInt(
+    maximum: number | bigint,
+    options?: ValidationOptions,
+): PropertyDecorator {
     return ValidateBy(
         {
             name: MAX_BIGINT,
@@ -30,10 +33,10 @@ export function MaxBigInt(maximum: number | bigint, options?: ValidationOptions)
                 validate: (value, _arguments): boolean => maxBigInt(value, maximum),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must not be larger than $constraint1`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

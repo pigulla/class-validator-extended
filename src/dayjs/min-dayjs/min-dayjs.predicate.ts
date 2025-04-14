@@ -12,7 +12,7 @@ import { isDayjs } from '../../type/is-dayjs'
 export function minDayjs(
     value: unknown,
     minimum: ConfigType,
-    options?: { allow_invalid?: boolean; inclusive?: boolean; granularity?: OpUnitType }
+    options?: { allow_invalid?: boolean; inclusive?: boolean; granularity?: OpUnitType },
 ): value is Dayjs {
     const min = dayjs(minimum)
     const inclusive = options?.inclusive ?? false
@@ -24,6 +24,7 @@ export function minDayjs(
 
     // Let's not rely on the isSameOrBefore-plugin which might or might not be registered.
     return (
-        isDayjs(value, options) && (min.isBefore(value, granularity) || (inclusive && min.isSame(value, granularity)))
+        isDayjs(value, options) &&
+        (min.isBefore(value, granularity) || (inclusive && min.isSame(value, granularity)))
     )
 }

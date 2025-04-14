@@ -8,7 +8,7 @@ import { isMap } from '../../type/is-map'
  */
 export function mapNotContainsKeys<Key = unknown>(
     value: unknown,
-    forbidden: Iterable<Key>
+    forbidden: Iterable<Key>,
 ): value is Map<unknown, unknown> {
     return isMap(value) && [...forbidden].every(item => !value.has(item))
 }

@@ -19,7 +19,11 @@ import matchesValidator from 'validator/lib/matches'
  */
 export function notMatches(value: unknown, pattern: RegExp, modifiers?: never): value is string
 export function notMatches(value: unknown, pattern: string, modifiers?: string): value is string
-export function notMatches(value: unknown, pattern: RegExp | string, modifiers?: string): value is string {
+export function notMatches(
+    value: unknown,
+    pattern: RegExp | string,
+    modifiers?: string,
+): value is string {
     if (typeof value !== 'string') {
         return false
     }

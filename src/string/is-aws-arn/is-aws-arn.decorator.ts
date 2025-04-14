@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { isAwsARN } from './is-aws-arn.predicate'
 
@@ -37,9 +37,12 @@ export function IsAwsARN(options?: ValidationOptions): PropertyDecorator {
             name: IS_AWS_ARN,
             validator: {
                 validate: (value, _arguments): boolean => isAwsARN(value),
-                defaultMessage: buildMessage(eachPrefix => `${eachPrefix}$property must be an AWS ARN string`, options),
+                defaultMessage: buildMessage(
+                    eachPrefix => `${eachPrefix}$property must be an AWS ARN string`,
+                    options,
+                ),
             },
         },
-        options
+        options,
     )
 }

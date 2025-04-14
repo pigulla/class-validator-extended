@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { mapContainsKeys } from './map-contains-keys.predicate'
 
@@ -22,7 +22,10 @@ export const MAP_CONTAINS_KEYS = 'mapContainsKeys'
  * @param options Generic class-validator options.
  * @typeParam Key The type of keys to check for.
  */
-export function MapContainsKeys<Key = unknown>(required: Key[], options?: ValidationOptions): PropertyDecorator {
+export function MapContainsKeys<Key = unknown>(
+    required: Key[],
+    options?: ValidationOptions,
+): PropertyDecorator {
     return ValidateBy(
         {
             name: MAP_CONTAINS_KEYS,
@@ -31,10 +34,10 @@ export function MapContainsKeys<Key = unknown>(required: Key[], options?: Valida
                 defaultMessage: buildMessage(
                     eachPrefix =>
                         `${eachPrefix}$property must contain all of the following keys: ${[...required].join(', ')}`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { mapUnique } from './map-unique.predicate'
 
@@ -25,16 +25,20 @@ export const MAP_UNIQUE = 'mapUnique'
  */
 export function MapUnique<Value = unknown, Projection = Value>(
     projection: (item: Value) => Projection,
-    options?: ValidationOptions
+    options?: ValidationOptions,
 ): PropertyDecorator {
     return ValidateBy(
         {
             name: MAP_UNIQUE,
             validator: {
-                validate: (value, _arguments): boolean => mapUnique<Value, Projection>(value, projection),
-                defaultMessage: buildMessage(eachPrefix => `${eachPrefix}$property must have unique values`, options),
+                validate: (value, _arguments): boolean =>
+                    mapUnique<Value, Projection>(value, projection),
+                defaultMessage: buildMessage(
+                    eachPrefix => `${eachPrefix}$property must have unique values`,
+                    options,
+                ),
             },
         },
-        options
+        options,
     )
 }

@@ -1,7 +1,7 @@
 import assert from 'node:assert'
-import { it, describe } from 'node:test'
+import { describe, it } from 'node:test'
 
-import { validateSync, ValidationError } from 'class-validator'
+import { ValidationError, validateSync } from 'class-validator'
 import type { ValidatorOptions } from 'class-validator/types/validation/ValidatorOptions'
 import { sprintf } from 'sprintf-js'
 
@@ -15,10 +15,9 @@ export function expectNoValidationErrors(instance: object): void {
     assert.deepEqual(validateSync(instance, validationOptions), [])
 }
 
-// eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
-export function expectValidationError<T extends Object>(
+export function expectValidationError<T extends {}>(
     instance: T,
-    { property, constraint, message }: { property: keyof T; constraint: string; message: string }
+    { property, constraint, message }: { property: keyof T; constraint: string; message: string },
 ): void {
     const errors = validateSync(instance, validationOptions)
 
@@ -42,7 +41,7 @@ function formatName(name: string, testCase: unknown[]): string {
 }
 
 export function describeEach<T extends unknown[] = unknown[]>(
-    testCases: T[]
+    testCases: T[],
 ): (name: string, callback: (...parameters: T) => void) => void {
     return (name: string, callback: (...parameters: T) => void): void => {
         for (const testCase of testCases) {
@@ -52,7 +51,7 @@ export function describeEach<T extends unknown[] = unknown[]>(
 }
 
 export function itEach<T extends unknown[] = unknown[]>(
-    testCases: T[]
+    testCases: T[],
 ): (name: string, callback: (...parameters: T) => void) => void {
     return (name: string, callback: (...parameters: T) => void): void => {
         for (const testCase of testCases) {

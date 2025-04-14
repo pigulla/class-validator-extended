@@ -9,7 +9,7 @@ describe('setMinSize', () => {
         'should throw for %s as a min',
         min => {
             assert.throws(() => setMinSize(0, min as number), TypeError)
-        }
+        },
     )
 
     itEach<[unknown, number]>([

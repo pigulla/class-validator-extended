@@ -1,5 +1,5 @@
 import assert from 'node:assert'
-import { describe, after, mock, beforeEach, afterEach, it } from 'node:test'
+import { after, afterEach, beforeEach, describe, it, mock } from 'node:test'
 
 import dayjs from 'dayjs'
 
@@ -51,24 +51,27 @@ describe('@MaxDuration', () => {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
-                class TestClass {
-                    @Decorator(...options)
-                    property: unknown = value
-                }
+            itEach<[Options]>(optionsList.map(item => [item]))(
+                'when called with options %j',
+                options => {
+                    class TestClass {
+                        @Decorator(...options)
+                        property: unknown = value
+                    }
 
-                expectValidationError(new TestClass(), {
-                    property: 'property',
-                    constraint: SYMBOL,
-                    message,
-                })
-                assert.equal(mockedMaxDuration.mock.callCount(), 1)
-                assert.deepEqual(mockedMaxDuration.mock.calls[0].arguments, [
-                    value,
-                    options[0],
-                    { inclusive: options[1]?.inclusive },
-                ])
-            })
+                    expectValidationError(new TestClass(), {
+                        property: 'property',
+                        constraint: SYMBOL,
+                        message,
+                    })
+                    assert.equal(mockedMaxDuration.mock.callCount(), 1)
+                    assert.deepEqual(mockedMaxDuration.mock.calls[0].arguments, [
+                        value,
+                        options[0],
+                        { inclusive: options[1]?.inclusive },
+                    ])
+                },
+            )
         })
     }
 

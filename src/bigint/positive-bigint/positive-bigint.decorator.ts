@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { positiveBigInt } from './positive-bigint.predicate'
 
@@ -26,9 +26,12 @@ export function PositiveBigInt(options?: ValidationOptions): PropertyDecorator {
             name: POSITIVE_BIGINT,
             validator: {
                 validate: (value, _arguments): boolean => positiveBigInt(value),
-                defaultMessage: buildMessage(eachPrefix => `${eachPrefix}$property must be a positive BigInt`, options),
+                defaultMessage: buildMessage(
+                    eachPrefix => `${eachPrefix}$property must be a positive BigInt`,
+                    options,
+                ),
             },
         },
-        options
+        options,
     )
 }

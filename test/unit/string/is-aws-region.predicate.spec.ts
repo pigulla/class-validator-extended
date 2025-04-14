@@ -38,6 +38,6 @@ describe('isAwsRegion', () => {
         'should be false for %j',
         value => {
             assert.equal(isAwsRegion(value), false)
-        }
+        },
     )
 })

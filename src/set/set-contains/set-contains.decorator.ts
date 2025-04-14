@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { setContains } from './set-contains.predicate'
 
@@ -24,7 +24,7 @@ export const SET_CONTAINS = 'setContains'
  */
 export function SetContains<Value = unknown>(
     required: Iterable<Value>,
-    options?: ValidationOptions
+    options?: ValidationOptions,
 ): PropertyDecorator {
     return ValidateBy(
         {
@@ -34,10 +34,10 @@ export function SetContains<Value = unknown>(
                 defaultMessage: buildMessage(
                     eachPrefix =>
                         `${eachPrefix}$property must contain all of the following values: ${[...required].join(', ')}`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

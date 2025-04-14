@@ -19,9 +19,7 @@ import { ValidateIf } from 'class-validator'
  * @param options Generic class-validator options.
  */
 export function Optional(options?: ValidationOptions): PropertyDecorator {
-    // eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
-    return function optionalDecorator(prototype: Object, propertyKey: string | symbol): void {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    return function optionalDecorator(prototype: object, propertyKey: string | symbol): void {
         ValidateIf(object => object[propertyKey] !== undefined, options)(prototype, propertyKey)
     }
 }

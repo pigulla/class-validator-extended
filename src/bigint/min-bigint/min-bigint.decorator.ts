@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { minBigInt } from './min-bigint.predicate'
 
@@ -21,7 +21,10 @@ export const MIN_BIGINT = 'minBigInt'
  * @param minimum The minimum allowed value.
  * @param options Generic class-validator options.
  */
-export function MinBigInt(minimum: number | bigint, options?: ValidationOptions): PropertyDecorator {
+export function MinBigInt(
+    minimum: number | bigint,
+    options?: ValidationOptions,
+): PropertyDecorator {
     return ValidateBy(
         {
             name: MIN_BIGINT,
@@ -30,10 +33,10 @@ export function MinBigInt(minimum: number | bigint, options?: ValidationOptions)
                 validate: (value, _arguments): boolean => minBigInt(value, minimum),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must not be less than $constraint1`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

@@ -9,7 +9,7 @@ describe('setSize', () => {
         `should throw for %s as the 'size' parameter`,
         size => {
             assert.throws(() => setSize(0, size as number), TypeError)
-        }
+        },
     )
 
     itEach<[unknown, number]>([

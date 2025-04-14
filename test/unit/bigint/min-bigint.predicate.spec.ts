@@ -9,7 +9,7 @@ describe('minBigInt', () => {
         'should throw for %s as a minValue',
         minValue => {
             assert.throws(() => minBigInt(0, minValue as number), TypeError)
-        }
+        },
     )
 
     itEach<[unknown, number | bigint]>([

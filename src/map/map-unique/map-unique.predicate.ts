@@ -9,7 +9,7 @@ import { isMap } from '../../type/is-map'
  */
 export function mapUnique<Value, Projection>(
     value: unknown,
-    projection: (item: Value) => Projection
+    projection: (item: Value) => Projection,
 ): value is Map<unknown, unknown> {
     if (typeof projection !== 'function') {
         throw new TypeError('Parameter "projection" must be a function')

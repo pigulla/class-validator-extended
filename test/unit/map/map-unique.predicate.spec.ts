@@ -9,9 +9,12 @@ describe('mapUnique', () => {
         return n % 4
     }
 
-    itEach<[unknown]>([[undefined], [null], ['']])('should throw for %j as the projection', value => {
-        assert.throws(() => mapUnique(0, value as (value: number) => number), TypeError)
-    })
+    itEach<[unknown]>([[undefined], [null], ['']])(
+        'should throw for %j as the projection',
+        value => {
+            assert.throws(() => mapUnique(0, value as (value: number) => number), TypeError)
+        },
+    )
 
     itEach<[Map<unknown, unknown>]>([
         [new Map()],

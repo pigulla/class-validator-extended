@@ -9,7 +9,7 @@ describe('mapMinSize', () => {
         'should throw for %s as a min',
         min => {
             assert.throws(() => mapMinSize(0, min as number), TypeError)
-        }
+        },
     )
 
     itEach<[unknown, number]>([

@@ -7,13 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.2.0] - 2025-04-11
+
 ### Changed
 
-- Use built-in test runner instead of Jest
+- Use built-in test runner instead of Jest.
+- Use [Biome](https://bioemjs.dev) instead of ESLint and Prettier.
 
 ### Deprecated
 
-- `@IsAwsARN` and `@IsAwsRegion` are deprecated.
+- `@IsAwsARN` and `@IsAwsRegion` will be removed in the next major version.
 
 ## [4.1.0] - 2025-04-07
 

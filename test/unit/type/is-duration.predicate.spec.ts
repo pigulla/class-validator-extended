@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { describe, before, after, it } from 'node:test'
+import { after, before, describe, it } from 'node:test'
 
 import dayjs from 'dayjs'
 import type { Duration } from 'dayjs/plugin/duration'
@@ -9,8 +9,7 @@ import { itEach } from '../../util'
 import { withoutDurationPlugin } from '../../without-duration-plugin'
 
 describe('isDuration', () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error
     const invalidDuration = dayjs.duration('fourtytwo', 'minutes')
 
     describe('with default options', () => {
@@ -29,8 +28,7 @@ describe('isDuration', () => {
 
         itEach<[Duration]>([
             [dayjs.duration(42, 'minutes')],
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
+            // @ts-expect-error
             [dayjs.duration()],
         ])('should be true for %s', value => {
             assert.equal(isDuration(value), true)
@@ -53,8 +51,7 @@ describe('isDuration', () => {
 
         itEach<[Duration]>([
             [dayjs.duration(42, 'minutes')],
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
+            // @ts-expect-error
             [dayjs.duration()],
         ])('should be true for %s', value => {
             assert.equal(isDuration(value, { allow_invalid: false }), true)
@@ -76,8 +73,7 @@ describe('isDuration', () => {
 
         itEach<[Duration]>([
             [dayjs.duration(42, 'minutes')],
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
+            // @ts-expect-error
             [dayjs.duration()],
             [invalidDuration],
         ])('should be true for %s', value => {

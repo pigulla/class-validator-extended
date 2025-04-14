@@ -1,7 +1,7 @@
 import assert from 'node:assert'
-import { describe, after, mock, afterEach } from 'node:test'
+import { after, afterEach, describe, mock } from 'node:test'
 
-import { MaxBigInt, MAX_BIGINT } from '../../../src'
+import type { MAX_BIGINT, MaxBigInt } from '../../../src'
 import { expectValidationError, itEach } from '../../util'
 
 describe('@MaxBigInt', () => {
@@ -9,7 +9,12 @@ describe('@MaxBigInt', () => {
 
     const max = BigInt(9_000)
     const matrix: Record<string, Options[]> = {
-        'property must not be larger than 9000': [[max], [max, {}], [max, { each: undefined }], [max, { each: false }]],
+        'property must not be larger than 9000': [
+            [max],
+            [max, {}],
+            [max, { each: undefined }],
+            [max, { each: false }],
+        ],
         'each value in property must not be larger than 9000': [[max, { each: true }]],
     }
 
@@ -32,20 +37,23 @@ describe('@MaxBigInt', () => {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %o', options => {
-                class TestClass {
-                    @Decorator(...options)
-                    property: unknown = value
-                }
+            itEach<[Options]>(optionsList.map(item => [item]))(
+                'when called with options %o',
+                options => {
+                    class TestClass {
+                        @Decorator(...options)
+                        property: unknown = value
+                    }
 
-                expectValidationError(new TestClass(), {
-                    property: 'property',
-                    constraint: SYMBOL,
-                    message,
-                })
-                assert.equal(mockedMaxBigInt.mock.callCount(), 1)
-                assert.deepEqual(mockedMaxBigInt.mock.calls[0].arguments, [value, options[0]])
-            })
+                    expectValidationError(new TestClass(), {
+                        property: 'property',
+                        constraint: SYMBOL,
+                        message,
+                    })
+                    assert.equal(mockedMaxBigInt.mock.callCount(), 1)
+                    assert.deepEqual(mockedMaxBigInt.mock.calls[0].arguments, [value, options[0]])
+                },
+            )
         })
     }
 })

@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { negativeBigInt } from './negative-bigint.predicate'
 
@@ -26,9 +26,12 @@ export function NegativeBigInt(options?: ValidationOptions): PropertyDecorator {
             name: NEGATIVE_BIGINT,
             validator: {
                 validate: (value, _arguments): boolean => negativeBigInt(value),
-                defaultMessage: buildMessage(eachPrefix => `${eachPrefix}$property must be a negative BigInt`, options),
+                defaultMessage: buildMessage(
+                    eachPrefix => `${eachPrefix}$property must be a negative BigInt`,
+                    options,
+                ),
             },
         },
-        options
+        options,
     )
 }

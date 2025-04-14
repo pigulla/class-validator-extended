@@ -23,9 +23,12 @@ describe('isNetworkPort', () => {
     })
 
     describe('with default options', () => {
-        itEach<[number]>([[0], [80], [3_000], [8_080], [65_535]])('should be true for %j', (value: unknown) => {
-            assert.equal(isNetworkPort(value), true)
-        })
+        itEach<[number]>([[0], [80], [3_000], [8_080], [65_535]])(
+            'should be true for %j',
+            (value: unknown) => {
+                assert.equal(isNetworkPort(value), true)
+            },
+        )
 
         itEach<[number]>([[-1]])('should be false for %s', (value: unknown) => {
             assert.equal(isNetworkPort(value), false)
@@ -39,9 +42,12 @@ describe('isNetworkPort', () => {
             assert.equal(isNetworkPort(value, options), false)
         })
 
-        itEach<[number]>([[80], [3_000], [8_080], [65_535]])('should be true for %s', (value: unknown) => {
-            assert.equal(isNetworkPort(value, options), true)
-        })
+        itEach<[number]>([[80], [3_000], [8_080], [65_535]])(
+            'should be true for %s',
+            (value: unknown) => {
+                assert.equal(isNetworkPort(value, options), true)
+            },
+        )
     })
 
     describe('with allow_system_ports set to false', () => {
@@ -51,9 +57,12 @@ describe('isNetworkPort', () => {
             assert.equal(isNetworkPort(value, options), false)
         })
 
-        itEach<[number]>([[0], [3_000], [8_080], [65_535]])('should be true for %s', (value: unknown) => {
-            assert.equal(isNetworkPort(value, options), true)
-        })
+        itEach<[number]>([[0], [3_000], [8_080], [65_535]])(
+            'should be true for %s',
+            (value: unknown) => {
+                assert.equal(isNetworkPort(value, options), true)
+            },
+        )
     })
 
     describe('with allow_system_allocated and allow_system_ports set to false', () => {
@@ -63,8 +72,11 @@ describe('isNetworkPort', () => {
             assert.equal(isNetworkPort(value, options), false)
         })
 
-        itEach<[number]>([[3_000], [8_080], [65_535]])('should be true for %s', (value: unknown) => {
-            assert.equal(isNetworkPort(value, options), true)
-        })
+        itEach<[number]>([[3_000], [8_080], [65_535]])(
+            'should be true for %s',
+            (value: unknown) => {
+                assert.equal(isNetworkPort(value, options), true)
+            },
+        )
     })
 })

@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { isDayjs } from './is-dayjs.predicate'
 
@@ -24,19 +24,22 @@ export const IS_DAYJS = 'isDayjs'
  *   - `allow_invalid: boolean = false`
  *     If true, allow the Dayjs object to be invalid (see [isValid()](https://day.js.org/docs/en/parse/is-valid)).
  */
-export function IsDayjs(options?: { allow_invalid?: boolean } & ValidationOptions): PropertyDecorator {
+export function IsDayjs(
+    options?: { allow_invalid?: boolean } & ValidationOptions,
+): PropertyDecorator {
     return ValidateBy(
         {
             name: IS_DAYJS,
             validator: {
-                validate: (value, _arguments): boolean => isDayjs(value, { allow_invalid: options?.allow_invalid }),
+                validate: (value, _arguments): boolean =>
+                    isDayjs(value, { allow_invalid: options?.allow_invalid }),
                 defaultMessage: buildMessage(
                     eachPrefix =>
                         `${eachPrefix}$property must be ${options?.allow_invalid ? 'a' : 'a valid'} Dayjs object`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

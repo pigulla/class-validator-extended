@@ -1,7 +1,7 @@
 import assert from 'node:assert'
-import { describe, after, mock, afterEach } from 'node:test'
+import { after, afterEach, describe, mock } from 'node:test'
 
-import { SET_CONTAINS, SetContains } from '../../../src'
+import type { SET_CONTAINS, SetContains } from '../../../src'
 import { expectValidationError, itEach } from '../../util'
 
 describe('@SetContains', () => {
@@ -15,7 +15,9 @@ describe('@SetContains', () => {
             [required, { each: undefined }],
             [required, { each: false }],
         ],
-        'each value in property must contain all of the following values: 1, 2, 3': [[required, { each: true }]],
+        'each value in property must contain all of the following values: 1, 2, 3': [
+            [required, { each: true }],
+        ],
     }
 
     const mockedSetContains = mock.fn(() => false)
@@ -37,20 +39,23 @@ describe('@SetContains', () => {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
-                class TestClass {
-                    @Decorator(...options)
-                    property: unknown = value
-                }
+            itEach<[Options]>(optionsList.map(item => [item]))(
+                'when called with options %j',
+                options => {
+                    class TestClass {
+                        @Decorator(...options)
+                        property: unknown = value
+                    }
 
-                expectValidationError(new TestClass(), {
-                    property: 'property',
-                    constraint: SYMBOL,
-                    message,
-                })
-                assert.equal(mockedSetContains.mock.callCount(), 1)
-                assert.deepEqual(mockedSetContains.mock.calls[0].arguments, [value, options[0]])
-            })
+                    expectValidationError(new TestClass(), {
+                        property: 'property',
+                        constraint: SYMBOL,
+                        message,
+                    })
+                    assert.equal(mockedSetContains.mock.callCount(), 1)
+                    assert.deepEqual(mockedSetContains.mock.calls[0].arguments, [value, options[0]])
+                },
+            )
         })
     }
 })

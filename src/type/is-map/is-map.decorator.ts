@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { isMap } from './is-map.predicate'
 
@@ -29,10 +29,10 @@ export function IsMap(options?: ValidationOptions): PropertyDecorator {
                 validate: (value, _arguments): boolean => isMap(value),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be an instance of Map`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

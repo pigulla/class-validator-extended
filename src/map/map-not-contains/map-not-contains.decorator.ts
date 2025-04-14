@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { mapNotContains } from './map-not-contains.predicate'
 
@@ -24,7 +24,7 @@ export const MAP_NOT_CONTAINS = 'mapNotContains'
  */
 export function MapNotContains<Value = unknown>(
     forbidden: Iterable<Value>,
-    options?: ValidationOptions
+    options?: ValidationOptions,
 ): PropertyDecorator {
     return ValidateBy(
         {
@@ -33,13 +33,13 @@ export function MapNotContains<Value = unknown>(
                 validate: (value, _arguments): boolean => mapNotContains<Value>(value, forbidden),
                 defaultMessage: buildMessage(
                     eachPrefix =>
-                        `${eachPrefix}$property must not contain any of the following values: ${[...forbidden].join(
-                            ', '
-                        )}`,
-                    options
+                        `${eachPrefix}$property must not contain any of the following values: ${[
+                            ...forbidden,
+                        ].join(', ')}`,
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

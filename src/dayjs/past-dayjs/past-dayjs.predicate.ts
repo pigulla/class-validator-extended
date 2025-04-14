@@ -10,7 +10,7 @@ import { isDayjs } from '../../type/is-dayjs'
  */
 export function pastDayjs(
     value: unknown,
-    options?: { allow_invalid?: boolean; inclusive?: boolean; granularity?: OpUnitType }
+    options?: { allow_invalid?: boolean; inclusive?: boolean; granularity?: OpUnitType },
 ): value is Dayjs {
     const now = dayjs()
     const inclusive = options?.inclusive ?? false
@@ -18,6 +18,7 @@ export function pastDayjs(
 
     // Let's not rely on the isSameOrBefore-plugin which might or might not be registered.
     return (
-        isDayjs(value, options) && (value.isBefore(now, granularity) || (inclusive && value.isSame(now, granularity)))
+        isDayjs(value, options) &&
+        (value.isBefore(now, granularity) || (inclusive && value.isSame(now, granularity)))
     )
 }

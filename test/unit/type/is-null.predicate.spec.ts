@@ -9,7 +9,10 @@ describe('isNull', () => {
         assert.equal(isNull(value), true)
     })
 
-    itEach<[unknown]>([[undefined], [{}], [[]], [0], [''], [false]])('should be false for %j', (value: unknown) => {
-        assert.equal(isNull(value), false)
-    })
+    itEach<[unknown]>([[undefined], [{}], [[]], [0], [''], [false]])(
+        'should be false for %j',
+        (value: unknown) => {
+            assert.equal(isNull(value), false)
+        },
+    )
 })

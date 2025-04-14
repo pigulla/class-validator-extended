@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { describe, beforeEach, afterEach, it } from 'node:test'
+import { afterEach, beforeEach, describe, it } from 'node:test'
 
 import dayjs from 'dayjs'
 
@@ -9,10 +9,15 @@ import { withoutDurationPlugin } from '../../without-duration-plugin'
 
 describe('maxDuration', () => {
     const maximum = dayjs.duration(1, 'hour')
-    const invalidDurationObjects: [string, unknown][] = [['an invalid duration', dayjs.duration('PxD')]]
+    const invalidDurationObjects: [string, unknown][] = [
+        ['an invalid duration', dayjs.duration('PxD')],
+    ]
 
     it('should throw if "maximum" is an invalid duration object', () => {
-        assert.throws(() => maxDuration(dayjs.duration(1, 'hour'), dayjs.duration('PxD')), TypeError)
+        assert.throws(
+            () => maxDuration(dayjs.duration(1, 'hour'), dayjs.duration('PxD')),
+            TypeError,
+        )
     })
 
     describe('with default options', () => {
@@ -28,16 +33,16 @@ describe('maxDuration', () => {
             'should be true for %s',
             (_, value) => {
                 assert.equal(maxDuration(value, maximum), true)
-            }
+            },
         )
 
         describe('and "inclusive" set to true', () => {
-            itEach<[string, unknown]>([...invalidDurationObjects, ['a longer duration', maximum.add(5, 'minutes')]])(
-                'should be false for %s',
-                (_, value) => {
-                    assert.equal(maxDuration(value, maximum, { inclusive: true }), false)
-                }
-            )
+            itEach<[string, unknown]>([
+                ...invalidDurationObjects,
+                ['a longer duration', maximum.add(5, 'minutes')],
+            ])('should be false for %s', (_, value) => {
+                assert.equal(maxDuration(value, maximum, { inclusive: true }), false)
+            })
 
             itEach<[string, unknown]>([
                 ['the maximum value itself', maximum],
@@ -55,7 +60,10 @@ describe('maxDuration', () => {
         afterEach(restore)
 
         it('should throw', () => {
-            assert.throws(() => maxDuration(42, maximum), /The Dayjs "duration" plugin is not loaded/)
+            assert.throws(
+                () => maxDuration(42, maximum),
+                /The Dayjs "duration" plugin is not loaded/,
+            )
         })
     })
 })

@@ -1,7 +1,7 @@
 import assert from 'node:assert'
-import { describe, after, mock, afterEach } from 'node:test'
+import { after, afterEach, describe, mock } from 'node:test'
 
-import type { IsSet, IS_SET } from '../../../src'
+import type { IS_SET, IsSet } from '../../../src'
 import { expectValidationError, itEach } from '../../util'
 
 describe('@IsSet', () => {
@@ -18,10 +18,11 @@ describe('@IsSet', () => {
             isSet: mockedIsSet,
         },
     })
-    const { IsSet: Decorator, IS_SET: SYMBOL } = require('../../../src/type/is-set/is-set.decorator') as {
-        IsSet: typeof IsSet
-        IS_SET: typeof IS_SET
-    }
+    const { IsSet: Decorator, IS_SET: SYMBOL } =
+        require('../../../src/type/is-set/is-set.decorator') as {
+            IsSet: typeof IsSet
+            IS_SET: typeof IS_SET
+        }
 
     afterEach(() => mockedIsSet.mock.resetCalls())
     after(() => mockedModule.restore())
@@ -30,20 +31,23 @@ describe('@IsSet', () => {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
-                class TestClass {
-                    @Decorator(...options)
-                    property: unknown = value
-                }
+            itEach<[Options]>(optionsList.map(item => [item]))(
+                'when called with options %j',
+                options => {
+                    class TestClass {
+                        @Decorator(...options)
+                        property: unknown = value
+                    }
 
-                expectValidationError(new TestClass(), {
-                    property: 'property',
-                    constraint: SYMBOL,
-                    message,
-                })
-                assert.equal(mockedIsSet.mock.callCount(), 1)
-                assert.deepEqual(mockedIsSet.mock.calls[0].arguments, [value])
-            })
+                    expectValidationError(new TestClass(), {
+                        property: 'property',
+                        constraint: SYMBOL,
+                        message,
+                    })
+                    assert.equal(mockedIsSet.mock.callCount(), 1)
+                    assert.deepEqual(mockedIsSet.mock.calls[0].arguments, [value])
+                },
+            )
         })
     }
 })
