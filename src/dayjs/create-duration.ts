@@ -1,9 +1,9 @@
 import dayjs from 'dayjs'
-import type { Duration, DurationUnitsObjectType, DurationUnitType } from 'dayjs/plugin/duration'
+import type { Duration, DurationUnitType, DurationUnitsObjectType } from 'dayjs/plugin/duration'
 
 /** @hidden */
 export function createDuration(
-    value: Duration | string | DurationUnitsObjectType | [time: number, unit?: DurationUnitType]
+    value: Duration | string | DurationUnitsObjectType | [time: number, unit?: DurationUnitType],
 ): Duration {
     if (!('isDuration' in dayjs)) {
         throw new Error('The Dayjs "duration" plugin is not loaded.')
@@ -11,11 +11,12 @@ export function createDuration(
 
     if (dayjs.isDuration(value)) {
         return value
-    } else if (Array.isArray(value)) {
+    }
+    if (Array.isArray(value)) {
         return dayjs.duration(...value)
-    } else if (typeof value === 'string') {
-        return dayjs.duration(value)
-    } else {
+    }
+    if (typeof value === 'string') {
         return dayjs.duration(value)
     }
+    return dayjs.duration(value)
 }

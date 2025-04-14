@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { setMinSize } from './set-min-size.predicate'
 
@@ -29,11 +29,12 @@ export function SetMinSize(minimum: number, options?: ValidationOptions): Proper
             validator: {
                 validate: (value, _arguments): boolean => setMinSize(value, minimum),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must contain at least $constraint1 elements`,
-                    options
+                    eachPrefix =>
+                        `${eachPrefix}$property must contain at least $constraint1 elements`,
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

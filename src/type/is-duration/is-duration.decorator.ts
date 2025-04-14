@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { isDuration } from './is-duration.predicate'
 
@@ -34,14 +34,15 @@ export function IsDuration(options?: { allow_invalid?: boolean } & ValidationOpt
         {
             name: IS_DURATION,
             validator: {
-                validate: (value, _arguments): boolean => isDuration(value, { allow_invalid: options?.allow_invalid }),
+                validate: (value, _arguments): boolean =>
+                    isDuration(value, { allow_invalid: options?.allow_invalid }),
                 defaultMessage: buildMessage(
                     eachPrefix =>
                         `${eachPrefix}$property must be ${options?.allow_invalid ? 'a' : 'a valid'} Dayjs duration`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

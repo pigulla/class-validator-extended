@@ -1,4 +1,4 @@
-import type { Duration, DurationUnitsObjectType, DurationUnitType } from 'dayjs/plugin/duration'
+import type { Duration, DurationUnitType, DurationUnitsObjectType } from 'dayjs/plugin/duration'
 
 import { isDuration } from '../../type/is-duration'
 import { createDuration } from '../create-duration'
@@ -13,7 +13,7 @@ import { isValidDuration } from '../is-valid-duration'
 export function maxDuration(
     value: unknown,
     maximum: Duration | string | DurationUnitsObjectType | [time: number, unit?: DurationUnitType],
-    options?: { inclusive?: boolean }
+    options?: { inclusive?: boolean },
 ): value is Duration {
     const max = createDuration(maximum)
 
@@ -25,6 +25,8 @@ export function maxDuration(
 
     return (
         isDuration(value) &&
-        (inclusive ? value.asMilliseconds() <= max.asMilliseconds() : value.asMilliseconds() < max.asMilliseconds())
+        (inclusive
+            ? value.asMilliseconds() <= max.asMilliseconds()
+            : value.asMilliseconds() < max.asMilliseconds())
     )
 }

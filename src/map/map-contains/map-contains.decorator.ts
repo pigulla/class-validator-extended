@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { mapContains } from './map-contains.predicate'
 
@@ -24,7 +24,7 @@ export const MAP_CONTAINS = 'mapContains'
  */
 export function MapContains<Value = unknown>(
     required: Iterable<Value>,
-    options?: ValidationOptions
+    options?: ValidationOptions,
 ): PropertyDecorator {
     return ValidateBy(
         {
@@ -34,10 +34,10 @@ export function MapContains<Value = unknown>(
                 defaultMessage: buildMessage(
                     eachPrefix =>
                         `${eachPrefix}$property must contain all of the following values: ${[...required].join(', ')}`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

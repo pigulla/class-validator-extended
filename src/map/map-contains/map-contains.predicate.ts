@@ -8,7 +8,7 @@ import { isMap } from '../../type/is-map'
  */
 export function mapContains<Value = unknown>(
     value: unknown,
-    required: Iterable<Value>
+    required: Iterable<Value>,
 ): value is Map<unknown, unknown> {
     if (!isMap(value)) {
         return false

@@ -1,14 +1,19 @@
 import assert from 'node:assert'
-import { describe, after, mock, afterEach } from 'node:test'
+import { after, afterEach, describe, mock } from 'node:test'
 
-import type { IsDuration, IS_DURATION } from '../../../src'
+import type { IS_DURATION, IsDuration } from '../../../src'
 import { expectValidationError, itEach } from '../../util'
 
 describe('@IsDuration', () => {
     type Options = Parameters<typeof IsDuration>
 
     const matrix: Record<string, Options[]> = {
-        'property must be a valid Dayjs duration': [[], [{}], [{ each: undefined }], [{ each: false }]],
+        'property must be a valid Dayjs duration': [
+            [],
+            [{}],
+            [{ each: undefined }],
+            [{ each: false }],
+        ],
         'each value in property must be a valid Dayjs duration': [[{ each: true }]],
         'property must be a Dayjs duration': [
             [{ allow_invalid: true }],
@@ -37,23 +42,26 @@ describe('@IsDuration', () => {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
-                class TestClass {
-                    @Decorator(...options)
-                    property: unknown = value
-                }
+            itEach<[Options]>(optionsList.map(item => [item]))(
+                'when called with options %j',
+                options => {
+                    class TestClass {
+                        @Decorator(...options)
+                        property: unknown = value
+                    }
 
-                expectValidationError(new TestClass(), {
-                    property: 'property',
-                    constraint: SYMBOL,
-                    message,
-                })
-                assert.equal(mockedIsDuration.mock.callCount(), 1)
-                assert.deepEqual(mockedIsDuration.mock.calls[0].arguments, [
-                    value,
-                    { allow_invalid: options[0]?.allow_invalid },
-                ])
-            })
+                    expectValidationError(new TestClass(), {
+                        property: 'property',
+                        constraint: SYMBOL,
+                        message,
+                    })
+                    assert.equal(mockedIsDuration.mock.callCount(), 1)
+                    assert.deepEqual(mockedIsDuration.mock.calls[0].arguments, [
+                        value,
+                        { allow_invalid: options[0]?.allow_invalid },
+                    ])
+                },
+            )
         })
     }
 })

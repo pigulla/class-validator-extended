@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { describe, beforeEach, afterEach, it } from 'node:test'
+import { afterEach, beforeEach, describe, it } from 'node:test'
 
 import dayjs from 'dayjs'
 

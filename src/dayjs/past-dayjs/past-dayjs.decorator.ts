@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 import type { OpUnitType } from 'dayjs'
 
 import { pastDayjs } from './past-dayjs.predicate'
@@ -37,7 +37,11 @@ export const PAST_DAYJS = 'pastDayjs'
  *     to ignore hours, minutes, seconds and milliseconds.
  */
 export function PastDayjs(
-    options?: { allow_invalid?: boolean; inclusive?: boolean; granularity?: OpUnitType } & ValidationOptions
+    options?: {
+        allow_invalid?: boolean
+        inclusive?: boolean
+        granularity?: OpUnitType
+    } & ValidationOptions,
 ): PropertyDecorator {
     return ValidateBy(
         {
@@ -51,10 +55,10 @@ export function PastDayjs(
                     }),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be ${message(options)}`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

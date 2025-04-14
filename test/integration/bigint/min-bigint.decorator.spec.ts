@@ -1,7 +1,7 @@
 import assert from 'node:assert'
-import { describe, after, mock, afterEach } from 'node:test'
+import { after, afterEach, describe, mock } from 'node:test'
 
-import { MinBigInt, MIN_BIGINT } from '../../../src'
+import type { MIN_BIGINT, MinBigInt } from '../../../src'
 import { expectValidationError, itEach } from '../../util'
 
 describe('@MinBigInt', () => {
@@ -9,7 +9,12 @@ describe('@MinBigInt', () => {
 
     const min = BigInt(9_000)
     const matrix: Record<string, Options[]> = {
-        'property must not be less than 9000': [[min], [min, {}], [min, { each: undefined }], [min, { each: false }]],
+        'property must not be less than 9000': [
+            [min],
+            [min, {}],
+            [min, { each: undefined }],
+            [min, { each: false }],
+        ],
         'each value in property must not be less than 9000': [[min, { each: true }]],
     }
 
@@ -32,20 +37,23 @@ describe('@MinBigInt', () => {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %o', options => {
-                class TestClass {
-                    @Decorator(...options)
-                    property: unknown = value
-                }
+            itEach<[Options]>(optionsList.map(item => [item]))(
+                'when called with options %o',
+                options => {
+                    class TestClass {
+                        @Decorator(...options)
+                        property: unknown = value
+                    }
 
-                expectValidationError(new TestClass(), {
-                    property: 'property',
-                    constraint: SYMBOL,
-                    message,
-                })
-                assert.equal(mockedMinBigInt.mock.callCount(), 1)
-                assert.deepEqual(mockedMinBigInt.mock.calls[0].arguments, [value, options[0]])
-            })
+                    expectValidationError(new TestClass(), {
+                        property: 'property',
+                        constraint: SYMBOL,
+                        message,
+                    })
+                    assert.equal(mockedMinBigInt.mock.callCount(), 1)
+                    assert.deepEqual(mockedMinBigInt.mock.calls[0].arguments, [value, options[0]])
+                },
+            )
         })
     }
 })

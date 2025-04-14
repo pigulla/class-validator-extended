@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { pastDate } from './past-date.predicate'
 
@@ -29,10 +29,10 @@ export function PastDate(options?: ValidationOptions): PropertyDecorator {
                 validate: (value, _arguments): boolean => pastDate(value),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be a Date instance in the past`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

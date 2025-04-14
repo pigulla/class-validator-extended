@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { isNull } from './is-null.predicate'
 
@@ -25,9 +25,12 @@ export function IsNull(options?: ValidationOptions): PropertyDecorator {
             name: IS_NULL,
             validator: {
                 validate: (value, _arguments): boolean => isNull(value),
-                defaultMessage: buildMessage(eachPrefix => `${eachPrefix}$property must be null`, options),
+                defaultMessage: buildMessage(
+                    eachPrefix => `${eachPrefix}$property must be null`,
+                    options,
+                ),
             },
         },
-        options
+        options,
     )
 }

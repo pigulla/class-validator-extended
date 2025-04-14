@@ -9,7 +9,7 @@ import { isSet } from '../../type/is-set'
  */
 export function setUnique<Value, Projection>(
     value: unknown,
-    projection: (item: Value) => Projection
+    projection: (item: Value) => Projection,
 ): value is Set<Value> {
     if (typeof projection !== 'function') {
         throw new TypeError('Parameter "projection" must be a function')

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { describe, before, after, mock } from 'node:test'
+import { after, before, describe, mock } from 'node:test'
 
 import dayjs from 'dayjs'
 
@@ -14,7 +14,9 @@ describe('futureDayjs', () => {
         ['an ISO string', '2020-05-01T06:00:00.000Z'],
         ['a Date object', new Date('2020-05-01T06:00:00.000Z')],
     ]
-    const invalidDayjsObjects: [string, unknown][] = [['an invalid Dayjs object', dayjs('2020-05-01T00:99:00.000Z')]]
+    const invalidDayjsObjects: [string, unknown][] = [
+        ['an invalid Dayjs object', dayjs('2020-05-01T00:99:00.000Z')],
+    ]
 
     before(() => {
         mock.timers.enable({ apis: ['Date'], now: now.toDate() })
@@ -25,12 +27,13 @@ describe('futureDayjs', () => {
     })
 
     describe('with default options', () => {
-        itEach<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects, ['the current date', now]])(
-            'should be false for %s',
-            (_, value) => {
-                assert.equal(futureDayjs(value), false)
-            }
-        )
+        itEach<[string, unknown]>([
+            ...notDayjsObjects,
+            ...invalidDayjsObjects,
+            ['the current date', now],
+        ])('should be false for %s', (_, value) => {
+            assert.equal(futureDayjs(value), false)
+        })
 
         itEach<[string, unknown]>([
             ['the next millisecond', now.add(1, 'millisecond')],
@@ -41,12 +44,13 @@ describe('futureDayjs', () => {
         })
 
         describe('and allow_invalid set to true', () => {
-            itEach<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects, ['the current date', now]])(
-                'should be false for %s',
-                (_, value) => {
-                    assert.equal(futureDayjs(value), false)
-                }
-            )
+            itEach<[string, unknown]>([
+                ...notDayjsObjects,
+                ...invalidDayjsObjects,
+                ['the current date', now],
+            ])('should be false for %s', (_, value) => {
+                assert.equal(futureDayjs(value), false)
+            })
 
             itEach<[string, unknown]>([
                 ['the next millisecond', now.add(1, 'millisecond')],
@@ -62,7 +66,7 @@ describe('futureDayjs', () => {
                 'should be false for %s',
                 (_, value) => {
                     assert.equal(futureDayjs(value, { inclusive: true }), false)
-                }
+                },
             )
 
             itEach<[string, unknown]>([
@@ -98,8 +102,11 @@ describe('futureDayjs', () => {
             itEach<[string, unknown]>([...notDayjsObjects, ...invalidDayjsObjects])(
                 'should be false for %s',
                 (_, value) => {
-                    assert.equal(futureDayjs(value, { inclusive: true, granularity: 'hour' }), false)
-                }
+                    assert.equal(
+                        futureDayjs(value, { inclusive: true, granularity: 'hour' }),
+                        false,
+                    )
+                },
             )
 
             itEach<[string, unknown]>([

@@ -11,8 +11,8 @@ export function withoutDurationPlugin(): { setup: () => void; restore: () => voi
 
             originalIsDuration = dayjs.isDuration
 
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
+            // @ts-expect-error
+            // biome-ignore lint/performance/noDelete: <explanation>
             delete dayjs.isDuration
         },
         restore() {

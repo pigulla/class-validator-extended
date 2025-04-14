@@ -9,7 +9,7 @@ describe('arraySize', () => {
         `should throw for %s as the 'size' parameter`,
         size => {
             assert.throws(() => arraySize(0, size as number), TypeError)
-        }
+        },
     )
 
     itEach<[unknown, number]>([

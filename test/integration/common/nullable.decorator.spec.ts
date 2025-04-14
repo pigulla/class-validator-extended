@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test'
 
-import { IsString, IS_STRING } from 'class-validator'
+import { IS_STRING, IsString } from 'class-validator'
 
 import { Nullable } from '../../../src'
 import { expectNoValidationErrors, expectValidationError } from '../../util'

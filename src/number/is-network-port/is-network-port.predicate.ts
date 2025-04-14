@@ -7,9 +7,14 @@ const integerRegex = /^0|([1-9]\d*)$/
  */
 export function isNetworkPort(
     value: unknown,
-    options?: { allow_system_allocated?: boolean; allow_system_ports?: boolean }
+    options?: { allow_system_allocated?: boolean; allow_system_ports?: boolean },
 ): value is number {
-    if (typeof value !== 'number' || !Number.isFinite(value) || value < 0 || !integerRegex.test(String(value))) {
+    if (
+        typeof value !== 'number' ||
+        !Number.isFinite(value) ||
+        value < 0 ||
+        !integerRegex.test(String(value))
+    ) {
         return false
     }
 

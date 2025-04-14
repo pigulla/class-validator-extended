@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { arraySize } from './array-size.predicate'
 
@@ -28,11 +28,12 @@ export function ArraySize(size: number, options?: ValidationOptions): PropertyDe
             validator: {
                 validate: (value, _arguments): boolean => arraySize(value, size),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must contain exactly $constraint1 element(s)`,
-                    options
+                    eachPrefix =>
+                        `${eachPrefix}$property must contain exactly $constraint1 element(s)`,
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

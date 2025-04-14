@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { describe, before, after, mock } from 'node:test'
+import { after, before, describe, mock } from 'node:test'
 
 import dayjs from 'dayjs'
 
@@ -21,13 +21,13 @@ describe('futureDate', () => {
         'should be true for %j',
         value => {
             assert.equal(futureDate(value), true)
-        }
+        },
     )
 
     itEach<[unknown]>([[undefined], [null], [now], [now.subtract(1, 'millisecond').toDate()]])(
         'should be false for %j',
         value => {
             assert.equal(futureDate(value), false)
-        }
+        },
     )
 })

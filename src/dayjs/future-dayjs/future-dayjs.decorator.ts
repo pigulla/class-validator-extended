@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 import type { OpUnitType } from 'dayjs'
 
 import { futureDayjs } from './future-dayjs.predicate'
@@ -38,7 +38,11 @@ export const FUTURE_DAYJS = 'futureDayjs'
  *     to ignore hours, minutes, seconds and milliseconds.
  */
 export function FutureDayjs(
-    options?: { allow_invalid?: boolean; inclusive?: boolean; granularity?: OpUnitType } & ValidationOptions
+    options?: {
+        allow_invalid?: boolean
+        inclusive?: boolean
+        granularity?: OpUnitType
+    } & ValidationOptions,
 ): PropertyDecorator {
     return ValidateBy(
         {
@@ -52,10 +56,10 @@ export function FutureDayjs(
                     }),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be ${message(options)}`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

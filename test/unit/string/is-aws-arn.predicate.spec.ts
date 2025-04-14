@@ -8,8 +8,12 @@ describe('isAwsARN', () => {
     itEach([
         ['arn:aws:s3:::bucket_name'],
         ['arn:aws:s3:::bucket_name/key_name'],
-        ['arn:aws:clouddirectory:us-west-2:123456789012:directory/ARIqk1HD-UjdtmcIrJHEvPI/schema/cognito/1.0/XYZ'],
-        ['arn:aws:clouddirectory:us-west-2:123456789012:schema/published/cognito/1.0/XYZ/published/cognito/1.0'],
+        [
+            'arn:aws:clouddirectory:us-west-2:123456789012:directory/ARIqk1HD-UjdtmcIrJHEvPI/schema/cognito/1.0/XYZ',
+        ],
+        [
+            'arn:aws:clouddirectory:us-west-2:123456789012:schema/published/cognito/1.0/XYZ/published/cognito/1.0',
+        ],
         ['arn:aws:clouddirectory:us-west-2:123456789012:schema/published/cognito/1.0'],
         ['arn:aws:clouddirectory:eu-central-1:123456789012:schema/development/cognito'],
     ])('should be true for %j', value => {

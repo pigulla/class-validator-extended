@@ -9,7 +9,7 @@ describe('maxBigInt', () => {
         'should throw for %s as a maxValue',
         maxValue => {
             assert.throws(() => maxBigInt(0, maxValue as number), TypeError)
-        }
+        },
     )
 
     itEach<[unknown, number | bigint]>([

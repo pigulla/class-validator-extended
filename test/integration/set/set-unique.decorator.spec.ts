@@ -1,7 +1,7 @@
 import assert from 'node:assert'
-import { describe, after, mock, afterEach } from 'node:test'
+import { after, afterEach, describe, mock } from 'node:test'
 
-import { SET_UNIQUE, SetUnique } from '../../../src'
+import type { SET_UNIQUE, SetUnique } from '../../../src'
 import { expectValidationError, itEach } from '../../util'
 
 describe('@SetUnique', () => {
@@ -37,20 +37,23 @@ describe('@SetUnique', () => {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
-                class TestClass {
-                    @Decorator(...options)
-                    property: unknown = value
-                }
+            itEach<[Options]>(optionsList.map(item => [item]))(
+                'when called with options %j',
+                options => {
+                    class TestClass {
+                        @Decorator(...options)
+                        property: unknown = value
+                    }
 
-                expectValidationError(new TestClass(), {
-                    property: 'property',
-                    constraint: SYMBOL,
-                    message,
-                })
-                assert.equal(mockedSetUnique.mock.callCount(), 1)
-                assert.deepEqual(mockedSetUnique.mock.calls[0].arguments, [value, options[0]])
-            })
+                    expectValidationError(new TestClass(), {
+                        property: 'property',
+                        constraint: SYMBOL,
+                        message,
+                    })
+                    assert.equal(mockedSetUnique.mock.callCount(), 1)
+                    assert.deepEqual(mockedSetUnique.mock.calls[0].arguments, [value, options[0]])
+                },
+            )
         })
     }
 })

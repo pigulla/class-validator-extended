@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { mapSize } from './map-size.predicate'
 
@@ -29,11 +29,12 @@ export function MapSize(size: number, options?: ValidationOptions): PropertyDeco
             validator: {
                 validate: (value, _arguments): boolean => mapSize(value, size),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must contain exactly $constraint1 element(s)`,
-                    options
+                    eachPrefix =>
+                        `${eachPrefix}$property must contain exactly $constraint1 element(s)`,
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

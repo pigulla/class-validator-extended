@@ -9,7 +9,7 @@ describe('setMaxSize', () => {
         'should throw for %s as a max',
         max => {
             assert.throws(() => setMaxSize(0, max as number), TypeError)
-        }
+        },
     )
 
     itEach<[unknown, number]>([

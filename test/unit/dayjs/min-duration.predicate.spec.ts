@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { describe, it, beforeEach, afterEach } from 'node:test'
+import { afterEach, beforeEach, describe, it } from 'node:test'
 
 import dayjs from 'dayjs'
 
@@ -15,7 +15,10 @@ describe('minDuration', () => {
     ]
 
     it('should throw if "minimum" is an invalid duration object', () => {
-        assert.throws(() => minDuration(dayjs.duration(1, 'hour'), dayjs.duration('PxD')), TypeError)
+        assert.throws(
+            () => minDuration(dayjs.duration(1, 'hour'), dayjs.duration('PxD')),
+            TypeError,
+        )
     })
 
     describe('with default options', () => {
@@ -31,7 +34,7 @@ describe('minDuration', () => {
             'should be true for %s',
             (_, value) => {
                 assert.equal(minDuration(value, minimum), true)
-            }
+            },
         )
 
         describe('and "inclusive" set to true', () => {
@@ -58,7 +61,10 @@ describe('minDuration', () => {
         afterEach(restore)
 
         it('should throw', () => {
-            assert.throws(() => minDuration(42, minimum), /The Dayjs "duration" plugin is not loaded/)
+            assert.throws(
+                () => minDuration(42, minimum),
+                /The Dayjs "duration" plugin is not loaded/,
+            )
         })
     })
 })

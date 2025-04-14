@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import type { ArrayMonotonicOptions } from './array-monotonic.options'
 import { arrayMonotonic } from './array-monotonic.predicate'
@@ -66,10 +66,10 @@ export function ArrayMonotonic<T = unknown>(options: ArrayMonotonicOptions<T> & 
                     arrayMonotonic<T>(value, { monotonicity: options.monotonicity }),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be a $constraint1 array`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

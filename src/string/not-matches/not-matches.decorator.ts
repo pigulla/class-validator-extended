@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { notMatches } from './not-matches.predicate'
 
@@ -36,14 +36,20 @@ export const NOT_MATCHES = 'notMatches'
  * @param options
  */
 export function NotMatches(pattern: RegExp, options?: ValidationOptions): PropertyDecorator
-export function NotMatches(pattern: string, modifiers?: string, options?: ValidationOptions): PropertyDecorator
+export function NotMatches(
+    pattern: string,
+    modifiers?: string,
+    options?: ValidationOptions,
+): PropertyDecorator
 export function NotMatches(
     pattern: RegExp | string,
     modifiersOrOptions?: string | ValidationOptions,
-    options?: ValidationOptions
+    options?: ValidationOptions,
 ): PropertyDecorator {
     let modifiers: string | undefined
+
     if (modifiersOrOptions && modifiersOrOptions instanceof Object && !options) {
+        // biome-ignore lint/style/noParameterAssign: this is fine
         options = modifiersOrOptions
     } else {
         modifiers = modifiersOrOptions as string
@@ -57,17 +63,16 @@ export function NotMatches(
                 validate: (value, arguments_): boolean =>
                     notMatches(
                         value,
-                        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                         /* istanbul ignore next */ arguments_?.constraints[0],
-                        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                        /* istanbul ignore next */ arguments_?.constraints[1]
+                        /* istanbul ignore next */ arguments_?.constraints[1],
                     ),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must not match $constraint1 regular expression`,
-                    options
+                    eachPrefix =>
+                        `${eachPrefix}$property must not match $constraint1 regular expression`,
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

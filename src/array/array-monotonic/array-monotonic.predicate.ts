@@ -24,8 +24,12 @@ function checkMonotonicity(value: number, monotonicity: Monotonicity): boolean {
 
 function compareItems<T>(a: T, b: T, options: ArrayMonotonicOptions<T>): boolean {
     if ('projection' in options) {
-        return checkMonotonicity(options.projection(b) - options.projection(a), options.monotonicity)
-    } else if ('comparator' in options) {
+        return checkMonotonicity(
+            options.projection(b) - options.projection(a),
+            options.monotonicity,
+        )
+    }
+    if ('comparator' in options) {
         return checkMonotonicity(options.comparator(b, a), options.monotonicity)
     }
 
@@ -40,16 +44,22 @@ const allowedValues = new Set(Object.values(Monotonicity))
  * @param options Additional options (see {@link ArrayMonotonic}).
  * @typeParam T The type of the array elements.
  */
-export function arrayMonotonic<T = unknown>(value: unknown, options: ArrayMonotonicOptions<T>): value is Array<T> {
+export function arrayMonotonic<T = unknown>(
+    value: unknown,
+    options: ArrayMonotonicOptions<T>,
+): value is Array<T> {
     if (!allowedValues.has(options.monotonicity)) {
         const allowedValuesString = [...allowedValues].map(allowed => `"${allowed}"`).join(', ')
         throw new TypeError(
-            `Unknown monotonicity type "${options.monotonicity}" (expected one of ${allowedValuesString})`
+            `Unknown monotonicity type "${options.monotonicity}" (expected one of ${allowedValuesString})`,
         )
     }
 
     return (
         Array.isArray(value) &&
-        value.every((item: T, index: number) => index === 0 || compareItems(value[index - 1], item, options))
+        value.every(
+            (item: T, index: number) =>
+                index === 0 || compareItems(value[index - 1], item, options),
+        )
     )
 }

@@ -12,7 +12,7 @@ import { isDayjs } from '../../type/is-dayjs'
 export function maxDayjs(
     value: unknown,
     maximum: ConfigType,
-    options?: { allow_invalid?: boolean; inclusive?: boolean; granularity?: OpUnitType }
+    options?: { allow_invalid?: boolean; inclusive?: boolean; granularity?: OpUnitType },
 ): value is Dayjs {
     const max = dayjs(maximum)
     const inclusive = options?.inclusive ?? false
@@ -23,5 +23,8 @@ export function maxDayjs(
     }
 
     // Let's not rely on the isSameOrBefore-plugin which might or might not be registered.
-    return isDayjs(value, options) && (max.isAfter(value, granularity) || (inclusive && max.isSame(value, granularity)))
+    return (
+        isDayjs(value, options) &&
+        (max.isAfter(value, granularity) || (inclusive && max.isSame(value, granularity)))
+    )
 }

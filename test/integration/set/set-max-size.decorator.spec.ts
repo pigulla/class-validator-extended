@@ -1,7 +1,7 @@
 import assert from 'node:assert'
-import { describe, after, mock, afterEach } from 'node:test'
+import { after, afterEach, describe, mock } from 'node:test'
 
-import { SET_MAX_SIZE, SetMaxSize } from '../../../src'
+import type { SET_MAX_SIZE, SetMaxSize } from '../../../src'
 import { expectValidationError, itEach } from '../../util'
 
 describe('@SetMaxSize', () => {
@@ -15,7 +15,9 @@ describe('@SetMaxSize', () => {
             [maximum, { each: undefined }],
             [maximum, { each: false }],
         ],
-        'each value in property must contain not more than 13 elements': [[maximum, { each: true }]],
+        'each value in property must contain not more than 13 elements': [
+            [maximum, { each: true }],
+        ],
     }
 
     const mockedSetMaxSize = mock.fn(() => false)
@@ -37,20 +39,23 @@ describe('@SetMaxSize', () => {
         describe(`should return the error message "${message}"`, () => {
             const value = Symbol('value')
 
-            itEach<[Options]>(optionsList.map(item => [item]))('when called with options %j', options => {
-                class TestClass {
-                    @Decorator(...options)
-                    property: unknown = value
-                }
+            itEach<[Options]>(optionsList.map(item => [item]))(
+                'when called with options %j',
+                options => {
+                    class TestClass {
+                        @Decorator(...options)
+                        property: unknown = value
+                    }
 
-                expectValidationError(new TestClass(), {
-                    property: 'property',
-                    constraint: SYMBOL,
-                    message,
-                })
-                assert.equal(mockedSetMaxSize.mock.callCount(), 1)
-                assert.deepEqual(mockedSetMaxSize.mock.calls[0].arguments, [value, options[0]])
-            })
+                    expectValidationError(new TestClass(), {
+                        property: 'property',
+                        constraint: SYMBOL,
+                        message,
+                    })
+                    assert.equal(mockedSetMaxSize.mock.callCount(), 1)
+                    assert.deepEqual(mockedSetMaxSize.mock.calls[0].arguments, [value, options[0]])
+                },
+            )
         })
     }
 })

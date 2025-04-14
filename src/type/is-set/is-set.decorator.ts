@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { isSet } from './is-set.predicate'
 
@@ -29,10 +29,10 @@ export function IsSet(options?: ValidationOptions): PropertyDecorator {
                 validate: (value, _arguments): boolean => isSet(value),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be an instance of Set`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

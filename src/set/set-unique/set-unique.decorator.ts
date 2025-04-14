@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { setUnique } from './set-unique.predicate'
 
@@ -25,16 +25,19 @@ export const SET_UNIQUE = 'setUnique'
  */
 export function SetUnique<Value = unknown, Projection = unknown>(
     projection: (item: Value) => Projection,
-    options?: ValidationOptions
+    options?: ValidationOptions,
 ): PropertyDecorator {
     return ValidateBy(
         {
             name: SET_UNIQUE,
             validator: {
                 validate: (value, _arguments): boolean => setUnique(value, projection),
-                defaultMessage: buildMessage(eachPrefix => `${eachPrefix}$property must have unique values`, options),
+                defaultMessage: buildMessage(
+                    eachPrefix => `${eachPrefix}$property must have unique values`,
+                    options,
+                ),
             },
         },
-        options
+        options,
     )
 }

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { describe, beforeEach } from 'node:test'
+import { beforeEach, describe } from 'node:test'
 
 import { setContains } from '../../../src'
 import { itEach } from '../../util'
@@ -15,13 +15,15 @@ describe('setContains', () => {
         'should be true for %j',
         value => {
             assert.equal(setContains(set, value), true)
-        }
+        },
     )
 
-    itEach<[Iterable<unknown>]>([[new Set([0])], [[undefined]], [['42']], [new Set(['foo', 42, undefined])]])(
-        'should be false for %j',
-        values => {
-            assert.equal(setContains(set, values), false)
-        }
-    )
+    itEach<[Iterable<unknown>]>([
+        [new Set([0])],
+        [[undefined]],
+        [['42']],
+        [new Set(['foo', 42, undefined])],
+    ])('should be false for %j', values => {
+        assert.equal(setContains(set, values), false)
+    })
 })

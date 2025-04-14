@@ -8,7 +8,10 @@ import { isValidDuration } from '../../dayjs/is-valid-duration'
  * @param value The value to validate.
  * @param options Additional options (see {@link IsDuration}).
  */
-export function isDuration(value: unknown, options?: { allow_invalid?: boolean }): value is Duration {
+export function isDuration(
+    value: unknown,
+    options?: { allow_invalid?: boolean },
+): value is Duration {
     if (!('isDuration' in dayjs)) {
         throw new Error('The Dayjs "duration" plugin is not loaded.')
     }

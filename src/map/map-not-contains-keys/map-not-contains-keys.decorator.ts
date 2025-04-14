@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { mapNotContainsKeys } from './map-not-contains-keys.predicate'
 
@@ -24,7 +24,7 @@ export const MAP_NOT_CONTAINS_KEYS = 'mapNotContainsKeys'
  */
 export function MapNotContainsKeys<Key = unknown>(
     forbidden: Iterable<Key>,
-    options?: ValidationOptions
+    options?: ValidationOptions,
 ): PropertyDecorator {
     return ValidateBy(
         {
@@ -33,13 +33,13 @@ export function MapNotContainsKeys<Key = unknown>(
                 validate: (value, _arguments): boolean => mapNotContainsKeys<Key>(value, forbidden),
                 defaultMessage: buildMessage(
                     eachPrefix =>
-                        `${eachPrefix}$property must not contain any of the following keys: ${[...forbidden].join(
-                            ', '
-                        )}`,
-                    options
+                        `${eachPrefix}$property must not contain any of the following keys: ${[
+                            ...forbidden,
+                        ].join(', ')}`,
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

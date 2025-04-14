@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 import dayjs from 'dayjs'
 import type { ConfigType, OpUnitType } from 'dayjs'
 
@@ -38,7 +38,11 @@ function message(options?: { allow_invalid?: boolean; inclusive?: boolean }): st
  */
 export function MaxDayjs(
     maximum: ConfigType,
-    options?: { allow_invalid?: boolean; inclusive?: boolean; granularity?: OpUnitType } & ValidationOptions
+    options?: {
+        allow_invalid?: boolean
+        inclusive?: boolean
+        granularity?: OpUnitType
+    } & ValidationOptions,
 ): PropertyDecorator {
     return ValidateBy(
         {
@@ -53,10 +57,10 @@ export function MaxDayjs(
                     }),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be ${message(options)}`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

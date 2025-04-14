@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { mapNotEmpty } from './map-not-empty.predicate'
 
@@ -26,9 +26,12 @@ export function MapNotEmpty(options?: ValidationOptions): PropertyDecorator {
             name: MAP_NOT_EMPTY,
             validator: {
                 validate: (value, _arguments): boolean => mapNotEmpty(value),
-                defaultMessage: buildMessage(eachPrefix => `${eachPrefix}$property must not be an empty map`, options),
+                defaultMessage: buildMessage(
+                    eachPrefix => `${eachPrefix}$property must not be an empty map`,
+                    options,
+                ),
             },
         },
-        options
+        options,
     )
 }

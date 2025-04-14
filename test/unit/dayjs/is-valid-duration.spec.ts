@@ -20,6 +20,6 @@ describe('isValidDuration', () => {
         'should return false for %s',
         (_, value) => {
             assert.equal(isValidDuration(value), false)
-        }
+        },
     )
 })

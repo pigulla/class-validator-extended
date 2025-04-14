@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { mapUniqueKeys } from './map-unique-keys.predicate'
 
@@ -25,16 +25,20 @@ export const MAP_UNIQUE_KEYS = 'mapUniqueKeys'
  */
 export function MapUniqueKeys<Key = unknown, Projection = unknown>(
     projection: (item: Key) => Projection,
-    options?: ValidationOptions
+    options?: ValidationOptions,
 ): PropertyDecorator {
     return ValidateBy(
         {
             name: MAP_UNIQUE_KEYS,
             validator: {
-                validate: (value, _arguments): boolean => mapUniqueKeys<Key, Projection>(value, projection),
-                defaultMessage: buildMessage(eachPrefix => `${eachPrefix}$property must have unique keys`, options),
+                validate: (value, _arguments): boolean =>
+                    mapUniqueKeys<Key, Projection>(value, projection),
+                defaultMessage: buildMessage(
+                    eachPrefix => `${eachPrefix}$property must have unique keys`,
+                    options,
+                ),
             },
         },
-        options
+        options,
     )
 }

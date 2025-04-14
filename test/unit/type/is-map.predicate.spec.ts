@@ -21,6 +21,6 @@ describe('isMap', () => {
         'should be false for %j',
         (value: unknown) => {
             assert.equal(isMap(value), false)
-        }
+        },
     )
 })

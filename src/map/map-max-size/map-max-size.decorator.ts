@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { mapMaxSize } from './map-max-size.predicate'
 
@@ -29,11 +29,12 @@ export function MapMaxSize(maximum: number, options?: ValidationOptions): Proper
             validator: {
                 validate: (value, _arguments): boolean => mapMaxSize(value, maximum),
                 defaultMessage: buildMessage(
-                    eachPrefix => `${eachPrefix}$property must contain not more than $constraint1 elements`,
-                    options
+                    eachPrefix =>
+                        `${eachPrefix}$property must contain not more than $constraint1 elements`,
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

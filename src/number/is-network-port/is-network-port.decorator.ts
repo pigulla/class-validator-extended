@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { isNetworkPort } from './is-network-port.predicate'
 
@@ -37,7 +37,10 @@ export const IS_NETWORK_PORT = 'isNetworkPort'
  *     If true, allow ports below 1024.
  */
 export function IsNetworkPort(
-    options?: { allow_system_allocated?: boolean; allow_system_ports?: boolean } & ValidationOptions
+    options?: {
+        allow_system_allocated?: boolean
+        allow_system_ports?: boolean
+    } & ValidationOptions,
 ): PropertyDecorator {
     const { allow_system_allocated, allow_system_ports } = {
         allow_system_allocated: true,
@@ -60,10 +63,10 @@ export function IsNetworkPort(
                             allow_system_allocated,
                             allow_system_ports,
                         })}`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

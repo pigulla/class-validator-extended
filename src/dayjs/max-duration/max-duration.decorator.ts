@@ -1,6 +1,6 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
-import type { Duration, DurationUnitsObjectType, DurationUnitType } from 'dayjs/plugin/duration'
+import { ValidateBy, buildMessage } from 'class-validator'
+import type { Duration, DurationUnitType, DurationUnitsObjectType } from 'dayjs/plugin/duration'
 
 import { createDuration } from '../create-duration'
 import { isValidDuration } from '../is-valid-duration'
@@ -41,7 +41,7 @@ function message(options?: { inclusive?: boolean }): string {
  */
 export function MaxDuration(
     maximum: Duration | string | DurationUnitsObjectType | [time: number, unit?: DurationUnitType],
-    options?: { inclusive?: boolean } & ValidationOptions
+    options?: { inclusive?: boolean } & ValidationOptions,
 ): PropertyDecorator {
     const max = createDuration(maximum)
 
@@ -54,13 +54,14 @@ export function MaxDuration(
             name: MAX_DURATION,
             constraints: [max.toISOString()],
             validator: {
-                validate: (value, _arguments): boolean => maxDuration(value, max, { inclusive: options?.inclusive }),
+                validate: (value, _arguments): boolean =>
+                    maxDuration(value, max, { inclusive: options?.inclusive }),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be ${message(options)}`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }

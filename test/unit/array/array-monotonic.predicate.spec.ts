@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 
-import { arrayMonotonic, Monotonicity } from '../../../src'
+import { Monotonicity, arrayMonotonic } from '../../../src'
 import { describeEach } from '../../util'
 
 const identity = (x: number): number => x
@@ -52,7 +52,10 @@ describe('arrayMonotonic', () => {
         [[3, 2, 1, 2], Monotonicity.WEAKLY_DECREASING],
     ])('should be false for %j that is %s', (values, monotonicity) => {
         it('when compared using a selector', () => {
-            assert.equal(arrayMonotonic<number>(values, { projection: identity, monotonicity }), false)
+            assert.equal(
+                arrayMonotonic<number>(values, { projection: identity, monotonicity }),
+                false,
+            )
         })
 
         it('when compared using a comparator', () => {
@@ -66,8 +69,12 @@ describe('arrayMonotonic', () => {
 
     it('should detect invalid options', () => {
         assert.throws(
-            () => arrayMonotonic<number>([], { projection: identity, monotonicity: 'foo' as Monotonicity }),
-            TypeError
+            () =>
+                arrayMonotonic<number>([], {
+                    projection: identity,
+                    monotonicity: 'foo' as Monotonicity,
+                }),
+            TypeError,
         )
     })
 

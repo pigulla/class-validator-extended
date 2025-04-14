@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { buildMessage, ValidateBy } from 'class-validator'
+import { ValidateBy, buildMessage } from 'class-validator'
 
 import { isAwsRegion } from './is-aws-region.predicate'
 
@@ -31,10 +31,10 @@ export function IsAwsRegion(options?: ValidationOptions): PropertyDecorator {
                 validate: (value, _arguments): boolean => isAwsRegion(value),
                 defaultMessage: buildMessage(
                     eachPrefix => `${eachPrefix}$property must be an AWS region string`,
-                    options
+                    options,
                 ),
             },
         },
-        options
+        options,
     )
 }
