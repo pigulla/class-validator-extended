@@ -13,7 +13,7 @@
 #### Safe and simple to use
 
 - 🕵️‍♀️ [Thoroughly tested](https://app.codecov.io/gh/pigulla/class-validator-extended)
-- 📝 [Well documented](https://pigulla.github.io/class-validator-extended/index-1.html)
+- 📝 [Well documented](https://pigulla.github.io/class-validator-extended/)
 - ✨ No additional dependencies ([Day.js](https://day.js.org/) is supported but optional)
 - 😊 Uses [Semantic Versioning](https://semver.org/) and keeps a [nice](https://keepachangelog.com/en/1.0.0/) [Changelog](https://github.com/pigulla/class-validator-extended/blob/main/CHANGELOG.md)
 
