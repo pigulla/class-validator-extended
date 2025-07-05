@@ -1,2 +1,2 @@
-export { MaxDayjs, MAX_DAYJS } from './max-dayjs.decorator'
+export { MAX_DAYJS, MaxDayjs } from './max-dayjs.decorator'
 export { maxDayjs } from './max-dayjs.predicate'

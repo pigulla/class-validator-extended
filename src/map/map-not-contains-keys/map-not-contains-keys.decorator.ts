@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { ValidateBy, buildMessage } from 'class-validator'
+import { buildMessage, ValidateBy } from 'class-validator'
 
 import { mapNotContainsKeys } from './map-not-contains-keys.predicate'
 

@@ -1,5 +1,5 @@
-import dayjs from 'dayjs'
 import type { Dayjs, OpUnitType } from 'dayjs'
+import dayjs from 'dayjs'
 
 import { isDayjs } from '../../type/is-dayjs'
 

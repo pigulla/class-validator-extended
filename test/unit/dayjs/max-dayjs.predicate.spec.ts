@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict'
 import { after, before, describe, mock } from 'node:test'
 
-import dayjs from 'dayjs'
 import type { ConfigType } from 'dayjs'
+import dayjs from 'dayjs'
 
 import { maxDayjs } from '../../../src'
 import { itEach } from '../../util'

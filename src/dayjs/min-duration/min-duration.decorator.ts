@@ -1,6 +1,6 @@
 import type { ValidationOptions } from 'class-validator'
-import { ValidateBy, buildMessage } from 'class-validator'
-import type { Duration, DurationUnitType, DurationUnitsObjectType } from 'dayjs/plugin/duration'
+import { buildMessage, ValidateBy } from 'class-validator'
+import type { Duration, DurationUnitsObjectType, DurationUnitType } from 'dayjs/plugin/duration'
 
 import { createDuration } from '../create-duration'
 import { isValidDuration } from '../is-valid-duration'

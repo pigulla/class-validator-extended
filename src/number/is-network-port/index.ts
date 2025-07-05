@@ -1,2 +1,2 @@
-export { IsNetworkPort, IS_NETWORK_PORT } from './is-network-port.decorator'
+export { IS_NETWORK_PORT, IsNetworkPort } from './is-network-port.decorator'
 export { isNetworkPort } from './is-network-port.predicate'
