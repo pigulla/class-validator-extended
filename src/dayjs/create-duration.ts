@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import type { Duration, DurationUnitType, DurationUnitsObjectType } from 'dayjs/plugin/duration'
+import type { Duration, DurationUnitsObjectType, DurationUnitType } from 'dayjs/plugin/duration'
 
 /** @hidden */
 export function createDuration(
@@ -18,5 +18,6 @@ export function createDuration(
     if (typeof value === 'string') {
         return dayjs.duration(value)
     }
+
     return dayjs.duration(value)
 }

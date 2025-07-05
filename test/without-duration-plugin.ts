@@ -12,7 +12,6 @@ export function withoutDurationPlugin(): { setup: () => void; restore: () => voi
             originalIsDuration = dayjs.isDuration
 
             // @ts-expect-error
-            // biome-ignore lint/performance/noDelete: <explanation>
             delete dayjs.isDuration
         },
         restore() {

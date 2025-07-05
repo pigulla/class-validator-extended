@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 
-import { Monotonicity, arrayMonotonic } from '../../../src'
+import { arrayMonotonic, Monotonicity } from '../../../src'
 import { describeEach } from '../../util'
 
 const identity = (x: number): number => x

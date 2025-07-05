@@ -1,4 +1,4 @@
-import type { Duration, DurationUnitType, DurationUnitsObjectType } from 'dayjs/plugin/duration'
+import type { Duration, DurationUnitsObjectType, DurationUnitType } from 'dayjs/plugin/duration'
 
 import { isDuration } from '../../type/is-duration'
 import { createDuration } from '../create-duration'

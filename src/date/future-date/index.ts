@@ -1,2 +1,2 @@
-export { FutureDate, FUTURE_DATE } from './future-date.decorator'
+export { FUTURE_DATE, FutureDate } from './future-date.decorator'
 export { futureDate } from './future-date.predicate'

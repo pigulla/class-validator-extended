@@ -1,2 +1,2 @@
-export { IsNull, IS_NULL } from './is-null.decorator'
+export { IS_NULL, IsNull } from './is-null.decorator'
 export { isNull } from './is-null.predicate'

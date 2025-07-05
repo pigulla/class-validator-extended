@@ -5,6 +5,7 @@ import matchesValidator from 'validator/lib/matches'
  * @param value The value to validate.
  * @param {RegExp} pattern The regular expression to validate against.
  */
+
 /**
  * @overload
  * @param value The value to validate.

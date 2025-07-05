@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { ValidateBy, buildMessage } from 'class-validator'
+import { buildMessage, ValidateBy } from 'class-validator'
 import type { OpUnitType } from 'dayjs'
 
 import { pastDayjs } from './past-dayjs.predicate'

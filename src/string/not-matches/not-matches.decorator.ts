@@ -1,5 +1,5 @@
 import type { ValidationOptions } from 'class-validator'
-import { ValidateBy, buildMessage } from 'class-validator'
+import { buildMessage, ValidateBy } from 'class-validator'
 
 import { notMatches } from './not-matches.predicate'
 
@@ -11,6 +11,7 @@ export const NOT_MATCHES = 'notMatches'
  * @param {RegExp} pattern The regular expression to validate against.
  * @param options Generic class-validator options.
  */
+
 /**
  * @overload
  * @param {string} pattern The regular expression to validate against.

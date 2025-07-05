@@ -1,2 +1,2 @@
-export { MinDuration, MIN_DURATION } from './min-duration.decorator'
+export { MIN_DURATION, MinDuration } from './min-duration.decorator'
 export { minDuration } from './min-duration.predicate'

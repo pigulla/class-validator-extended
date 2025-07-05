@@ -1,7 +1,7 @@
 import type { ValidationOptions } from 'class-validator'
-import { ValidateBy, buildMessage } from 'class-validator'
-import dayjs from 'dayjs'
+import { buildMessage, ValidateBy } from 'class-validator'
 import type { ConfigType, OpUnitType } from 'dayjs'
+import dayjs from 'dayjs'
 
 import { maxDayjs } from './max-dayjs.predicate'
 
