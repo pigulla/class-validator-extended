@@ -59,7 +59,7 @@
     "devDependencies": {
         "@biomejs/biome": "2.2.4",
         "@swc-node/register": "1.11.1",
-        "@swc/core": "1.13.19",
+        "@swc/core": "1.13.20",
         "@types/node": "24.6.1",
         "@types/sprintf-js": "1.1.4",
         "@types/validator": "13.15.3",
