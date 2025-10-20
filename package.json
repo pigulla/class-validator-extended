@@ -60,7 +60,7 @@
         "@biomejs/biome": "2.2.6",
         "@swc-node/register": "1.11.1",
         "@swc/core": "1.13.20",
-        "@types/node": "24.7.1",
+        "@types/node": "24.8.1",
         "@types/sprintf-js": "1.1.4",
         "@types/validator": "13.15.3",
         "cz-conventional-changelog": "3.3.0",
