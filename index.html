@@ -5,21 +5,25 @@
 <a href="https://libraries.io/npm/class-validator-extended"><img src="https://img.shields.io/librariesio/release/npm/class-validator-extended?style=flat-square&amp;cacheSeconds=3600" alt="libraries.io"></a>
 <a href="https://app.codecov.io/gh/pigulla/class-validator-extended"><img src="https://img.shields.io/codecov/c/github/pigulla/class-validator-extended?style=flat-square&amp;cacheSeconds=3600" alt="Codecov"></a>
 <a href="https://bundlephobia.com/package/class-validator-extended"><img src="https://img.shields.io/bundlephobia/min/class-validator-extended?style=flat-square&amp;cacheSeconds=3600" alt="npm bundle size"></a></p>
-<h1 id="class-validator-extended" class="tsd-anchor-link">class-validator-extended<a href="#class-validator-extended" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1><blockquote>
+<h1 id="class-validator-extended" class="tsd-anchor-link">class-validator-extended<a href="#class-validator-extended" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1>
+<blockquote>
 <p>Additional validators for <a href="https://github.com/typestack/class-validator">class-validator</a>.</p>
 </blockquote>
-<h4 id="safe-and-simple-to-use" class="tsd-anchor-link">Safe and simple to use<a href="#safe-and-simple-to-use" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<h4 id="safe-and-simple-to-use" class="tsd-anchor-link">Safe and simple to use<a href="#safe-and-simple-to-use" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4>
+<ul>
 <li>🕵️‍♀️ <a href="https://app.codecov.io/gh/pigulla/class-validator-extended">Thoroughly tested</a></li>
 <li>📝 <a href="https://pigulla.github.io/class-validator-extended/">Well documented</a></li>
 <li>✨ No additional dependencies (<a href="https://day.js.org/">Day.js</a> is supported but optional)</li>
 <li>😊 Uses <a href="https://semver.org/">Semantic Versioning</a> and keeps a <a href="https://keepachangelog.com/en/1.0.0/">nice</a> <a href="https://github.com/pigulla/class-validator-extended/blob/main/CHANGELOG.md">Changelog</a></li>
 </ul>
-<h2 id="installation" class="tsd-anchor-link">Installation<a href="#installation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Use your favorite package manager to install:</p>
+<h2 id="installation" class="tsd-anchor-link">Installation<a href="#installation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>Use your favorite package manager to install:</p>
 <pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">class-validator-extended</span>
 </code><button type="button">Copy</button></pre>
 
 <p>For obvious reasons, <a href="https://github.com/typestack/class-validator">class-validator</a> needs to be installed.</p>
-<h2 id="usage" class="tsd-anchor-link">Usage<a href="#usage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Just use the decorators like any of the built-in ones:</p>
+<h2 id="usage" class="tsd-anchor-link">Usage<a href="#usage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>Just use the decorators like any of the built-in ones:</p>
 <pre><code class="typescript"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">ArrayMinSize</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;class-validator&#39;</span><br/><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">ArrayMonotonic</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;class-validator-extended&#39;</span><br/><br/><span class="hl-5">class</span><span class="hl-1"> </span><span class="hl-6">Foo</span><span class="hl-1"> {</span><br/><span class="hl-1">    @</span><span class="hl-0">ArrayMinSize</span><span class="hl-1">(</span><span class="hl-7">2</span><span class="hl-1">)</span><br/><span class="hl-1">    @</span><span class="hl-0">ArrayMonotonic</span><span class="hl-1">()</span><br/><span class="hl-1">    </span><span class="hl-4">values</span><span class="hl-1">: [</span><span class="hl-7">1</span><span class="hl-1">, </span><span class="hl-7">13</span><span class="hl-1">, </span><span class="hl-7">42</span><span class="hl-1">]</span><br/><span class="hl-1">}</span>
 </code><button type="button">Copy</button></pre>
 
@@ -28,7 +32,8 @@
 </code><button type="button">Copy</button></pre>
 
 <p>Please note that Dayjs is an <a href="https://docs.npmjs.com/cli/v8/configuring-npm/package-json#optionaldependencies">optional dependency</a> and will by default be installed by npm and yarn. To avoid this use <code>npm install --omit optional</code> or <code>yarn install --ignore-optional</code>, respectively.</p>
-<h2 id="validation-decorators" class="tsd-anchor-link">Validation decorators<a href="#validation-decorators" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>For detailed information please read the <a href="https://pigulla.github.io/class-validator-extended/modules.html">API docs</a>.</p>
+<h2 id="validation-decorators" class="tsd-anchor-link">Validation decorators<a href="#validation-decorators" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>For detailed information please read the <a href="https://pigulla.github.io/class-validator-extended/modules.html">API docs</a>.</p>
 <table>
 <thead>
 <tr>
